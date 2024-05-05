@@ -1,7 +1,7 @@
-## Ссылка на задание
+## Link to task
 
-## Скриншот
+## Screenshot
 
-## Дата сдачи / дата дедлайна
+## Submission date/deadline date.
 
-## Описание пунктов, которые выполнены
+## Description of items completed
