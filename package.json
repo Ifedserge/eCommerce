@@ -4,8 +4,13 @@
   "description": "final task of RSSchool 2023Q4 stage 2",
   "main": "webpack.config.js",
   "scripts": {
+    "test": "jest",
     "start": "webpack serve --env development",
-    "build": "webpack",
+    "build": "npm run test && webpack",
+    "build-without-tests": "webpack",
+    "format-code": "npx prettier --write .",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "prepare": "husky install"
   },
   "author": "",
