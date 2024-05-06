@@ -5,8 +5,9 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --env development",
-    "build": "webpack"
-  },
+    "build": "webpack",
+    "prepare": "husky install"
+  }
   "author": "",
   "license": "ISC",
   "devDependencies": {
