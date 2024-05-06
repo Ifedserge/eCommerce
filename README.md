@@ -52,3 +52,26 @@ Installs Husky hooks for pre-commit and pre-push.
 
     npm run prepare
 
+## Installation
+
+Follow these step-by-step instructions to set up and run the project locally on your machine:
+
+1. Clone this repository.
+
+        git clone https://github.com/Ifedserge/eCommerce.git
+
+2. Move to the project folder.
+
+        cd ecommerce
+
+3. Run the following command to install project dependencies.
+
+        npm install
+
+4. Start the development server.
+
+        npm start
+
+5. Open the project in your web browser.
+
+        http://localhost:8080
