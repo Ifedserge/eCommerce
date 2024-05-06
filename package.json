@@ -7,7 +7,7 @@
     "start": "webpack serve --env development",
     "build": "webpack",
     "prepare": "husky install"
-  }
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
