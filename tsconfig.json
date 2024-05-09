@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
   },
-  "exclude": ["node_modules", "jest.config.ts"]
+  "exclude": ["node_modules"]
 }
