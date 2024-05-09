@@ -11,7 +11,7 @@ This project is an e-commerce application developed as the final assignment of R
 | IDE          | VS Code               | 1.88.1      |
 | Preprocessor | SASS                  | 1.75.0      |
 | Linters      | ESLint                | 8.57.0      |
-|              | Prettier              | 3.2.5       |
+| Code Formatter | Prettier              | 3.2.5       |
 | Testing      | Jest                  | 29.7.0      |
 | Dev Server   | Webpack Dev Server    | 5.0.4       |
 
