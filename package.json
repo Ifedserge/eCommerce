@@ -9,14 +9,15 @@
     "build": "npm run test && webpack",
     "build-without-tests": "webpack",
     "format-code": "npx prettier --write .",
-    "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint src"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/sass": "^1.45.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "copy-webpack-plugin": "^12.0.2",
