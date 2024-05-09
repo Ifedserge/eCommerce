@@ -25,6 +25,5 @@
         "props": true
       }
     ]
-  },
-  "ignorePatterns": ["*config.js"]
+  }
 }
