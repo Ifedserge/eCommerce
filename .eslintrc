@@ -11,7 +11,7 @@
     "plugin:import/recommended"
   ],
   "parserOptions": {
-    "project": "./tsconfig.json"
+   "project": "**/tsconfig.json"
   },
   "plugins": ["prettier", "import", "@typescript-eslint"],
   "rules": {
@@ -25,5 +25,6 @@
         "props": true
       }
     ]
-  }
+  },
+  "ignorePatterns": ["jest.config.ts"]
 }
