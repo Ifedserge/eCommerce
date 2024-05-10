@@ -25,5 +25,6 @@
         "props": true
       }
     ]
-  }
+  },
+  "ignorePatterns": ["jest.config.ts"]
 }
