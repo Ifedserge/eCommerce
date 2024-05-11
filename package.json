@@ -54,5 +54,12 @@
     "*.{js,jsx,ts,tsx,md}": [
       "npm run lint:fix"
     ]
+  },
+  "dependencies": {
+    "@commercetools/history-sdk": "^4.3.0",
+    "@commercetools/importapi-sdk": "^5.4.0",
+    "@commercetools/platform-sdk": "^7.8.0",
+    "@commercetools/sdk-client-v2": "^2.5.0",
+    "dotenv-webpack": "^8.1.0"
   }
 }
