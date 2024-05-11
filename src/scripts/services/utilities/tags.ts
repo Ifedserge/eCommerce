@@ -1,4 +1,5 @@
-import { TagAttributes, BlockType, InputType, HeadingType } from '../../components/types/types';
+import { TagAttributes } from '../../components/types/interfaces';
+import { BlockType, InputType, HeadingType } from '../../components/types/enums';
 
 export const createBlock = (type: BlockType, className: string[]) => {
   const elem = document.createElement(type);
