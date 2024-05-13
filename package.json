@@ -60,6 +60,7 @@
     "@commercetools/importapi-sdk": "^5.4.0",
     "@commercetools/platform-sdk": "^7.8.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
+    "bootstrap": "^5.3.3",
     "dotenv-webpack": "^8.1.0"
   }
 }
