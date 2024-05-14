@@ -2,3 +2,30 @@
 @import 'base/base';
 
 @import 'pages/login';
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+.text {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+}
+
+.text_bold {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.text_normal {
+  font-size: 1.125rem;
+}
+
+.text_small {
+  font-size: 0.875rem;
+}
+
+body {
+  height: 100vh; //заглушка
+  display: flex;
+  justify-content: space-between; //заглушка
+  align-items: center;
+  flex-direction: column;
+}
