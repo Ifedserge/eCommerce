@@ -37,8 +37,8 @@ a:not([class]) {
 }
 
 a {
-  text-decoration: none;
-  color: black;
+  text-decoration: none !important;
+  color: black !important;
 }
 
 img {
