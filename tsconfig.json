@@ -8,6 +8,7 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
+    "moduleResolution": "node",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
   },
   "exclude": ["node_modules", "jest.config.ts"]
