@@ -1,9 +1,9 @@
-import { createBlock } from '../../../services/utilities/tags';
-import { createFooter } from '../footer/footer';
-import { Header } from '../header/header';
-import { MainPage } from '../main-page/main-page';
-import { BlockType } from '../../types/enums';
-import '../../../../sass/main.scss';
+import { createBlock } from '../../services/utilities/tags';
+import { createFooter } from '../views/footer/footer';
+import { Header } from '../views/header/header';
+import { MainPage } from '../views/main-page/main-page';
+import { BlockType } from '../types/enums';
+import '../../../sass/main.scss';
 
 export class App {
   private header = new Header();
