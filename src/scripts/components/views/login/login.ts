@@ -5,10 +5,7 @@ import {
 import { BlockType, InputType } from '../../types/enums';
 
 export class Login {
-  static render() {
-    const { body } = document;
-    body.innerHTML = '';
-
+  static render(): HTMLFormElement {
     this.render.toString();
     const loginForm = createForm(['login-form']);
 
@@ -31,8 +28,7 @@ export class Login {
     const passwordContainer = createBlock(BlockType.div, ['form-group']);
 
     const passwordLabel = createLabel(['form-label'], 'Password');
-    const passwordInput = createInput(InputType.password, ['form-control']);
-    passwordInput.setAttribute('placeholder', 'Enter password');
+    const passwordInput = createInput(InputType.password, ['form-control'], { name: 'placeholder', value: 'Enter password' });
     passwordInput.addEventListener('keyup', onInputPasswordChange);
 
     const eye = document.createElement('i');
@@ -57,6 +53,7 @@ export class Login {
 
     loginForm.appendChild(fieldset);
     loginForm.appendChild(submitButton);
-    body.appendChild(loginForm);
+
+    return loginForm;
   }
 }
