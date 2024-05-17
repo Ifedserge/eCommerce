@@ -1,5 +1,5 @@
-import { createBlock, createLink } from '../../../services/utilities/tags';
-import { BlockType } from '../../types/enums';
+import { createBlock, createLink } from '../../../../services/utilities/tags';
+import { BlockType } from '../../../types/enums';
 
 export function createFooter(): HTMLElement {
   const footer = createBlock(BlockType.footer, ['footer']);

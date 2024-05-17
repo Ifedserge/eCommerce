@@ -1,6 +1,6 @@
 import { createBlock } from '../../services/utilities/tags';
-import { createFooter } from '../views/footer/footer';
-import { Header } from '../views/header/header';
+import { createFooter } from '../views/partials/footer/footer';
+import { Header } from '../views/partials/header/header';
 import { MainPage } from '../views/main-page/main-page';
 import { BlockType } from '../types/enums';
 
@@ -12,8 +12,8 @@ export class App {
   constructor() {}
 
   static start(): void {
-    const header = this.header.getLayout();
-    const mainPage = new MainPage().getLayout();
+    const header = this.header.createLayout();
+    const mainPage = new MainPage().createLayout();
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
