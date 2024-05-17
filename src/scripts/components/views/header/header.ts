@@ -1,6 +1,5 @@
 import { createBlock, createLink } from '../../../services/utilities/tags';
 import { BlockType } from '../../types/enums';
-import '../../../../sass/main.scss';
 
 export class Header {
   private isLogined: boolean;

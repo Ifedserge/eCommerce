@@ -1,6 +1,5 @@
 import { createBlock, createLink } from '../../../services/utilities/tags';
 import { BlockType } from '../../types/enums';
-import '../../../../sass/main.scss';
 
 export function createFooter(): HTMLElement {
   const footer = createBlock(BlockType.footer, ['footer']);
