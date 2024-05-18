@@ -2,7 +2,12 @@ import {
   createBlock, createButton, createForm, createInput, createLabel,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
-import { validateEmailInput, validateNameInput, validateLastNameInput } from '../../../services/utilities/inputValidation';
+import {
+  validateEmailInput,
+  validateNameInput,
+  validateLastNameInput,
+  validatePasswordInput,
+} from '../../../services/utilities/inputValidation';
 
 class Registartion {
   regestrationSection: HTMLElement;
@@ -35,7 +40,7 @@ class Registartion {
 
   passwordLabel: HTMLElement;
 
-  passwordInput: HTMLElement;
+  passwordInput: HTMLInputElement;
 
   dateOfBirth: HTMLElement;
 
@@ -93,7 +98,7 @@ class Registartion {
     this.emailInput = createInput(InputType.text, ['form-control']);
     this.emailInput.setAttribute('placeholder', 'Enter email');
 
-    this.passwordContainer = createBlock(BlockType.div, ['form-group']);
+    this.passwordContainer = createBlock(BlockType.div, ['password__block']);
     this.passwordLabel = createLabel(['form-label'], 'Password');
     this.passwordInput = createInput(InputType.password, ['form-control'], { name: 'placeholder', value: 'Enter password' });
 
@@ -157,7 +162,9 @@ class Registartion {
       this.emailContainer.append(this.emailLabel, emailErrorElement);
 
       this.passwordLabel.append(this.passwordInput);
-      this.passwordContainer.append(this.passwordLabel);
+      const passwordErrorElement = createBlock(BlockType.div, ['error-message']);
+      this.passwordInput.addEventListener('input', () => validatePasswordInput(this.passwordInput, passwordErrorElement));
+      this.passwordContainer.append(this.passwordLabel, passwordErrorElement);
 
       this.dateOfBirthLabel.append(this.dateOfBirthInput);
       this.dateOfBirth.append(this.dateOfBirthLabel);

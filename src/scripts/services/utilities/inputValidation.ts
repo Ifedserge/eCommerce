@@ -1,4 +1,9 @@
-import { validateEmail, validateName, validateLastName } from './validation';
+import {
+  validateEmail,
+  validateName,
+  validateLastName,
+  validatePassword,
+} from './validation';
 
 export function validateEmailInput(
   emailInput: HTMLInputElement,
@@ -64,6 +69,29 @@ export function validateLastNameInput(
       nameError.textContent = errorMessages.join(', ');
       nameError.classList.remove('fade-out');
       nameError.classList.add('visible');
+    }, 500);
+  }
+}
+
+export function validatePasswordInput(
+  passwordInput: HTMLInputElement,
+  passwordErrorElement: HTMLElement,
+): void {
+  const passwordValue = passwordInput.value;
+  const { isValid, errorMessages } = validatePassword(passwordValue);
+  const passwordError = passwordErrorElement;
+
+  if (isValid) {
+    passwordInput.classList.remove('error');
+    passwordError.classList.remove('visible');
+    setTimeout(() => { passwordError.textContent = ''; }, 500);
+  } else {
+    passwordInput.classList.add('error');
+    passwordError.classList.add('fade-out');
+    setTimeout(() => {
+      passwordError.textContent = errorMessages.join(', ');
+      passwordError.classList.remove('fade-out');
+      passwordError.classList.add('visible');
     }, 500);
   }
 }
