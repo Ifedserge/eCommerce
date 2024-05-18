@@ -1,26 +1,41 @@
 .registration {
-    .regestration__container{
-        .fieldset{
-            .email__block{
-                .error {
-                  border-color: rgb(255, 193, 193);
-                  background-color:  rgb(255, 193, 193);
-                }
-                .error-message {
-                  width: 350px;
-                  font-size: 10px;
-                  margin: 5px 0;
-                  opacity: 0;
-                  transition: opacity 0.5s ease-in-out;
-                }
-                .error-message.visible {
-                  opacity: 1;
-                }
-                .error-message.fade-out {
-                  opacity: 0;
-                  transition: opacity 0.5s ease-in-out;
-                }
-            }
+  .regestration__container{
+    .auth-fieldset{
+      border: black solid 3px;
+      padding: 1rem;
+
+        legend {
+          float: none;
+          width: auto;
+          padding: 5px;
+          margin-bottom: 0;
+        }
+        input,
+        select {
+          cursor: pointer;
+        }
+        .username__block,
+        .user_last_name__block,
+        .email__block{
+          .error {
+            border-color: rgb(255, 193, 193);
+            background-color:  rgb(255, 193, 193);
+          }
+          .error-message {
+            width: 350px;
+            font-size: 10px;
+            margin: 5px 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+          }
+          .error-message.visible {
+            opacity: 1;
+           }
+          .error-message.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+          }
         }
     }
+  }
 }

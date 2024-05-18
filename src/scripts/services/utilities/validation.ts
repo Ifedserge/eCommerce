@@ -60,3 +60,31 @@ export function validatePassword(password: string): { isValid: boolean; errorMes
     errorMessages,
   };
 }
+
+export function validateName(name: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  const nameRegex = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+  if (!nameRegex.test(name)) {
+    errorMessages.push('Name must contain only letters and at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateLastName(lastName: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  const lastNameRegex = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+  if (!lastNameRegex.test(lastName)) {
+    errorMessages.push('Last name must contain only letters and at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}

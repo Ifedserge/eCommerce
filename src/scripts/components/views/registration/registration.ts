@@ -2,7 +2,7 @@ import {
   createBlock, createButton, createForm, createInput, createLabel,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
-import { validateEmailInput } from '../../../services/utilities/emailValidation';
+import { validateEmailInput, validateNameInput, validateLastNameInput } from '../../../services/utilities/inputValidation';
 
 class Registartion {
   regestrationSection: HTMLElement;
@@ -17,13 +17,13 @@ class Registartion {
 
   usernameLabel: HTMLElement;
 
-  usernameInput: HTMLElement;
+  usernameInput: HTMLInputElement;
 
   userLastnameContainer: HTMLElement;
 
   userLastnameLabel: HTMLElement;
 
-  userLastnameInput: HTMLElement;
+  userLastnameInput: HTMLInputElement;
 
   emailContainer: HTMLElement;
 
@@ -73,7 +73,7 @@ class Registartion {
     this.regestrationSection = createBlock(BlockType.section, ['registration']);
     this.regestrationContainer = createForm(['regestration__container']);
     this.fieldset = document.createElement('fieldset');
-    this.fieldset.classList.add('fieldset');
+    this.fieldset.classList.add('auth-fieldset');
 
     this.legend = document.createElement('legend');
     this.legend.textContent = 'Registration';
@@ -141,10 +141,14 @@ class Registartion {
 
     if (main) {
       this.usernameLabel.append(this.usernameInput);
-      this.usernameContainer.append(this.usernameLabel);
+      const nameErrorElement = createBlock(BlockType.div, ['error-message']);
+      this.usernameInput.addEventListener('input', () => validateNameInput(this.usernameInput, nameErrorElement));
+      this.usernameContainer.append(this.usernameLabel, nameErrorElement);
 
       this.userLastnameLabel.append(this.userLastnameInput);
-      this.userLastnameContainer.append(this.userLastnameLabel);
+      const lastnameErrorElement = createBlock(BlockType.div, ['error-message']);
+      this.userLastnameInput.addEventListener('input', () => validateLastNameInput(this.userLastnameInput, lastnameErrorElement));
+      this.userLastnameContainer.append(this.userLastnameLabel, lastnameErrorElement);
 
       const emailErrorElement = createBlock(BlockType.div, ['error-message']);
       emailErrorElement.id = 'emailError';
