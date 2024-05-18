@@ -1,6 +1,10 @@
 import { onInputEmailChange, onInputPasswordChange, onSubmitLoginForm } from '../../../services/login/loginButtons';
 import {
-  createBlock, createButton, createForm, createInput, createLabel,
+  createBlock,
+  createButton,
+  createForm,
+  createInput,
+  createLabel,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
 
@@ -29,7 +33,10 @@ export class Login {
     const passwordContainer = createBlock(BlockType.div, ['form-group']);
 
     const passwordLabel = createLabel(['form-label'], 'Password');
-    const passwordInput = createInput(InputType.password, ['form-control'], { name: 'placeholder', value: 'Enter password' });
+    const passwordInput = createInput(InputType.password, ['form-control'], {
+      name: 'placeholder',
+      value: 'Enter password',
+    });
     passwordInput.addEventListener('keyup', onInputPasswordChange);
 
     const eye = document.createElement('i');
