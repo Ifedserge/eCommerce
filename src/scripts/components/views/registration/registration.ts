@@ -1,8 +1,8 @@
 import {
   createBlock, createButton, createForm, createInput, createLabel,
 } from '../../../services/utilities/tags';
-import { onInputEmailChange } from '../../../services/login/loginButtons';
 import { BlockType, InputType } from '../../types/enums';
+import { validateEmailInput } from '../../../services/utilities/emailValidation';
 
 class Registartion {
   regestrationSection: HTMLElement;
@@ -29,7 +29,7 @@ class Registartion {
 
   emailLabel: HTMLElement;
 
-  emailInput: HTMLElement;
+  emailInput: HTMLInputElement;
 
   passwordContainer: HTMLElement;
 
@@ -88,7 +88,7 @@ class Registartion {
     this.userLastnameInput = createInput(InputType.text, ['form-control']);
     this.userLastnameInput.setAttribute('placeholder', 'Enter your last name');
 
-    this.emailContainer = createBlock(BlockType.div, ['form-group']);
+    this.emailContainer = createBlock(BlockType.div, ['email__block']);
     this.emailLabel = createLabel(['form-label'], 'Email');
     this.emailInput = createInput(InputType.text, ['form-control']);
     this.emailInput.setAttribute('placeholder', 'Enter email');
@@ -146,9 +146,11 @@ class Registartion {
       this.userLastnameLabel.append(this.userLastnameInput);
       this.userLastnameContainer.append(this.userLastnameLabel);
 
-      this.emailInput.addEventListener('keypress', onInputEmailChange);
+      const emailErrorElement = createBlock(BlockType.div, ['error-message']);
+      emailErrorElement.id = 'emailError';
+      this.emailInput.addEventListener('input', () => validateEmailInput(this.emailInput, emailErrorElement));
       this.emailLabel.append(this.emailInput);
-      this.emailContainer.append(this.emailLabel);
+      this.emailContainer.append(this.emailLabel, emailErrorElement);
 
       this.passwordLabel.append(this.passwordInput);
       this.passwordContainer.append(this.passwordLabel);
