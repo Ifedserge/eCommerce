@@ -76,7 +76,7 @@ class Registartion {
 
   countryIndexInput: HTMLInputElement;
 
-  regBtn: HTMLElement;
+  regBtn: HTMLButtonElement;
 
   constructor() {
     this.regestrationSection = createBlock(BlockType.section, ['registration']);
@@ -131,6 +131,7 @@ class Registartion {
     this.countryIndexInput.setAttribute('placeholder', 'Enter country index');
 
     this.regBtn = createButton(['btn', 'btn-primary'], 'Registration');
+    this.regBtn.disabled = true;
   }
 
   createSelect(options: string[], classes: string[]): HTMLSelectElement {
@@ -143,6 +144,28 @@ class Registartion {
       select.appendChild(optionElement);
     });
     return select;
+  }
+
+  checkFormValidity() {
+    const nameValid = !this.usernameInput.classList.contains('error') && this.usernameInput.value.trim() !== '';
+    const lastNameValid = !this.userLastnameInput.classList.contains('error') && this.userLastnameInput.value.trim() !== '';
+    const emailValid = !this.emailInput.classList.contains('error') && this.emailInput.value.trim() !== '';
+    const passwordValid = !this.passwordInput.classList.contains('error') && this.passwordInput.value.trim() !== '';
+    const dateOfBirthValid = !this.dateOfBirthInput.classList.contains('error') && this.dateOfBirthInput.value.trim() !== '';
+    const cityValid = !this.cityInput.classList.contains('error') && this.cityInput.value.trim() !== '';
+    const streetValid = !this.streetInput.classList.contains('error') && this.streetInput.value.trim() !== '';
+    const countryIndexValid = !this.countryIndexInput.classList.contains('error') && this.countryIndexInput.value.trim() !== '';
+
+    const isValid = nameValid
+      && lastNameValid
+      && emailValid
+      && passwordValid
+      && dateOfBirthValid
+      && cityValid
+      && streetValid
+      && countryIndexValid;
+
+    this.regBtn.disabled = !isValid;
   }
 
   render() {
@@ -161,18 +184,27 @@ class Registartion {
 
       const emailErrorElement = createBlock(BlockType.div, ['error-message']);
       emailErrorElement.id = 'emailError';
-      this.emailInput.addEventListener('input', () => validateEmailInput(this.emailInput, emailErrorElement));
+      this.emailInput.addEventListener('input', () => {
+        validateEmailInput(this.emailInput, emailErrorElement);
+        this.checkFormValidity();
+      });
       this.emailLabel.append(this.emailInput);
       this.emailContainer.append(this.emailLabel, emailErrorElement);
 
       this.passwordLabel.append(this.passwordInput);
       const passwordErrorElement = createBlock(BlockType.div, ['error-message']);
-      this.passwordInput.addEventListener('input', () => validatePasswordInput(this.passwordInput, passwordErrorElement));
+      this.passwordInput.addEventListener('input', () => {
+        validatePasswordInput(this.passwordInput, passwordErrorElement);
+        this.checkFormValidity();
+      });
       this.passwordContainer.append(this.passwordLabel, passwordErrorElement);
 
       this.dateOfBirthLabel.append(this.dateOfBirthInput);
       const dateOfBirthElement = createBlock(BlockType.div, ['error-message']);
-      this.dateOfBirthInput.addEventListener('input', () => validateDateOfBirthInput(this.dateOfBirthInput, dateOfBirthElement));
+      this.dateOfBirthInput.addEventListener('input', () => {
+        validateDateOfBirthInput(this.dateOfBirthInput, dateOfBirthElement);
+        this.checkFormValidity();
+      });
       this.dateOfBirth.append(this.dateOfBirthLabel, dateOfBirthElement);
 
       this.countryLabel.append(this.countrySelect);
@@ -180,21 +212,26 @@ class Registartion {
 
       this.cityLabel.append(this.cityInput);
       const cityInputElement = createBlock(BlockType.div, ['error-message']);
-      this.cityInput.addEventListener('input', () => validateCityInput(this.cityInput, cityInputElement));
+      this.cityInput.addEventListener('input', () => {
+        validateCityInput(this.cityInput, cityInputElement);
+        this.checkFormValidity();
+      });
       this.city.append(this.cityLabel, cityInputElement);
 
       this.streetLabel.append(this.streetInput);
       const streetInputElement = createBlock(BlockType.div, ['error-message']);
-      this.streetInput.addEventListener('input', () => validateStreetInput(this.streetInput, streetInputElement));
+      this.streetInput.addEventListener('input', () => {
+        validateStreetInput(this.streetInput, streetInputElement);
+        this.checkFormValidity();
+      });
       this.street.append(this.streetLabel, streetInputElement);
 
       this.countryIndexLabel.append(this.countryIndexInput);
       const countryIndexElement = createBlock(BlockType.div, ['error-message']);
-      this.countryIndexInput.addEventListener('input', () => validatePostalCodeInput(
-        this.countrySelect,
-        this.countryIndexInput,
-        countryIndexElement,
-      ));
+      this.countryIndexInput.addEventListener('input', () => {
+        validatePostalCodeInput(this.countrySelect, this.countryIndexInput, countryIndexElement);
+        this.checkFormValidity();
+      });
       this.countryIndex.append(this.countryIndexLabel, countryIndexElement);
 
       this.fieldset.append(
