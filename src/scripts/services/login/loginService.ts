@@ -18,7 +18,6 @@ export class LoginService {
         NotificationService.showNotification('Login successful!', NotificationType.success);
       })
       .catch((error) => {
-        console.log(error);
         NotificationService.showNotification(`Something went wrong. Please try again. Error: ${error.body.message}`, NotificationType.error);
       });
   }
