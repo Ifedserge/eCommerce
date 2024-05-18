@@ -4,7 +4,7 @@ import { BlockType } from '../../types/enums';
 export class MainPage {
   constructor() {}
 
-  createLayout(): HTMLElement {
+  static createLayout(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['main-page']);
     return wrapper;
   }

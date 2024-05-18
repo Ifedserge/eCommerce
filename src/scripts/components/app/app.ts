@@ -13,7 +13,7 @@ export class App {
 
   static start(): void {
     const header = this.header.createLayout();
-    const mainPage = new MainPage().createLayout();
+    const mainPage = MainPage.createLayout();
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
