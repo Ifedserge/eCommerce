@@ -27,3 +27,9 @@ export enum BlockType {
   section = 'section',
   div = 'div',
 }
+
+export enum NotificationType {
+  success = 'success',
+  info = 'info',
+  error = 'error',
+}
