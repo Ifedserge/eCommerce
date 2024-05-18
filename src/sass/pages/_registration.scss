@@ -17,7 +17,11 @@
         .username__block,
         .user_last_name__block,
         .password__block,
-        .email__block{
+        .date_of_birth__block,
+        .email__block,
+        .city__block,
+        .street__block,
+        .contry_index__block {
           .error {
             border-color: rgb(255, 193, 193);
             background-color:  rgb(255, 193, 193);

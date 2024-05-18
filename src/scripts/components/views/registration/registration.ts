@@ -7,6 +7,10 @@ import {
   validateNameInput,
   validateLastNameInput,
   validatePasswordInput,
+  validateDateOfBirthInput,
+  validateStreetInput,
+  validateCityInput,
+  validatePostalCodeInput,
 } from '../../../services/utilities/inputValidation';
 
 class Registartion {
@@ -46,31 +50,31 @@ class Registartion {
 
   dateOfBirthLabel:HTMLElement;
 
-  dateOfBirthInput:HTMLElement;
+  dateOfBirthInput:HTMLInputElement;
 
   country: HTMLElement;
 
   countryLabel: HTMLElement;
 
-  countrySelect: HTMLElement;
+  countrySelect: HTMLSelectElement;
 
   city: HTMLElement;
 
   cityLabel: HTMLElement;
 
-  cityInput: HTMLElement;
+  cityInput: HTMLInputElement;
 
   street: HTMLElement;
 
   streetLabel: HTMLElement;
 
-  streetInput: HTMLElement;
+  streetInput: HTMLInputElement;
 
   countryIndex: HTMLElement;
 
   countryIndexLabel: HTMLElement;
 
-  countryIndexInput: HTMLElement;
+  countryIndexInput: HTMLInputElement;
 
   regBtn: HTMLElement;
 
@@ -102,26 +106,26 @@ class Registartion {
     this.passwordLabel = createLabel(['form-label'], 'Password');
     this.passwordInput = createInput(InputType.password, ['form-control'], { name: 'placeholder', value: 'Enter password' });
 
-    this.dateOfBirth = createBlock(BlockType.div, ['form-group']);
+    this.dateOfBirth = createBlock(BlockType.div, ['date_of_birth__block']);
     this.dateOfBirthLabel = createLabel(['form-label'], 'Date of birth');
     this.dateOfBirthInput = createInput(InputType.text, ['form-control']);
     this.dateOfBirthInput.setAttribute('placeholder', 'Enter date of birth');
 
-    this.country = createBlock(BlockType.div, ['form-group']);
+    this.country = createBlock(BlockType.div, ['country__block']);
     this.countryLabel = createLabel(['form-label'], 'Country');
     this.countrySelect = this.createSelect(['Belarus', 'Germany'], ['form-control']);
 
-    this.city = createBlock(BlockType.div, ['form-group']);
+    this.city = createBlock(BlockType.div, ['city__block']);
     this.cityLabel = createLabel(['form-label'], 'City');
     this.cityInput = createInput(InputType.text, ['form-control']);
     this.cityInput.setAttribute('placeholder', 'Enter city');
 
-    this.street = createBlock(BlockType.div, ['form-group']);
-    this.streetLabel = createLabel(['form-label'], 'City');
+    this.street = createBlock(BlockType.div, ['street__block']);
+    this.streetLabel = createLabel(['form-label'], 'Street');
     this.streetInput = createInput(InputType.text, ['form-control']);
-    this.streetInput.setAttribute('placeholder', 'Enter city');
+    this.streetInput.setAttribute('placeholder', 'Enter street');
 
-    this.countryIndex = createBlock(BlockType.div, ['form-group']);
+    this.countryIndex = createBlock(BlockType.div, ['contry_index__block']);
     this.countryIndexLabel = createLabel(['form-label'], 'Country index');
     this.countryIndexInput = createInput(InputType.text, ['form-control']);
     this.countryIndexInput.setAttribute('placeholder', 'Enter country index');
@@ -129,7 +133,7 @@ class Registartion {
     this.regBtn = createButton(['btn', 'btn-primary'], 'Registration');
   }
 
-  createSelect(options: string[], classes: string[]): HTMLElement {
+  createSelect(options: string[], classes: string[]): HTMLSelectElement {
     const select = document.createElement('select');
     select.classList.add(...classes);
     options.forEach((option) => {
@@ -167,19 +171,31 @@ class Registartion {
       this.passwordContainer.append(this.passwordLabel, passwordErrorElement);
 
       this.dateOfBirthLabel.append(this.dateOfBirthInput);
-      this.dateOfBirth.append(this.dateOfBirthLabel);
+      const dateOfBirthElement = createBlock(BlockType.div, ['error-message']);
+      this.dateOfBirthInput.addEventListener('input', () => validateDateOfBirthInput(this.dateOfBirthInput, dateOfBirthElement));
+      this.dateOfBirth.append(this.dateOfBirthLabel, dateOfBirthElement);
 
       this.countryLabel.append(this.countrySelect);
       this.country.append(this.countryLabel);
 
       this.cityLabel.append(this.cityInput);
-      this.city.append(this.cityLabel);
+      const cityInputElement = createBlock(BlockType.div, ['error-message']);
+      this.cityInput.addEventListener('input', () => validateCityInput(this.cityInput, cityInputElement));
+      this.city.append(this.cityLabel, cityInputElement);
 
       this.streetLabel.append(this.streetInput);
-      this.street.append(this.streetLabel);
+      const streetInputElement = createBlock(BlockType.div, ['error-message']);
+      this.streetInput.addEventListener('input', () => validateStreetInput(this.streetInput, streetInputElement));
+      this.street.append(this.streetLabel, streetInputElement);
 
       this.countryIndexLabel.append(this.countryIndexInput);
-      this.countryIndex.append(this.countryIndexLabel);
+      const countryIndexElement = createBlock(BlockType.div, ['error-message']);
+      this.countryIndexInput.addEventListener('input', () => validatePostalCodeInput(
+        this.countrySelect,
+        this.countryIndexInput,
+        countryIndexElement,
+      ));
+      this.countryIndex.append(this.countryIndexLabel, countryIndexElement);
 
       this.fieldset.append(
         this.legend,
