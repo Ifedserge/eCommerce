@@ -1,4 +1,4 @@
-import { onInputEmailChange, onInputPasswordChange } from '../../../services/login/loginButtons';
+import { onInputEmailChange, onInputPasswordChange, onSubmitLoginForm } from '../../../services/login/loginButtons';
 import {
   createBlock,
   createButton,
@@ -12,6 +12,7 @@ export class Login {
   static render(): HTMLFormElement {
     this.render.toString();
     const loginForm = createForm(['login-form']);
+    loginForm.addEventListener('submit', onSubmitLoginForm);
 
     const fieldset = document.createElement('fieldset');
     fieldset.classList.add('auth-fieldset');
