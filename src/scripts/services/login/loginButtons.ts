@@ -40,8 +40,12 @@ export function onSubmitLoginForm(event: Event) {
     NotificationService.showNotification('Please enter your email and password', NotificationType.error);
     return;
   }
-  if (!validateEmail(email).isValid || !validatePassword(password).isValid) {
-    NotificationService.showNotification('Please enter a valid email and password', NotificationType.error);
+  if (!validateEmail(email).isValid) {
+    NotificationService.showNotification('Please enter a valid email', NotificationType.error);
+    return;
+  }
+  if (!validatePassword(password).isValid) {
+    NotificationService.showNotification('Please enter a valid password', NotificationType.error);
     return;
   }
 
