@@ -1,0 +1,21 @@
+.notification {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    color: #fff;
+
+    &.success {
+        background-color: #4CAF50;
+    }
+
+    &.error {
+        background-color: #f44336;
+    }
+
+    &.info {
+        background-color: #2196F3;
+    }
+}

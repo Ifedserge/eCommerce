@@ -28,6 +28,12 @@ export enum BlockType {
   div = 'div',
 }
 
+export enum NotificationType {
+  success = 'success',
+  info = 'info',
+  error = 'error',
+}
+
 export enum Pages {
   index = 'index',
   login = 'login',
