@@ -1,46 +1,27 @@
-.registration {
-  .regestration__container{
-    .auth-fieldset{
-      border: black solid 3px;
-      padding: 1rem;
+  .registration-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .auth-fieldset {
+        border: black solid 3px;
+        padding: 1rem;
 
         legend {
-          float: none;
-          width: auto;
-          padding: 5px;
-          margin-bottom: 0;
+            float: none;
+            width: auto;
+            padding: 5px;
+            margin-bottom: 0;
         }
-        input,
-        select {
-          cursor: pointer;
+
+        .invalid-feedback {
+            display: flex;
         }
-        .username__block,
-        .user_last_name__block,
-        .password__block,
-        .date_of_birth__block,
-        .email__block,
-        .city__block,
-        .street__block,
-        .contry_index__block {
-          .error {
-            border-color: rgb(255, 193, 193);
-            background-color:  rgb(255, 193, 193);
-          }
-          .error-message {
-            width: 300px;
-            font-size: 10px;
-            margin: 5px 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-          }
-          .error-message.visible {
-            opacity: 1;
-           }
-          .error-message.fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-          }
+
+        i {
+            cursor: pointer;
         }
     }
   }
-}
