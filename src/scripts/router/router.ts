@@ -1,3 +1,4 @@
+import { Pages } from '../components/types/enums';
 import { RouteInterface } from '../components/types/interfaces';
 
 export default class Router {
@@ -23,8 +24,17 @@ export default class Router {
   urlChangedHandler(): void {
     const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
 
-    if (route) {
-      route.callback();
+    if (!route) {
+      this.redirectToNotFoundPage();
+      return;
+    }
+    route.callback();
+  }
+
+  redirectToNotFoundPage() {
+    const notFoundPage = this.routes.find((item) => item.path === Pages.notFound);
+    if (notFoundPage) {
+      this.navigate(notFoundPage.path);
     }
   }
 }

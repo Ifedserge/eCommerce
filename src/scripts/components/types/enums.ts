@@ -33,4 +33,5 @@ export enum Pages {
   login = 'login',
   registration = 'registration',
   user = 'user',
+  notFound = 'not-found',
 }

@@ -5,6 +5,7 @@ import { MainPage } from '../views/main-page/main-page';
 import { BlockType, Pages } from '../types/enums';
 import Router from '../../router/router';
 import { Login } from '../views/login/login';
+import { createNotFoundPage } from '../views/not-found/not-found';
 
 interface RouteInterface {
   path: string;
@@ -50,6 +51,11 @@ export class App {
       {
         path: `${Pages.registration}`,
         callback: () => this.changePage(createBlock(BlockType.div, ['registration'])),
+      },
+
+      {
+        path: `${Pages.notFound}`,
+        callback: () => this.changePage(createNotFoundPage(this.router)),
       },
     ];
   }
