@@ -1,5 +1,5 @@
 import {
-  createBlock, createButton, createForm, createInput, createLabel,
+  createBlock, createButton, createForm, createInput, createLabel, createSelect,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
 
@@ -16,18 +16,6 @@ import {
 } from '../../../services/registration/registrationButtons';
 
 class Registration {
-  static createSelect(options: string[], className: string[]): HTMLSelectElement {
-    const select = document.createElement('select') as HTMLSelectElement;
-    className.forEach((item) => select.classList.add(item));
-    options.forEach((option) => {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      select.appendChild(optionElement);
-    });
-    return select;
-  }
-
   static render(): HTMLFormElement {
     const registrationForm = createForm(['registration-form']);
     registrationForm.addEventListener('submit', onSubmitRegistrationForm);
@@ -85,7 +73,7 @@ class Registration {
 
     const countryContainer = createBlock(BlockType.div, ['form-group']);
     const countryLabel = createLabel(['form-label'], 'Country');
-    const countrySelect = this.createSelect(['Belarus', 'Germany'], ['form-control']);
+    const countrySelect = createSelect(['Belarus', 'Germany'], ['form-control']);
     countrySelect.setAttribute('name', 'country');
 
     countryContainer.appendChild(countryLabel);
