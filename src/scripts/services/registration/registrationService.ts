@@ -15,7 +15,8 @@ export class RegistrationService {
     country: string,
   ): Promise<void> {
     await apiRoot
-      .customers()
+      .me()
+      .signup()
       .post({
         body: {
           email,
