@@ -27,3 +27,10 @@ export enum BlockType {
   section = 'section',
   div = 'div',
 }
+
+export enum Pages {
+  index = 'index',
+  login = 'login',
+  registration = 'registration',
+  user = 'user',
+}
