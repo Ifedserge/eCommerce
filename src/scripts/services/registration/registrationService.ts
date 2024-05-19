@@ -1,5 +1,6 @@
-import { NotificationService } from '../utilities/notification';
 import { NotificationType } from '../../components/types/enums';
+import { apiRoot } from '../api';
+import { NotificationService } from '../utilities/notification';
 
 export class RegistrationService {
   static async register(
@@ -12,40 +13,30 @@ export class RegistrationService {
     street: string,
     postalCode: string,
     country: string,
-  ) {
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+  ): Promise<void> {
+    await apiRoot
+      .customers()
+      .post({
+        body: {
           email,
           password,
-          name,
+          firstName: name,
           lastName,
+          addresses: [{
+            city,
+            streetName: street,
+            postalCode,
+            country,
+          }],
           dateOfBirth,
-          city,
-          street,
-          postalCode,
-          country,
-        }),
+        },
+      })
+      .execute()
+      .then(() => {
+        NotificationService.showNotification('Registration successful!', NotificationType.success);
+      })
+      .catch((error) => {
+        NotificationService.showNotification(`Something went wrong. Please try again. Error: ${error.body.message}`, NotificationType.error);
       });
-
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
-      const data = await response.json();
-      NotificationService.showNotification('Registration successful', NotificationType.success);
-      return data;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        NotificationService.showNotification(error.message, NotificationType.error);
-      } else {
-        NotificationService.showNotification('An unknown error occurred', NotificationType.error);
-      }
-      return null;
-    }
   }
 }
