@@ -1,5 +1,6 @@
-import { Pages } from '../components/types/enums';
-import { RouteInterface } from '../components/types/interfaces';
+import { Pages } from '../../components/types/enums';
+import { RouteInterface } from '../../components/types/interfaces';
+import { checkLoginState } from '../utilities/checkLoginState';
 
 export default class Router {
   private routes;
@@ -24,7 +25,10 @@ export default class Router {
   private urlChangedHandler(): void {
     const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
 
-    if (!route) {
+    if (
+      !route ||
+      (checkLoginState() && (route.path === Pages.login || route.path === Pages.registration))
+    ) {
       this.redirectToNotFoundPage();
       return;
     }
