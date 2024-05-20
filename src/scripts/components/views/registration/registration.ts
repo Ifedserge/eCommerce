@@ -171,15 +171,8 @@ class Registration {
       ['registration-form__button', 'text', 'text_bold'],
       'Register',
     );
-    const loginButton = createButton(
-      ['registration-form__button', 'text', 'text_bold'],
-      'To come in.',
-    );
-    loginButton.addEventListener('click', () => {
-      window.location.pathname = '/login';
-    });
     registrationForm.appendChild(fieldset);
-    registrationForm.append(submitButton, loginButton);
+    registrationForm.append(submitButton);
 
     return registrationForm;
   }
