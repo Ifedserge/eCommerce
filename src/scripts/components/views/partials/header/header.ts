@@ -3,13 +3,16 @@ import { BlockType, Pages } from '../../../types/enums';
 import { Router } from '../../../types/interfaces';
 
 export class Header {
-  private isLogined: boolean;
+  private isLogined;
 
   private router;
 
-  constructor(router: Router, logined = false) {
+  private updateHeaderCallback;
+
+  constructor(router: Router, logined: boolean, callback: () => void) {
     this.router = router;
     this.isLogined = logined;
+    this.updateHeaderCallback = callback;
   }
 
   createLayout(): HTMLElement {
@@ -32,8 +35,6 @@ export class Header {
   }
 
   createAuthBlock(): HTMLElement {
-    // this.changeAuthState(); //emulator of authorized/unauthorized user for view. Delete later
-
     const wrapper = createBlock(BlockType.div, ['header__auth-wrapper']);
 
     const registerLink = createButton(['header__link', 'text', 'text_normal'], 'Register');
@@ -43,7 +44,12 @@ export class Header {
     loginLink.addEventListener('click', () => this.router.navigate(Pages.login));
 
     const logoutLink = createButton(['header__link', 'text', 'text_normal'], 'Log out');
-    logoutLink.addEventListener('click', () => this.router.navigate(Pages.index));
+    logoutLink.addEventListener('click', () => {
+      window.localStorage.clear();
+      this.isLogined = false;
+      this.updateHeaderCallback();
+      this.router.navigate(Pages.index);
+    });
 
     const userLink = createButton(['header__icon-wrapper'], '');
     userLink.addEventListener('click', () => this.router.navigate(Pages.user));
