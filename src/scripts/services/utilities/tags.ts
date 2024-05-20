@@ -90,3 +90,20 @@ export const createSelect = (
   });
   return elem;
 };
+
+export const createImg = (
+  className: string[],
+  src: string,
+  alt: string,
+  height?: number,
+  width?: number,
+) => {
+  const elem = document.createElement('img');
+  className.forEach((item) => elem.classList.add(item));
+  elem.setAttribute('src', `${src}`);
+  elem.setAttribute('alt', `${alt}`);
+  if (height) elem.setAttribute('height', `${height}px`);
+  if (width) elem.setAttribute('width', `${width}px`);
+
+  return elem;
+};

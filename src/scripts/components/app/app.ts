@@ -28,7 +28,7 @@ export class App {
   start(): void {
     this.header = new Header(this.router, this.updateHeader.bind(this));
     const header = this.header.createLayout();
-    const mainPage = MainPage.createLayout();
+    const mainPage = new MainPage().createLayout();
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
@@ -52,11 +52,11 @@ export class App {
     return [
       {
         path: '',
-        callback: () => this.changePage(MainPage.createLayout()),
+        callback: () => this.changePage(new MainPage().createLayout()),
       },
       {
         path: `${Pages.index}`,
-        callback: () => this.changePage(MainPage.createLayout()),
+        callback: () => this.changePage(new MainPage().createLayout()),
       },
       {
         path: `${Pages.login}`,
