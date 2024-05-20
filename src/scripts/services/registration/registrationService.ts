@@ -65,6 +65,7 @@ export class RegistrationService {
       })
       .then(() => {
         NotificationService.showNotification('Registration and address addition successful!', NotificationType.success);
+        window.location.pathname = '/index';
       })
       .catch((error) => {
         const errorMessage = error?.body?.message || `An unknown error occurred: ${error.message}`;
