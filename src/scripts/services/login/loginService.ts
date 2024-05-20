@@ -16,9 +16,11 @@ export class LoginService {
       .execute()
       .then(() => {
         NotificationService.showNotification('Login successful!', NotificationType.success);
+        window.location.pathname = '/index';
       })
       .catch((error) => {
         NotificationService.showNotification(`Something went wrong. Please try again. Error: ${error.body.message}`, NotificationType.error);
+        localStorage.clear();
       });
   }
 }
