@@ -34,8 +34,7 @@ export class Header {
     const loginLink = createLink(['header__link', 'text', 'text_normal'], '', 'Log in'); // add the link
     const logoutLink = createLink(['header__link', 'text', 'text_normal'], '', 'Log out'); // add the link
     const userLink = createLink(['header__icon-wrapper'], '', ''); // add the link
-    const userLogo =
-      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+    const userLogo = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
     userLink.innerHTML = userLogo;
     if (this.isLogined) wrapper.append(logoutLink, userLink);
     else wrapper.append(registerLink, loginLink);

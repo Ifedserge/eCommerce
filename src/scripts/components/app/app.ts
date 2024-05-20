@@ -9,7 +9,7 @@ export class App {
 
   static main = createBlock(BlockType.main, ['main']);
 
-  constructor() {}
+  // constructor() {}
 
   static start(): void {
     const header = this.header.createLayout();

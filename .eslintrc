@@ -17,6 +17,7 @@
   "rules": {
     "no-plusplus": "off",
     "no-console": "warn",
+    "class-methods-use-this":"off",
     "@typescript-eslint/no-explicit-any": "error",
     "import/prefer-default-export": "off",
     "no-param-reassign": [

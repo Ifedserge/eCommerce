@@ -1,3 +1,5 @@
+import { calculateAge } from './calculateAge';
+
 export function validateEmail(email: string): { isValid: boolean; errorMessages: string[] } {
   const errorMessages: string[] = [];
 
@@ -53,6 +55,117 @@ export function validatePassword(password: string): { isValid: boolean; errorMes
 
   if (password.trim() !== password) {
     errorMessages.push('Password must not contain leading or trailing whitespace.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateName(name: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  const nameRegex = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+  if (!nameRegex.test(name)) {
+    errorMessages.push('Name must contain only letters and at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateLastName(lastName: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  const lastNameRegex = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+  if (!lastNameRegex.test(lastName)) {
+    errorMessages.push('Last name must contain only letters and at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateDateOfBirth(
+  dateOfBirth: string,
+): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateRegex.test(dateOfBirth)) {
+    errorMessages.push('Date of birth must be in the format YYYY-MM-DD.');
+  } else {
+    const birthDate = new Date(dateOfBirth);
+    if (Number.isNaN(birthDate.getTime())) {
+      errorMessages.push('Invalid date.');
+    } else {
+      const age = calculateAge(birthDate);
+      if (age < 16) {
+        errorMessages.push('You must be at least 16 years old.');
+      }
+    }
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateStreet(street: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  if (street.trim().length === 0) {
+    errorMessages.push('Street must contain at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validateCity(city: string): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  const cityRegex = /^[a-zA-Zа-яА-ЯёЁ\s]+$/;
+  if (!cityRegex.test(city)) {
+    errorMessages.push('City must contain only letters and spaces.');
+  }
+
+  if (city.trim().length === 0) {
+    errorMessages.push('City must contain at least one character.');
+  }
+
+  return {
+    isValid: errorMessages.length === 0,
+    errorMessages,
+  };
+}
+
+export function validatePostalCode(
+  country: string,
+  postalCode: string,
+): { isValid: boolean; errorMessages: string[] } {
+  const errorMessages: string[] = [];
+
+  if (country === 'Belarus') {
+    const belarusRegex = /^\d{6}$/;
+    if (!belarusRegex.test(postalCode)) {
+      errorMessages.push('Postal code for Belarus must be a 6-digit number.');
+    }
+  } else if (country === 'Germany') {
+    const germanyRegex = /^\d{5}$/;
+    if (!germanyRegex.test(postalCode)) {
+      errorMessages.push('Postal code for Germany must be a 5-digit number.');
+    }
+  } else {
+    errorMessages.push('Invalid country selected.');
   }
 
   return {
