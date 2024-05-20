@@ -16,7 +16,7 @@ export class App {
   routes = this.createRoutes();
 
   router = new Router(this.routes);
-
+  
   header = new Header(this.router);
 
   main = createBlock(BlockType.main, ['main']);

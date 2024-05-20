@@ -35,6 +35,7 @@ export class Header {
     // this.changeAuthState(); //emulator of authorized/unauthorized user for view. Delete later
 
     const wrapper = createBlock(BlockType.div, ['header__auth-wrapper']);
+
     const registerLink = createButton(['header__link', 'text', 'text_normal'], 'Register');
     registerLink.addEventListener('click', () => this.router.navigate(Pages.registration));
 
