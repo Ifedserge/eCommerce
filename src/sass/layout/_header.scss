@@ -33,4 +33,10 @@
     display: flex;
     justify-content: center;
   }
+
+  &__link,
+  &__icon-wrapper {
+    border: none;
+    background-color: inherit;
+  }
 }

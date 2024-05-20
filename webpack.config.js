@@ -15,6 +15,7 @@ const devServer = (isDev) =>
           static: {
             directory: path.join(__dirname, './src'),
           },
+          historyApiFallback: true,
         },
       };
 
