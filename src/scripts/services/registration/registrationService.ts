@@ -1,43 +1,74 @@
-import { NotificationType } from '../../components/types/enums';
+import { CustomerDraft, CustomerAddAddressAction } from '@commercetools/platform-sdk';
 import { apiRoot } from '../api';
 import { NotificationService } from '../utilities/notification';
+import { NotificationType } from '../../components/types/enums';
+
+const countryCodes: { [key: string]: string } = {
+  Belarus: 'BY',
+  Germany: 'DE',
+};
 
 export class RegistrationService {
-  static async register(
+  static register(
     email: string,
     password: string,
-    name: string,
+    firstName: string,
     lastName: string,
     dateOfBirth: string,
     city: string,
     street: string,
+    streetNumber: string,
     postalCode: string,
     country: string,
   ): Promise<void> {
-    await apiRoot
-      .me()
-      .signup()
-      .post({
-        body: {
-          email,
-          password,
-          firstName: name,
-          lastName,
-          addresses: [{
+    const countryCode = countryCodes[country];
+    if (!countryCode) {
+      return Promise.reject(new Error(`Invalid country name: ${country}`));
+    }
+
+    const customerDraft: CustomerDraft = {
+      email,
+      password,
+      firstName,
+      lastName,
+    };
+
+    return apiRoot
+      .customers()
+      .post({ body: customerDraft })
+      .execute()
+      .then((response) => {
+        const customerId = response.body.customer.id;
+        const customerVersion = response.body.customer.version;
+
+        const addressAction: CustomerAddAddressAction = {
+          action: 'addAddress',
+          address: {
             city,
             streetName: street,
+            streetNumber,
             postalCode,
-            country,
-          }],
-          dateOfBirth,
-        },
+            country: countryCode,
+          },
+        };
+
+        const updateBody = {
+          version: customerVersion,
+          actions: [addressAction],
+        };
+
+        return apiRoot
+          .customers()
+          .withId({ ID: customerId })
+          .post({ body: updateBody })
+          .execute();
       })
-      .execute()
       .then(() => {
-        NotificationService.showNotification('Registration successful!', NotificationType.success);
+        NotificationService.showNotification('Registration and address addition successful!', NotificationType.success);
       })
       .catch((error) => {
-        NotificationService.showNotification(`Something went wrong. Please try again. Error: ${error.body.message}`, NotificationType.error);
+        const errorMessage = error?.body?.message || `An unknown error occurred: ${error.message}`;
+        NotificationService.showNotification(`Something went wrong. Please try again. Error: ${errorMessage}`, NotificationType.error);
       });
   }
 }

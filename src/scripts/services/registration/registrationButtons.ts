@@ -129,74 +129,52 @@ export function onSubmitRegistrationForm(event: Event) {
   const dateOfBirthInput = form.querySelector('input[name="dateOfBirth"]') as HTMLInputElement;
   const cityInput = form.querySelector('input[name="city"]') as HTMLInputElement;
   const streetInput = form.querySelector('input[name="street"]') as HTMLInputElement;
+  const streetNumberInput = form.querySelector('input[name="streetNumber"]') as HTMLInputElement;
   const postalCodeInput = form.querySelector('input[name="countryIndex"]') as HTMLInputElement;
   const countrySelect = form.querySelector('select[name="country"]') as HTMLSelectElement;
 
   const email = emailInput?.value || '';
   const password = passwordInput?.value || '';
-  const name = nameInput?.value || '';
+  const firstName = nameInput?.value || '';
   const lastName = lastNameInput?.value || '';
   const dateOfBirth = dateOfBirthInput?.value || '';
   const city = cityInput?.value || '';
   const street = streetInput?.value || '';
+  const streetNumber = streetNumberInput?.value || '';
   const postalCode = postalCodeInput?.value || '';
   const country = countrySelect?.value || '';
 
-  if (!email
+  if (
+    !email
     || !password
-    || !name
+    || !firstName
     || !lastName
     || !dateOfBirth
     || !city
     || !street
+    || !streetNumber
     || !postalCode
-  ) {
+    || !country) {
     NotificationService.showNotification('Please fill out all fields', NotificationType.error);
-    return;
-  }
-
-  if (!validateEmail(email).isValid) {
-    NotificationService.showNotification('Please enter a valid email', NotificationType.error);
-    return;
-  }
-  if (!validatePassword(password).isValid) {
-    NotificationService.showNotification('Please enter a valid password', NotificationType.error);
-    return;
-  }
-  if (!validateName(name).isValid) {
-    NotificationService.showNotification('Please enter a valid name', NotificationType.error);
-    return;
-  }
-  if (!validateLastName(lastName).isValid) {
-    NotificationService.showNotification('Please enter a valid last name', NotificationType.error);
-    return;
-  }
-  if (!validateDateOfBirth(dateOfBirth).isValid) {
-    NotificationService.showNotification('Please enter a valid date of birth', NotificationType.error);
-    return;
-  }
-  if (!validateCity(city).isValid) {
-    NotificationService.showNotification('Please enter a valid city', NotificationType.error);
-    return;
-  }
-  if (!validateStreet(street).isValid) {
-    NotificationService.showNotification('Please enter a valid street', NotificationType.error);
-    return;
-  }
-  if (!validatePostalCode(country, postalCode).isValid) {
-    NotificationService.showNotification('Please enter a valid postal code', NotificationType.error);
     return;
   }
 
   RegistrationService.register(
     email,
     password,
-    name,
+    firstName,
     lastName,
     dateOfBirth,
     city,
     street,
+    streetNumber,
     postalCode,
     country,
-  );
+  )
+    .then(() => {
+      NotificationService.showNotification('Registration successful!', NotificationType.success);
+    })
+    .catch((error) => {
+      NotificationService.showNotification(`Registration failed: ${error.message}`, NotificationType.error);
+    });
 }
