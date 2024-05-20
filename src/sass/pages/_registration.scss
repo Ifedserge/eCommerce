@@ -1,0 +1,27 @@
+  .registration-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .auth-fieldset {
+        border: black solid 3px;
+        padding: 1rem;
+
+        legend {
+            float: none;
+            width: auto;
+            padding: 5px;
+            margin-bottom: 0;
+        }
+
+        .invalid-feedback {
+            display: flex;
+        }
+
+        i {
+            cursor: pointer;
+        }
+    }
+  }

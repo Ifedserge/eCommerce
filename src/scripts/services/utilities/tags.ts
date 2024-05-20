@@ -71,3 +71,22 @@ export const createLink = (className: string[], address: string, name: string) =
   elem.append(name);
   return elem;
 };
+
+export const createSelect = (
+  options: string[],
+  className: string[],
+  ...attributes: TagAttributes[]
+) => {
+  const elem = document.createElement('select');
+  className.forEach((item) => elem.classList.add(item));
+  if (attributes) {
+    attributes.forEach((item) => elem.setAttribute(item.name, item.value ? item.value : ''));
+  }
+  options.forEach((option) => {
+    const optionElem = document.createElement('option');
+    optionElem.value = option;
+    optionElem.textContent = option;
+    elem.appendChild(optionElem);
+  });
+  return elem;
+};
