@@ -97,6 +97,15 @@ class Registration {
     streetContainer.appendChild(streetLabel);
     streetContainer.appendChild(streetInput);
 
+    const streetNumberContainer = createBlock(BlockType.div, ['form-group']);
+    const streetNumberLabel = createLabel(['form-label'], 'Street number');
+    const streetNumberInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter street number' });
+    streetNumberInput.setAttribute('name', 'streetNumber');
+    streetNumberInput.addEventListener('input', onInputStreetChange);
+
+    streetNumberContainer.appendChild(streetNumberLabel);
+    streetNumberContainer.appendChild(streetNumberInput);
+
     const countryIndexContainer = createBlock(BlockType.div, ['form-group']);
     const countryIndexLabel = createLabel(['form-label'], 'Country index');
     const countryIndexInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter country index' });
@@ -116,6 +125,7 @@ class Registration {
       countryContainer,
       cityContainer,
       streetContainer,
+      streetNumberContainer,
       countryIndexContainer,
     );
 
