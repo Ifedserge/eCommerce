@@ -33,3 +33,11 @@ export enum NotificationType {
   info = 'info',
   error = 'error',
 }
+
+export enum Pages {
+  index = 'index',
+  login = 'login',
+  registration = 'registration',
+  user = 'user',
+  notFound = 'not-found',
+}
