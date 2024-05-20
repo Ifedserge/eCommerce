@@ -115,6 +115,13 @@ class Registration {
     countryIndexContainer.appendChild(countryIndexLabel);
     countryIndexContainer.appendChild(countryIndexInput);
 
+    const defaultAddressContainer = createBlock(BlockType.div, ['form-group']);
+    const defaultAddressLabel = createLabel(['form-label'], 'Set as default shipping address');
+    const defaultAddressInput = createInput(InputType.checkbox, ['default_check']);
+    defaultAddressInput.setAttribute('name', 'defaultAddress');
+
+    defaultAddressContainer.append(defaultAddressLabel, defaultAddressInput);
+
     fieldset.append(
       legend,
       emailContainer,
@@ -127,6 +134,7 @@ class Registration {
       streetContainer,
       streetNumberContainer,
       countryIndexContainer,
+      defaultAddressContainer,
     );
 
     const submitButton = createButton(['btn', 'btn-primary'], 'Register');
