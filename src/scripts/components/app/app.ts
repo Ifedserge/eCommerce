@@ -3,7 +3,7 @@ import { createFooter } from '../views/partials/footer/footer';
 import { Header } from '../views/partials/header/header';
 import { MainPage } from '../views/main-page/main-page';
 import { BlockType, Pages } from '../types/enums';
-import Router from '../../router/router';
+import Router from '../../services/router/router';
 import { Login } from '../views/login/login';
 import { createNotFoundPage } from '../views/not-found/not-found';
 import { RouteInterface } from '../types/interfaces';
@@ -26,18 +26,12 @@ export class App {
   }
 
   start(): void {
-    this.header = new Header(this.router, this.checkLoginState(), this.updateHeader.bind(this));
+    this.header = new Header(this.router, this.updateHeader.bind(this));
     const header = this.header.createLayout();
     const mainPage = MainPage.createLayout();
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
-  }
-
-  checkLoginState(): boolean {
-    const storage = window.localStorage;
-    if (storage.expirationTime && storage.refreshToken && storage.token) return true;
-    return false;
   }
 
   updateHeader(): void {
