@@ -18,12 +18,13 @@ export class Login {
     fieldset.classList.add('auth-fieldset');
 
     const legend = document.createElement('legend');
+    legend.classList.add('text');
     legend.textContent = 'Login';
 
     const emailContainer = createBlock(BlockType.div, ['form-group']);
 
-    const emailLabel = createLabel(['form-label'], 'Email');
-    const emailInput = createInput(InputType.text, ['form-control']);
+    const emailLabel = createLabel(['form-label', 'text', 'text-normal'], 'Email');
+    const emailInput = createInput(InputType.text, ['form-control', 'text', 'text_small']);
     emailInput.setAttribute('placeholder', 'Enter email');
     emailInput.addEventListener('keypress', onInputEmailChange);
 
@@ -32,8 +33,8 @@ export class Login {
 
     const passwordContainer = createBlock(BlockType.div, ['form-group']);
 
-    const passwordLabel = createLabel(['form-label'], 'Password');
-    const passwordInput = createInput(InputType.password, ['form-control'], {
+    const passwordLabel = createLabel(['form-label', 'text', 'text-normal'], 'Password');
+    const passwordInput = createInput(InputType.password, ['form-control', 'text', 'text_small'], {
       name: 'placeholder',
       value: 'Enter password',
     });
@@ -57,7 +58,7 @@ export class Login {
     fieldset.appendChild(emailContainer);
     fieldset.appendChild(passwordContainer);
 
-    const submitButton = createButton(['btn', 'btn-primary'], 'Login');
+    const submitButton = createButton(['login-form__button', 'text', 'text_bold'], 'Login');
 
     loginForm.appendChild(fieldset);
     loginForm.appendChild(submitButton);
