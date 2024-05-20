@@ -161,7 +161,7 @@ class Registration {
 
     const submitButton = createButton(
       ['registration-form__button', 'text', 'text_bold'],
-      'Register'
+      'Register',
     );
     registrationForm.appendChild(fieldset);
     registrationForm.appendChild(submitButton);

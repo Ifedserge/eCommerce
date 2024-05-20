@@ -6,8 +6,6 @@ import {
   createP,
 } from '../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../types/enums';
-const urlPhoto = require('../../../../assets/main-page-photo.png');
-const urlTracery = require('../../../../assets/tracery.png');
 
 export class MainPage {
   createLayout(): HTMLElement {
@@ -30,15 +28,19 @@ export class MainPage {
     infoBlock.append(slogan, heading, linkCatalogue);
 
     const imgWrapper = createBlock(BlockType.div, ['main-page__preview-imgs']);
-    const photo = createImg(['main-page__preview-img'], urlPhoto, 'Matheus Ferrero');
+    const photo = createImg(
+      ['main-page__preview-img'],
+      '../../../../assets/main-page-photo.png',
+      'Matheus Ferrero'
+    );
     const tracery = createImg(
       ['main-page__preview-tracery-first', 'tracery'],
-      urlTracery,
+      '../../../../assets/tracery.png',
       'tracery'
     );
     const tracery2 = createImg(
       ['main-page__preview-tracery-second', 'tracery'],
-      urlTracery,
+      '../../../../assets/tracery.png',
       'tracery'
     );
 
