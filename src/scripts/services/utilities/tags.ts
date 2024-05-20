@@ -96,7 +96,7 @@ export const createImg = (
   src: string,
   alt: string,
   height?: number,
-  width?: number
+  width?: number,
 ) => {
   const elem = document.createElement('img');
   className.forEach((item) => elem.classList.add(item));
