@@ -21,7 +21,7 @@ export default class Router {
     this.urlChangedHandler();
   }
 
-  urlChangedHandler(): void {
+  private urlChangedHandler(): void {
     const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
 
     if (!route) {
@@ -31,7 +31,7 @@ export default class Router {
     route.callback();
   }
 
-  redirectToNotFoundPage() {
+  private redirectToNotFoundPage() {
     const notFoundPage = this.routes.find((item) => item.path === Pages.notFound);
     if (notFoundPage) {
       this.navigate(notFoundPage.path);

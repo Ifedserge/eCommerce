@@ -10,5 +10,4 @@ export interface RouteInterface {
 
 export interface Router {
   navigate: (url: string) => void;
-  urlChangedHandler: () => void;
 }

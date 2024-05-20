@@ -6,17 +6,14 @@ import { BlockType, Pages } from '../types/enums';
 import Router from '../../router/router';
 import { Login } from '../views/login/login';
 import { createNotFoundPage } from '../views/not-found/not-found';
-
-interface RouteInterface {
-  path: string;
-  callback: () => void;
-}
+import { RouteInterface } from '../types/interfaces';
+import Registration from '../views/registration/registration';
 
 export class App {
   routes = this.createRoutes();
 
   router = new Router(this.routes);
-  
+
   header = new Header(this.router);
 
   main = createBlock(BlockType.main, ['main']);
@@ -50,7 +47,7 @@ export class App {
       },
       {
         path: `${Pages.registration}`,
-        callback: () => this.changePage(createBlock(BlockType.div, ['registration'])),
+        callback: () => this.changePage(Registration.render()),
       },
 
       {
