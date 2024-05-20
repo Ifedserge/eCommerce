@@ -173,7 +173,7 @@ class Registration {
     );
     const loginButton = createButton(
       ['registration-form__button', 'text', 'text_bold'],
-      'To come in',
+      'To come in.',
     );
     loginButton.addEventListener('click', () => {
       window.location.pathname = '/login';
