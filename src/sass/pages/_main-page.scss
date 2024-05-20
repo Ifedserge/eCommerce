@@ -1,0 +1,132 @@
+.main-page {
+  width: 100vw;
+
+  &__preview {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: $gray-color;
+  }
+
+  &__preview-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__slogan {
+    color: #727a82;
+  }
+
+  &__heading {
+    margin: 25px 0 50px 0;
+    font-size: 8rem;
+    transform: scale(0.7, 1);
+    font-weight: 800;
+    line-height: 0.75;
+  }
+
+  &__catalogue-link {
+    padding: 27px 24px;
+    background-color: $black-color;
+    color: $white-color;
+    width: fit-content;
+    border: none;
+  }
+
+  &__preview-imgs {
+    padding: 50px 0;
+    position: relative;
+  }
+
+  &__preview-img {
+    height: 517px;
+    z-index: 2;
+    position: relative;
+  }
+
+  &__preview-tracery-first {
+    position: absolute;
+    top: 0;
+    left: -50px;
+  }
+
+  &__preview-tracery-second {
+    position: absolute;
+    bottom: 0;
+    right: -50px;
+  }
+}
+
+.tracery {
+  width: 232px;
+  height: 176px;
+}
+
+@media (min-width: 768px) {
+  .main-page {
+    &__heading {
+      transform-origin: 0 0;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .main-page {
+    &__preview-img {
+      height: 350px;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .main-page {
+    &__preview {
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    &__heading {
+      font-size: 6.125rem;
+      margin: 0 0 40px 0;
+    }
+
+    &__preview-info {
+      align-items: center;
+      order: 1;
+    }
+
+    &__preview-imgs {
+      order: 0;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 424.98px) {
+  .main-page {
+    &__heading {
+      font-size: 5.375rem;
+    }
+
+    &__preview-img {
+      height: 249px;
+    }
+
+    &__preview-tracery-first {
+      top: 30px;
+      left: -20px;
+    }
+
+    &__preview-tracery-second {
+      position: absolute;
+      bottom: 30px;
+      right: -20px;
+    }
+  }
+
+  .tracery {
+    height: 80px;
+    width: 109px;
+  }
+}

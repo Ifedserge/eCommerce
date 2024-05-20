@@ -6,6 +6,7 @@ export function displayErrorMessages(messages: string[], element: HTMLElement): 
   messages.forEach((message) => {
     const errorMessage = document.createElement('span');
     errorMessage.classList.add('invalid-feedback');
+    errorMessage.classList.add('text');
     errorMessage.innerText = message;
     element.appendChild(errorMessage);
   });

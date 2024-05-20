@@ -1,5 +1,10 @@
 import {
-  createBlock, createButton, createForm, createInput, createLabel, createSelect,
+  createBlock,
+  createButton,
+  createForm,
+  createInput,
+  createLabel,
+  createSelect,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
 
@@ -24,11 +29,15 @@ class Registration {
     fieldset.classList.add('auth-fieldset');
 
     const legend = document.createElement('legend');
+    legend.classList.add('text');
     legend.textContent = 'Registration';
 
     const emailContainer = createBlock(BlockType.div, ['form-group']);
-    const emailLabel = createLabel(['form-label'], 'Email');
-    const emailInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter email' });
+    const emailLabel = createLabel(['form-label', 'text'], 'Email');
+    const emailInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter email',
+    });
     emailInput.setAttribute('name', 'email');
     emailInput.addEventListener('input', onInputEmailChange);
 
@@ -36,8 +45,11 @@ class Registration {
     emailContainer.appendChild(emailInput);
 
     const nameContainer = createBlock(BlockType.div, ['form-group']);
-    const nameLabel = createLabel(['form-label'], 'Name');
-    const nameInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter your name' });
+    const nameLabel = createLabel(['form-label', 'text'], 'Name');
+    const nameInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter your name',
+    });
     nameInput.setAttribute('name', 'name');
     nameInput.addEventListener('input', onInputNameChange);
 
@@ -45,8 +57,11 @@ class Registration {
     nameContainer.appendChild(nameInput);
 
     const lastNameContainer = createBlock(BlockType.div, ['form-group']);
-    const lastNameLabel = createLabel(['form-label'], 'Last name');
-    const lastNameInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter your last name' });
+    const lastNameLabel = createLabel(['form-label', 'text'], 'Last name');
+    const lastNameInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter your last name',
+    });
     lastNameInput.setAttribute('name', 'lastname');
     lastNameInput.addEventListener('input', onInputLastNameChange);
 
@@ -54,8 +69,11 @@ class Registration {
     lastNameContainer.appendChild(lastNameInput);
 
     const passwordContainer = createBlock(BlockType.div, ['form-group']);
-    const passwordLabel = createLabel(['form-label'], 'Password');
-    const passwordInput = createInput(InputType.password, ['form-control'], { name: 'placeholder', value: 'Enter password' });
+    const passwordLabel = createLabel(['form-label', 'text'], 'Password');
+    const passwordInput = createInput(InputType.password, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter password',
+    });
     passwordInput.setAttribute('name', 'password');
     passwordInput.addEventListener('input', onInputPasswordChange);
 
@@ -63,8 +81,11 @@ class Registration {
     passwordContainer.appendChild(passwordInput);
 
     const dateOfBirthContainer = createBlock(BlockType.div, ['form-group']);
-    const dateOfBirthLabel = createLabel(['form-label'], 'Date of birth');
-    const dateOfBirthInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter date of birth' });
+    const dateOfBirthLabel = createLabel(['form-label', 'text'], 'Date of birth');
+    const dateOfBirthInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter date of birth',
+    });
     dateOfBirthInput.setAttribute('name', 'dateOfBirth');
     dateOfBirthInput.addEventListener('input', onInputDateOfBirthChange);
 
@@ -72,16 +93,19 @@ class Registration {
     dateOfBirthContainer.appendChild(dateOfBirthInput);
 
     const countryContainer = createBlock(BlockType.div, ['form-group']);
-    const countryLabel = createLabel(['form-label'], 'Country');
-    const countrySelect = createSelect(['Belarus', 'Germany'], ['form-control']);
+    const countryLabel = createLabel(['form-label', 'text'], 'Country');
+    const countrySelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text']);
     countrySelect.setAttribute('name', 'country');
 
     countryContainer.appendChild(countryLabel);
     countryContainer.appendChild(countrySelect);
 
     const cityContainer = createBlock(BlockType.div, ['form-group']);
-    const cityLabel = createLabel(['form-label'], 'City');
-    const cityInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter city' });
+    const cityLabel = createLabel(['form-label', 'text'], 'City');
+    const cityInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter city',
+    });
     cityInput.setAttribute('name', 'city');
     cityInput.addEventListener('input', onInputCityChange);
 
@@ -89,8 +113,11 @@ class Registration {
     cityContainer.appendChild(cityInput);
 
     const streetContainer = createBlock(BlockType.div, ['form-group']);
-    const streetLabel = createLabel(['form-label'], 'Street');
-    const streetInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter street' });
+    const streetLabel = createLabel(['form-label', 'text'], 'Street');
+    const streetInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter street',
+    });
     streetInput.setAttribute('name', 'street');
     streetInput.addEventListener('input', onInputStreetChange);
 
@@ -107,8 +134,11 @@ class Registration {
     streetNumberContainer.appendChild(streetNumberInput);
 
     const countryIndexContainer = createBlock(BlockType.div, ['form-group']);
-    const countryIndexLabel = createLabel(['form-label'], 'Country index');
-    const countryIndexInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter country index' });
+    const countryIndexLabel = createLabel(['form-label', 'text'], 'Country index');
+    const countryIndexInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter country index',
+    });
     countryIndexInput.setAttribute('name', 'countryIndex');
     countryIndexInput.addEventListener('input', onInputPostalCodeChange);
 
@@ -129,7 +159,10 @@ class Registration {
       countryIndexContainer,
     );
 
-    const submitButton = createButton(['btn', 'btn-primary'], 'Register');
+    const submitButton = createButton(
+      ['registration-form__button', 'text', 'text_bold'],
+      'Register'
+    );
     registrationForm.appendChild(fieldset);
     registrationForm.appendChild(submitButton);
 

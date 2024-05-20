@@ -16,9 +16,11 @@ export class Header {
   }
 
   createLayout(): HTMLElement {
-    const wrapper = createBlock(BlockType.header, ['header']);
+    const block = createBlock(BlockType.header, ['header']);
+    const wrapper = createBlock(BlockType.div, ['header__wrapper']);
     wrapper.append(this.createLogo(), this.createManageBlock());
-    return wrapper;
+    block.append(wrapper);
+    return block;
   }
 
   createLogo(): HTMLElement {
