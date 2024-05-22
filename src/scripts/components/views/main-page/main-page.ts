@@ -23,7 +23,7 @@ export class MainPage {
     const heading = createHeading(['main-page__heading', 'text'], 'DENIM', HeadingType.h1);
     const linkCatalogue = createButton(
       ['main-page__catalogue-link', 'text', 'text_bold'],
-      'Check new collection',
+      'Check new collection'
     );
     infoBlock.append(slogan, heading, linkCatalogue);
 
@@ -31,17 +31,17 @@ export class MainPage {
     const photo = createImg(
       ['main-page__preview-img'],
       '../../../../assets/main-page-photo.png',
-      'Matheus Ferrero',
+      'Matheus Ferrero'
     );
     const tracery = createImg(
       ['main-page__preview-tracery-first', 'tracery'],
       '../../../../assets/tracery.png',
-      'tracery',
+      'tracery'
     );
     const tracery2 = createImg(
       ['main-page__preview-tracery-second', 'tracery'],
       '../../../../assets/tracery.png',
-      'tracery',
+      'tracery'
     );
 
     imgWrapper.append(tracery, photo, tracery2);

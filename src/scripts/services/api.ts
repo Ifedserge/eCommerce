@@ -49,5 +49,6 @@ const ctpClient: Client = new ClientBuilder()
   .withLoggerMiddleware()
   .build();
 
-export const apiRoot: ByProjectKeyRequestBuilder = createApiBuilderFromCtpClient(ctpClient)
-  .withProjectKey({ projectKey: `${process.env.CTP_PROJECT_KEY}` });
+export const apiRoot: ByProjectKeyRequestBuilder = createApiBuilderFromCtpClient(
+  ctpClient
+).withProjectKey({ projectKey: `${process.env.CTP_PROJECT_KEY}` });

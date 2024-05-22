@@ -1,3 +1,7 @@
 /dist
 node_modules
 .eslintrc
+*.config.ts
+*.config.js
+*.json
+*.md

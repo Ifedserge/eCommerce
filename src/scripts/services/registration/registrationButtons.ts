@@ -107,7 +107,8 @@ export function onInputStreetChange(event: Event) {
 export function onInputPostalCodeChange(event: Event) {
   const input: HTMLInputElement = event.target as HTMLInputElement;
   const postalCode: string = input.value;
-  const country: string = (document.querySelector('select[name="country"]') as HTMLSelectElement).value;
+  const country: string = (document.querySelector('select[name="country"]') as HTMLSelectElement)
+    .value;
 
   const validationResult = validatePostalCode(country, postalCode);
   if (!validationResult.isValid) {
@@ -145,16 +146,17 @@ export function onSubmitRegistrationForm(event: Event) {
   const country = countrySelect?.value || '';
 
   if (
-    !email
-    || !password
-    || !firstName
-    || !lastName
-    || !dateOfBirth
-    || !city
-    || !street
-    || !streetNumber
-    || !postalCode
-    || !country) {
+    !email ||
+    !password ||
+    !firstName ||
+    !lastName ||
+    !dateOfBirth ||
+    !city ||
+    !street ||
+    !streetNumber ||
+    !postalCode ||
+    !country
+  ) {
     NotificationService.showNotification('Please fill out all fields', NotificationType.error);
     return;
   }
@@ -169,12 +171,15 @@ export function onSubmitRegistrationForm(event: Event) {
     street,
     streetNumber,
     postalCode,
-    country,
+    country
   )
     .then(() => {
       NotificationService.showNotification('Registration successful!', NotificationType.success);
     })
     .catch((error) => {
-      NotificationService.showNotification(`Registration failed: ${error.message}`, NotificationType.error);
+      NotificationService.showNotification(
+        `Registration failed: ${error.message}`,
+        NotificationType.error
+      );
     });
 }

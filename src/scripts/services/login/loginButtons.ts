@@ -37,7 +37,10 @@ export function onSubmitLoginForm(event: Event) {
   const password: string = form.querySelectorAll('input')[1].value;
 
   if (!email || !password) {
-    NotificationService.showNotification('Please enter your email and password', NotificationType.error);
+    NotificationService.showNotification(
+      'Please enter your email and password',
+      NotificationType.error
+    );
     return;
   }
   if (!validateEmail(email).isValid) {

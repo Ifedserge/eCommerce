@@ -52,7 +52,9 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md}": [
-      "npm run lint:fix"
+      "npm run format-code",
+      "npm run lint:fix",
+      "git add ."
     ]
   },
   "dependencies": {

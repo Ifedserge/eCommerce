@@ -19,7 +19,7 @@ export class RegistrationService {
     street: string,
     streetNumber: string,
     postalCode: string,
-    country: string,
+    country: string
   ): Promise<void> {
     const countryCode = countryCodes[country];
     if (!countryCode) {
@@ -57,19 +57,21 @@ export class RegistrationService {
           actions: [addressAction],
         };
 
-        return apiRoot
-          .customers()
-          .withId({ ID: customerId })
-          .post({ body: updateBody })
-          .execute();
+        return apiRoot.customers().withId({ ID: customerId }).post({ body: updateBody }).execute();
       })
       .then(() => {
-        NotificationService.showNotification('Registration and address addition successful!', NotificationType.success);
+        NotificationService.showNotification(
+          'Registration and address addition successful!',
+          NotificationType.success
+        );
         window.location.pathname = '/index';
       })
       .catch((error) => {
         const errorMessage = error?.body?.message || `An unknown error occurred: ${error.message}`;
-        NotificationService.showNotification(`Something went wrong. Please try again. Error: ${errorMessage}`, NotificationType.error);
+        NotificationService.showNotification(
+          `Something went wrong. Please try again. Error: ${errorMessage}`,
+          NotificationType.error
+        );
       });
   }
 }

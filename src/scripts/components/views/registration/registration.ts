@@ -126,7 +126,10 @@ class Registration {
 
     const streetNumberContainer = createBlock(BlockType.div, ['form-group']);
     const streetNumberLabel = createLabel(['form-label'], 'Street number');
-    const streetNumberInput = createInput(InputType.text, ['form-control'], { name: 'placeholder', value: 'Enter street number' });
+    const streetNumberInput = createInput(InputType.text, ['form-control'], {
+      name: 'placeholder',
+      value: 'Enter street number',
+    });
     streetNumberInput.setAttribute('name', 'streetNumber');
     streetNumberInput.addEventListener('input', onInputStreetChange);
 
@@ -164,12 +167,12 @@ class Registration {
       streetContainer,
       streetNumberContainer,
       countryIndexContainer,
-      defaultAddressContainer,
+      defaultAddressContainer
     );
 
     const submitButton = createButton(
       ['registration-form__button', 'text', 'text_bold'],
-      'Register',
+      'Register'
     );
     registrationForm.appendChild(fieldset);
     registrationForm.append(submitButton);

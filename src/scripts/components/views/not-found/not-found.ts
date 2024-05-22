@@ -8,7 +8,7 @@ export function createNotFoundPage(router: Router): HTMLElement {
   const message = createHeading(
     ['not-found__message', 'text'],
     'Sorry, but page not found',
-    HeadingType.h2,
+    HeadingType.h2
   );
   const linkToMain = createButton(['not-found__link', 'text', 'text_small'], 'Go to the main page');
   linkToMain.addEventListener('click', () => router.navigate(Pages.index));
