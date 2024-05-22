@@ -1,39 +1,48 @@
-const functions = require('../src/scripts/services/utilities/validation');
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+  validateLastName,
+  validateDateOfBirth,
+  validateStreet,
+  validateCity,
+  validatePostalCode,
+} from '../src/scripts/services/utilities/validation';
 
 test('validate Email', () => {
-  expect(functions.validateEmail('test@mail.ru')).toStrictEqual({
+  expect(validateEmail('test@mail.ru')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateEmail('testmail.ru')).toStrictEqual({
+  expect(validateEmail('testmail.ru')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Email address must be properly formatted (e.g., user@example.com).',
       "Email address must contain an '@' symbol separating local part and domain name.",
     ],
   });
-  expect(functions.validateEmail('   test@mail.ru')).toStrictEqual({
+  expect(validateEmail('   test@mail.ru')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Email address must be properly formatted (e.g., user@example.com).',
       'Email address must not contain leading or trailing whitespace.',
     ],
   });
-  expect(functions.validateEmail('test@mail.ru   ')).toStrictEqual({
+  expect(validateEmail('test@mail.ru   ')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Email address must be properly formatted (e.g., user@example.com).',
       'Email address must not contain leading or trailing whitespace.',
     ],
   });
-  expect(functions.validateEmail('test@')).toStrictEqual({
+  expect(validateEmail('test@')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Email address must be properly formatted (e.g., user@example.com).',
       'Email address must contain a domain name (e.g., example.com).',
     ],
   });
-  expect(functions.validateEmail('test@mail.')).toStrictEqual({
+  expect(validateEmail('test@mail.')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Email address must be properly formatted (e.g., user@example.com).',
@@ -43,22 +52,22 @@ test('validate Email', () => {
 });
 
 test('validate password', () => {
-  expect(functions.validatePassword('RSSchool1')).toStrictEqual({
+  expect(validatePassword('RSSchool1')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validatePassword('Rss1')).toStrictEqual({
+  expect(validatePassword('Rss1')).toStrictEqual({
     isValid: false,
     errorMessages: ['Password must be at least 8 characters long.'],
   });
-  expect(functions.validatePassword('Rss')).toStrictEqual({
+  expect(validatePassword('Rss')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must be at least 8 characters long.',
       'Password must contain at least one digit (0-9).',
     ],
   });
-  expect(functions.validatePassword('rss')).toStrictEqual({
+  expect(validatePassword('rss')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must be at least 8 characters long.',
@@ -66,7 +75,7 @@ test('validate password', () => {
       'Password must contain at least one digit (0-9).',
     ],
   });
-  expect(functions.validatePassword('RSS')).toStrictEqual({
+  expect(validatePassword('RSS')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must be at least 8 characters long.',
@@ -74,25 +83,25 @@ test('validate password', () => {
       'Password must contain at least one digit (0-9).',
     ],
   });
-  expect(functions.validatePassword('rsschool1')).toStrictEqual({
+  expect(validatePassword('rsschool1')).toStrictEqual({
     isValid: false,
     errorMessages: ['Password must contain at least one uppercase letter (A-Z).'],
   });
-  expect(functions.validatePassword('rsschool')).toStrictEqual({
+  expect(validatePassword('rsschool')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must contain at least one uppercase letter (A-Z).',
       'Password must contain at least one digit (0-9).',
     ],
   });
-  expect(functions.validatePassword('RSSCHOOL')).toStrictEqual({
+  expect(validatePassword('RSSCHOOL')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must contain at least one lowercase letter (a-z).',
       'Password must contain at least one digit (0-9).',
     ],
   });
-  expect(functions.validatePassword('   RSSCHOOL')).toStrictEqual({
+  expect(validatePassword('   RSSCHOOL')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must contain at least one lowercase letter (a-z).',
@@ -100,7 +109,7 @@ test('validate password', () => {
       'Password must not contain leading or trailing whitespace.',
     ],
   });
-  expect(functions.validatePassword('RSSCHOOL  ')).toStrictEqual({
+  expect(validatePassword('RSSCHOOL  ')).toStrictEqual({
     isValid: false,
     errorMessages: [
       'Password must contain at least one lowercase letter (a-z).',
@@ -111,114 +120,121 @@ test('validate password', () => {
 });
 
 test('validate name', () => {
-  expect(functions.validateName('RSSchool')).toStrictEqual({
+  expect(validateName('RSSchool')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateName('РСскул')).toStrictEqual({
+  expect(validateName('РСскул')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateName('111')).toStrictEqual({
+  expect(validateName('111')).toStrictEqual({
     isValid: false,
     errorMessages: ['Name must contain only letters and at least one character.'],
   });
-  expect(functions.validateName('sdf111')).toStrictEqual({
+  expect(validateName('sdf111')).toStrictEqual({
     isValid: false,
     errorMessages: ['Name must contain only letters and at least one character.'],
   });
-  expect(functions.validateName('')).toStrictEqual({
+  expect(validateName('')).toStrictEqual({
     isValid: false,
     errorMessages: ['Name must contain only letters and at least one character.'],
   });
 });
 
 test('validate last name', () => {
-  expect(functions.validateLastName('RSSchool')).toStrictEqual({
+  expect(validateLastName('RSSchool')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateLastName('РСскул')).toStrictEqual({
+  expect(validateLastName('РСскул')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateLastName('111')).toStrictEqual({
+  expect(validateLastName('111')).toStrictEqual({
     isValid: false,
     errorMessages: ['Last name must contain only letters and at least one character.'],
   });
-  expect(functions.validateLastName('sdf111')).toStrictEqual({
+  expect(validateLastName('sdf111')).toStrictEqual({
     isValid: false,
     errorMessages: ['Last name must contain only letters and at least one character.'],
   });
-  expect(functions.validateLastName('')).toStrictEqual({
+  expect(validateLastName('')).toStrictEqual({
     isValid: false,
     errorMessages: ['Last name must contain only letters and at least one character.'],
   });
 });
 
 test('validate date of birth', () => {
-  expect(functions.validateDateOfBirth('1992-02-03')).toStrictEqual({
+  expect(validateDateOfBirth('1992-02-03')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateDateOfBirth('03-02-1992')).toStrictEqual({
+  expect(validateDateOfBirth('03-02-1992')).toStrictEqual({
     isValid: false,
     errorMessages: ['Date of birth must be in the format YYYY-MM-DD.'],
   });
-  expect(functions.validateDateOfBirth('sdf111')).toStrictEqual({
+  expect(validateDateOfBirth('sdf111')).toStrictEqual({
     isValid: false,
     errorMessages: ['Date of birth must be in the format YYYY-MM-DD.'],
   });
-  expect(functions.validateDateOfBirth('2012-02-03')).toStrictEqual({
+  expect(validateDateOfBirth('2012-02-03')).toStrictEqual({
     isValid: false,
     errorMessages: ['You must be at least 16 years old.'],
   });
 });
 
 test('validate street', () => {
-  expect(functions.validateStreet('RSSchool')).toStrictEqual({
+  expect(validateStreet('RSSchool')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateStreet('')).toStrictEqual({
+  expect(validateStreet('')).toStrictEqual({
     isValid: false,
     errorMessages: ['Street must contain at least one character.'],
   });
 });
 
 test('validate city', () => {
-  expect(functions.validateCity('Minsk')).toStrictEqual({
+  expect(validateCity('Minsk')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateCity('Минск')).toStrictEqual({
+  expect(validateCity('Минск')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validateCity('Boobs228')).toStrictEqual({
+  expect(validateCity('Boobs228')).toStrictEqual({
     isValid: false,
     errorMessages: ['City must contain only letters and spaces.'],
+  });
+  expect(validateCity('')).toStrictEqual({
+    isValid: false,
+    errorMessages: [
+      'City must contain only letters and spaces.',
+      'City must contain at least one character.',
+    ],
   });
 });
 
 test('validate post code', () => {
-  expect(functions.validatePostalCode('Belarus', 123456)).toStrictEqual({
+  expect(validatePostalCode('Belarus', '123456')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validatePostalCode('Germany', 12345)).toStrictEqual({
+  expect(validatePostalCode('Germany', '12345')).toStrictEqual({
     isValid: true,
     errorMessages: [],
   });
-  expect(functions.validatePostalCode('Belarus', 12345)).toStrictEqual({
+  expect(validatePostalCode('Belarus', '12345')).toStrictEqual({
     isValid: false,
     errorMessages: ['Postal code for Belarus must be a 6-digit number.'],
   });
-  expect(functions.validatePostalCode('Germany', 123456)).toStrictEqual({
+  expect(validatePostalCode('Germany', '123456')).toStrictEqual({
     isValid: false,
     errorMessages: ['Postal code for Germany must be a 5-digit number.'],
   });
-  expect(functions.validatePostalCode('Boobs', 123456)).toStrictEqual({
+  expect(validatePostalCode('Boobs', '123456')).toStrictEqual({
     isValid: false,
     errorMessages: ['Invalid country selected.'],
   });
