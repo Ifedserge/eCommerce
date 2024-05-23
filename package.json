@@ -51,10 +51,9 @@
     "webpack-dev-server": "^5.0.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md}": [
-      "npm run format-code",
-      "npm run lint:fix",
-      "git add ."
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "dependencies": {
