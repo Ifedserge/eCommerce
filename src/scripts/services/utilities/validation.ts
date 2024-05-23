@@ -13,7 +13,9 @@ export function validateEmail(email: string): { isValid: boolean; errorMessages:
   }
 
   if (!email.includes('@')) {
-    errorMessages.push("Email address must contain an '@' symbol separating local part and domain name.");
+    errorMessages.push(
+      "Email address must contain an '@' symbol separating local part and domain name."
+    );
   }
 
   const atIndex = email.lastIndexOf('@');
@@ -91,9 +93,10 @@ export function validateLastName(lastName: string): { isValid: boolean; errorMes
   };
 }
 
-export function validateDateOfBirth(
-  dateOfBirth: string,
-): { isValid: boolean; errorMessages: string[] } {
+export function validateDateOfBirth(dateOfBirth: string): {
+  isValid: boolean;
+  errorMessages: string[];
+} {
   const errorMessages: string[] = [];
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -150,7 +153,7 @@ export function validateCity(city: string): { isValid: boolean; errorMessages: s
 
 export function validatePostalCode(
   country: string,
-  postalCode: string,
+  postalCode: string
 ): { isValid: boolean; errorMessages: string[] } {
   const errorMessages: string[] = [];
 

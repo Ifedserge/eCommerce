@@ -1,4 +1,8 @@
-import { onInputEmailChange, onInputPasswordChange, onSubmitLoginForm } from '../../../services/login/loginButtons';
+import {
+  onInputEmailChange,
+  onInputPasswordChange,
+  onSubmitLoginForm,
+} from '../../../services/login/loginButtons';
 import {
   createBlock,
   createButton,

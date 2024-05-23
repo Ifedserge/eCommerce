@@ -26,8 +26,8 @@ export default class Router {
     const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
 
     if (
-      !route
-      || (checkLoginState() && (route.path === Pages.login || route.path === Pages.registration))
+      !route ||
+      (checkLoginState() && (route.path === Pages.login || route.path === Pages.registration))
     ) {
       this.redirectToNotFoundPage();
       return;

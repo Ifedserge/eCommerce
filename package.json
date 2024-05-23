@@ -51,9 +51,11 @@
     "webpack-dev-server": "^5.0.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md}": [
-      "npm run lint:fix"
-    ]
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.scss": "prettier --write"
   },
   "dependencies": {
     "@commercetools/history-sdk": "^4.3.0",

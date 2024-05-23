@@ -19,7 +19,10 @@ export class LoginService {
         window.location.pathname = '/index';
       })
       .catch((error) => {
-        NotificationService.showNotification(`Something went wrong. Please try again. Error: ${error.body.message}`, NotificationType.error);
+        NotificationService.showNotification(
+          `Something went wrong. Please try again. Error: ${error.body.message}`,
+          NotificationType.error
+        );
         localStorage.clear();
       });
   }
