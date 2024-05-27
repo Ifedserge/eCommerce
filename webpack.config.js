@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 
 const devServer = (isDev) =>
   !isDev
@@ -14,6 +15,7 @@ const devServer = (isDev) =>
           static: {
             directory: path.join(__dirname, './src'),
           },
+          historyApiFallback: true,
         },
       };
 
@@ -63,6 +65,7 @@ module.exports = ({ development }) => ({
     new HtmlWebpackPlugin({
       filename: 'index.html',
     }),
+    new DotenvWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         {

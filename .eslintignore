@@ -9,5 +9,7 @@ dist/
 out/
 **/*.cjs
 !**/*.ts
-jest.config.ts
-webpack.config.js
+*.config.ts
+*.config.js
+*.json
+*.md

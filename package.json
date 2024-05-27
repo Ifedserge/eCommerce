@@ -4,7 +4,7 @@
   "description": "final task of RSSchool 2023Q4 stage 2",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --collectCoverageFrom='src/scripts/**/*.ts'",
     "start": "webpack serve --env development",
     "build": "npm run test && webpack",
     "build-without-tests": "webpack",
@@ -51,8 +51,18 @@
     "webpack-dev-server": "^5.0.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md}": [
-      "npm run lint:fix"
-    ]
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.scss": "prettier --write"
+  },
+  "dependencies": {
+    "@commercetools/history-sdk": "^4.3.0",
+    "@commercetools/importapi-sdk": "^5.4.0",
+    "@commercetools/platform-sdk": "^7.8.0",
+    "@commercetools/sdk-client-v2": "^2.5.0",
+    "bootstrap": "^5.3.3",
+    "dotenv-webpack": "^8.1.0"
   }
 }

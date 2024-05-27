@@ -1,1 +1,12 @@
 @import 'base/reset';
+@import 'base/base';
+
+@import 'pages/login';
+@import 'components/notifications';
+@import 'abstracts/variables';
+@import 'abstracts/font';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'pages/registration';
+@import 'pages/not-found';
+@import 'pages/main-page';
