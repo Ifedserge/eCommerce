@@ -92,6 +92,9 @@ class Registration {
     dateOfBirthContainer.appendChild(dateOfBirthLabel);
     dateOfBirthContainer.appendChild(dateOfBirthInput);
 
+    const shippingAddres = document.createElement('p');
+    shippingAddres.innerText = 'Shipping address';
+
     const countryContainer = createBlock(BlockType.div, ['form-group']);
     const countryLabel = createLabel(['form-label', 'text'], 'Country');
     const countrySelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text']);
@@ -155,6 +158,9 @@ class Registration {
 
     defaultAddressContainer.append(defaultAddressLabel, defaultAddressInput);
 
+    const billingAddress = document.createElement('p');
+    billingAddress.innerText = 'Billing address';
+
     fieldset.append(
       legend,
       emailContainer,
@@ -162,12 +168,14 @@ class Registration {
       lastNameContainer,
       passwordContainer,
       dateOfBirthContainer,
+      shippingAddres,
       countryContainer,
       cityContainer,
       streetContainer,
       streetNumberContainer,
       countryIndexContainer,
-      defaultAddressContainer
+      defaultAddressContainer,
+      billingAddress
     );
 
     const submitButton = createButton(
