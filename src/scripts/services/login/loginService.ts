@@ -1,10 +1,10 @@
 import { NotificationType } from '../../components/types/enums';
-import { apiRoot } from '../api';
+import { apiAnonRoot } from '../api';
 import { NotificationService } from '../utilities/notification';
 
 export class LoginService {
   static async login(email: string, password: string): Promise<void> {
-    await apiRoot
+    await apiAnonRoot
       .me()
       .login()
       .post({

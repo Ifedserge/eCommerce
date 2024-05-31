@@ -1,5 +1,5 @@
 import { CustomerDraft, CustomerAddAddressAction } from '@commercetools/platform-sdk';
-import { apiRoot } from '../api';
+import { apiAnonRoot } from '../api';
 import { NotificationService } from '../utilities/notification';
 import { NotificationType } from '../../components/types/enums';
 
@@ -33,7 +33,7 @@ export class RegistrationService {
       lastName,
     };
 
-    return apiRoot
+    return apiAnonRoot
       .customers()
       .post({ body: customerDraft })
       .execute()
@@ -57,7 +57,11 @@ export class RegistrationService {
           actions: [addressAction],
         };
 
-        return apiRoot.customers().withId({ ID: customerId }).post({ body: updateBody }).execute();
+        return apiAnonRoot
+          .customers()
+          .withId({ ID: customerId })
+          .post({ body: updateBody })
+          .execute();
       })
       .then(() => {
         NotificationService.showNotification(
