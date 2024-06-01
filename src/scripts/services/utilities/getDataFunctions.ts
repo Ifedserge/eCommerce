@@ -1,6 +1,7 @@
+import { NotificationType } from '../../components/types/enums';
 import { IProductData } from '../../components/types/interfaces';
 import { apiAnonRoot } from '../api';
-import { createP } from './tags';
+import { NotificationService } from './notification';
 
 export function getCatalogueDataMan(
   callBack: (data: IProductData) => HTMLElement,
@@ -23,10 +24,9 @@ export function getCatalogueDataMan(
       });
     })
     .catch(() => {
-      const message = createP(
-        ['error', 'text'],
-        'Something happened. Please go to the main page...'
+      NotificationService.showNotification(
+        'Something happened. Please, go to the main page...',
+        NotificationType.error
       );
-      block.append(message);
     });
 }
