@@ -8,11 +8,6 @@ import { Login } from '../views/login/login';
 import { createNotFoundPage } from '../views/not-found/not-found';
 import { RouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
-import {
-  getCatalogueDataMan,
-  getCatalogueDataWoman,
-  getProducts,
-} from '../../services/getDataService';
 import { Catalogue } from '../views/catalogue/catalogue';
 
 export class App {

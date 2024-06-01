@@ -8,24 +8,21 @@ import {
   createP,
 } from '../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../types/enums';
-import { createCard } from '../partials/card';
+import { createCard } from '../partials/card/card';
 
 export class Catalogue {
   private router;
-  private block = createBlock(BlockType.section, ['catalogue']);
+  private cardsBlock = createBlock(BlockType.div, ['catalogue__cards']);
 
   constructor(router: Router) {
     this.router = router;
   }
 
   createLayout(paths: string[]): HTMLElement {
-    this.block.append(
-      this.createNavBlock(paths),
-      this.createFilter(228, ['']),
-      this.createCardsBlock()
-    );
-    getCatalogueDataMan(createCard, this.block);
-    return this.block;
+    const block = createBlock(BlockType.section, ['catalogue']);
+    block.append(this.createNavBlock(paths), this.createFilter(228, ['']), this.cardsBlock);
+    getCatalogueDataMan(createCard, this.cardsBlock);
+    return block;
   }
 
   createNavBlock(path: string[]): HTMLElement {

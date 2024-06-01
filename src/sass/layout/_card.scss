@@ -1,0 +1,16 @@
+.card {
+  flex-basis: 20%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  border: none !important;
+
+  &__name {
+    margin: 25px 0 0 0;
+    font-weight: 500;
+  }
+
+  &__price {
+    margin: 15px 0 0 0;
+    font-weight: 700;
+  }
+}

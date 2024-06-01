@@ -1,8 +1,15 @@
 .catalogue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+
   &__navigation {
     display: flex;
     justify-content: center;
     background-color: $gray-color;
+
+    width: 100vw;
   }
 
   &__nav-wrapper {
@@ -41,6 +48,14 @@
 
   &__heading {
     font-weight: 700;
+  }
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 10px;
   }
 }
 
