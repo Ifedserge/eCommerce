@@ -6,7 +6,7 @@ import { BlockType, Pages } from '../types/enums';
 import Router from '../../services/router/router';
 import { Login } from '../views/login/login';
 import { createNotFoundPage } from '../views/not-found/not-found';
-import { RouteInterface } from '../types/interfaces';
+import { IRouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
 import { Catalogue } from '../views/catalogue/catalogue';
 
@@ -49,7 +49,7 @@ export class App {
     this.main.append(layout);
   }
 
-  createRoutes(): RouteInterface[] {
+  createRoutes(): IRouteInterface[] {
     return [
       {
         path: '',

@@ -1,6 +1,6 @@
 import { createBlock, createButton, createHeading } from '../../../services/utilities/tags';
 import { BlockType, HeadingType, Pages } from '../../types/enums';
-import { Router } from '../../types/interfaces';
+import Router from '../../../services/router/router';
 
 export function createNotFoundPage(router: Router): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['not-found']);

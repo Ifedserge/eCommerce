@@ -1,4 +1,4 @@
-import { getCatalogueDataMan } from '../../../services/getDataService';
+import { getCatalogueDataMan } from '../../../services/utilities/getDataFunctions';
 import Router from '../../../services/router/router';
 import {
   createBlock,
@@ -12,6 +12,7 @@ import { createCard } from '../partials/card/card';
 
 export class Catalogue {
   private router;
+
   private cardsBlock = createBlock(BlockType.div, ['catalogue__cards']);
 
   constructor(router: Router) {
@@ -20,7 +21,7 @@ export class Catalogue {
 
   createLayout(paths: string[]): HTMLElement {
     const block = createBlock(BlockType.section, ['catalogue']);
-    block.append(this.createNavBlock(paths), this.createFilter(228, ['']), this.cardsBlock);
+    block.append(this.createNavBlock(paths), this.createFilter(), this.cardsBlock);
     getCatalogueDataMan(createCard, this.cardsBlock);
     return block;
   }
@@ -74,7 +75,7 @@ export class Catalogue {
     return block;
   }
 
-  createFilter(range: number, colors: string[]): HTMLElement {
+  createFilter(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['catalogue__filter']);
 
     return wrapper;
