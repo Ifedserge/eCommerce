@@ -1,0 +1,50 @@
+.catalogue {
+  &__navigation {
+    display: flex;
+    justify-content: center;
+    background-color: $gray-color;
+  }
+
+  &__nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+
+  &__nav-img-wrapper {
+    position: relative;
+  }
+
+  &__nav-img {
+    height: 260px;
+    z-index: 2;
+    position: relative;
+  }
+
+  &__nav-tracery-first {
+    position: absolute;
+    bottom: 0;
+    left: -30px;
+  }
+
+  &__nav-tracery-second {
+    position: absolute;
+    top: 0;
+    right: -30px;
+  }
+
+  &__path-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__heading {
+    font-weight: 700;
+  }
+}
+
+.tracery {
+  width: 232px;
+  height: 176px;
+}

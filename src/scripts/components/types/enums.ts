@@ -40,4 +40,11 @@ export enum Pages {
   registration = 'registration',
   user = 'user',
   notFound = 'not-found',
+  catalogue = 'catalogue',
+  man = 'catalogue/man',
+  man_jeans = 'catalogue/man/jeans',
+  man_jackets = 'catalogue/man/jackets',
+  woman = 'catalogue/woman',
+  woman_jeans = 'catalogue/woman/jeans',
+  woman_jackets = 'catalogue/woman/jackets',
 }
