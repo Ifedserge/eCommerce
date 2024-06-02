@@ -34,8 +34,8 @@ const passwordMiddlewareOptions: PasswordAuthMiddlewareOptions = {
     clientId: `${process.env.CTP_CLIENT_ID}`,
     clientSecret: `${process.env.CTP_CLIENT_SECRET}`,
     user: {
-      username: localStorage.getItem('email')!,
-      password: decryptCipher(localStorage.getItem('encryptPassword')!),
+      username: localStorage.getItem('email') || '',
+      password: decryptCipher(localStorage.getItem('encryptPassword') || ''),
     },
   },
   scopes,

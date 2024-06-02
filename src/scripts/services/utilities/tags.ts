@@ -1,4 +1,4 @@
-import { TagAttributes } from '../../components/types/interfaces';
+import { ITagAttributes } from '../../components/types/interfaces';
 import { BlockType, InputType, HeadingType } from '../../components/types/enums';
 
 export const createBlock = (type: BlockType, className: string[]) => {
@@ -10,7 +10,7 @@ export const createBlock = (type: BlockType, className: string[]) => {
 export const createInput = (
   inputType: InputType,
   className: string[],
-  ...attributes: TagAttributes[]
+  ...attributes: ITagAttributes[]
 ) => {
   const elem = document.createElement('input');
   elem.setAttribute('type', inputType);
@@ -21,7 +21,7 @@ export const createInput = (
   return elem;
 };
 
-export const createForm = (className: string[], ...attributes: TagAttributes[]) => {
+export const createForm = (className: string[], ...attributes: ITagAttributes[]) => {
   const elem = document.createElement('form');
   className.forEach((item) => elem.classList.add(item));
   if (attributes) {
@@ -30,7 +30,11 @@ export const createForm = (className: string[], ...attributes: TagAttributes[]) 
   return elem;
 };
 
-export const createLabel = (className: string[], text?: string, ...attributes: TagAttributes[]) => {
+export const createLabel = (
+  className: string[],
+  text?: string,
+  ...attributes: ITagAttributes[]
+) => {
   const elem = document.createElement('label');
   className.forEach((item) => elem.classList.add(item));
   if (text) elem.innerText = text;
@@ -40,7 +44,11 @@ export const createLabel = (className: string[], text?: string, ...attributes: T
   return elem;
 };
 
-export const createButton = (className: string[], text: string, ...attributes: TagAttributes[]) => {
+export const createButton = (
+  className: string[],
+  text: string,
+  ...attributes: ITagAttributes[]
+) => {
   const elem = document.createElement('button');
   className.forEach((item) => elem.classList.add(item));
   elem.innerText = text;
@@ -75,7 +83,7 @@ export const createLink = (className: string[], address: string, name: string) =
 export const createSelect = (
   options: string[],
   className: string[],
-  ...attributes: TagAttributes[]
+  ...attributes: ITagAttributes[]
 ) => {
   const elem = document.createElement('select');
   className.forEach((item) => elem.classList.add(item));

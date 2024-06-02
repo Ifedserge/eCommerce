@@ -1,7 +1,7 @@
 import { checkLoginState } from '../../../../services/utilities/checkLoginState';
 import { createBlock, createButton } from '../../../../services/utilities/tags';
 import { BlockType, Pages } from '../../../types/enums';
-import { Router } from '../../../types/interfaces';
+import Router from '../../../../services/router/router';
 
 export class Header {
   private isLogined = checkLoginState();
