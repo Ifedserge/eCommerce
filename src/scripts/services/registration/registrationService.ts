@@ -1,4 +1,12 @@
-import { MyCustomerDraft, BaseAddress } from '@commercetools/platform-sdk';
+import {
+  MyCustomerDraft,
+  BaseAddress,
+  CustomerUpdateAction,
+  CustomerSetDefaultShippingAddressAction,
+  CustomerAddShippingAddressIdAction,
+  CustomerSetDefaultBillingAddressAction,
+  CustomerAddBillingAddressIdAction,
+} from '@commercetools/platform-sdk';
 import { apiAnonRoot, apiAuthRoot } from '../api';
 import { NotificationService } from '../utilities/notification';
 import { NotificationType } from '../../components/types/enums';
@@ -83,28 +91,49 @@ export class RegistrationService {
           NotificationType.success
         );
 
+        const { id: customerId, version, addresses } = anonResponse.body.customer;
+
+        const actions: CustomerUpdateAction[] = [];
+        if (useAsDefaultShipping) {
+          actions.push({
+            action: 'setDefaultShippingAddress',
+            addressId: addresses[0].id,
+          } as CustomerSetDefaultShippingAddressAction);
+        } else {
+          actions.push({
+            action: 'addShippingAddressId',
+            addressId: addresses[0].id,
+          } as CustomerAddShippingAddressIdAction);
+        }
+
+        if (useAsDefaultBilling) {
+          actions.push({
+            action: 'setDefaultBillingAddress',
+            addressId: addresses[1].id,
+          } as CustomerSetDefaultBillingAddressAction);
+        } else {
+          actions.push({
+            action: 'addBillingAddressId',
+            addressId: addresses[1].id,
+          } as CustomerAddBillingAddressIdAction);
+        }
+
         return apiAuthRoot
-          .me()
-          .get()
-          .execute()
-          .then((authResponse) => {
-            console.log(`'apiAuthRoot response:\n' + ${authResponse}`);
-            window.location.pathname = '/index';
+          .customers()
+          .withId({ ID: customerId })
+          .post({
+            body: {
+              version,
+              actions,
+            },
           })
-          .catch((authError) => {
-            const errorMessage =
-              authError?.body?.message || `An unknown error occurred: ${authError.message}`;
+          .execute()
+          .then(() => {
             NotificationService.showNotification(
-              `Something went wrong. Please try again. Error: ${errorMessage}`,
-              NotificationType.error
+              'Addresses added successfully!',
+              NotificationType.success
             );
-            const deleteArgs = {
-              queryArgs: {
-                version: anonResponse.body.customer.version,
-                key: `${process.env.CTP_PROJECT_KEY}`,
-              },
-            };
-            apiAuthRoot.me().delete(deleteArgs).execute();
+            window.location.pathname = '/index';
           });
       })
       .catch((anonError) => {

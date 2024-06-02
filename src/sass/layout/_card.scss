@@ -1,22 +1,70 @@
 .card {
-  flex-basis: 20%;
-  flex-grow: 1;
-  flex-shrink: 1;
-  justify-content: space-between;
-  border: none !important;
+  &__img-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  &__basket-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
 
   &__name {
-    margin: 15px 0 0 0;
-    font-weight: 500;
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   &__description {
-    font-size: 0.75rem;
-    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #666;
+  }
+
+  &__price-block {
+    display: flex;
+    align-items: baseline;
+    margin-top: 10px;
+  }
+
+  &__old-price {
+    font-size: 16px;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+  }
+
+  &__new-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e60023;
   }
 
   &__price {
-    margin: 10px 0 0 0;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: bold;
   }
 }

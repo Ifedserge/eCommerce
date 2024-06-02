@@ -65,6 +65,20 @@ export const createP = (className: string[], text?: string) => {
   return elem;
 };
 
+export const createDel = (className: string[], text: string) => {
+  const elem = document.createElement('del');
+  className.forEach((item) => elem.classList.add(item));
+  elem.innerText = text;
+  return elem;
+};
+
+export const createSpan = (className: string[], text: string) => {
+  const elem = document.createElement('span');
+  className.forEach((item) => elem.classList.add(item));
+  elem.innerText = text;
+  return elem;
+};
+
 export const createHeading = (className: string[], text: string, tag: HeadingType) => {
   const elem = document.createElement(tag);
   className.forEach((item) => elem.classList.add(item));

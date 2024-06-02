@@ -31,8 +31,10 @@ export interface ICustomerDraft {
 }
 
 export interface IAddress {
+  id?: string;
   city: string;
   streetName: string;
+  streetNumber?: string;
   postalCode: string;
   country: string;
 }
@@ -48,6 +50,12 @@ interface IPrice {
     currencyCode: string;
     centAmount: number;
     fractionDigits: number;
+  };
+  discounted?: {
+    value: {
+      centAmount: number;
+      fractionDigits: number;
+    };
   };
 }
 
@@ -72,4 +80,14 @@ export interface IProductData {
     'en-GB': string;
     ru: string;
   };
+}
+export interface IUserProfile {
+  email: string;
+  firstName: string;
+  lastName: string;
+  billingAddresses: IAddress[];
+  shippingAddresses: IAddress[];
+  defaultBillingAddress: IAddress | null;
+  defaultShippingAddress: IAddress | null;
+  dateOfBirth: string;
 }

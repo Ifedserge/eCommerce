@@ -1,0 +1,44 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  .profile-fieldset {
+    border: black solid 3px;
+    padding: 1rem;
+
+    legend {
+      float: none;
+      width: auto;
+      padding: 5px;
+      margin-bottom: 0;
+    }
+
+    .invalid-feedback {
+      display: flex;
+    }
+
+    .form-checkbox {
+      margin-top: 20px;
+    }
+
+    i {
+      cursor: pointer;
+    }
+
+    .type-container {
+      margin-top: 10px;
+
+      .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .form-checkbox {
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}
