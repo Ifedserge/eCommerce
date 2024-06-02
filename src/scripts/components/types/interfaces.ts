@@ -5,25 +5,21 @@ import {
   Cart,
 } from '@commercetools/platform-sdk';
 
-export interface TagAttributes {
+export interface ITagAttributes {
   name: string;
   value?: string;
 }
-export interface RouteInterface {
+export interface IRouteInterface {
   path: string;
   callback: () => void;
 }
 
-export interface Router {
-  navigate: (url: string) => void;
-}
-
-export interface CustomerDraft {
+export interface ICustomerDraft {
   email: string;
   password: string;
   firstName?: string;
   lastName?: string;
-  addresses?: Address[];
+  addresses?: IAddress[];
   dateOfBirth?: string;
   companyName?: string;
   vatId?: string;
@@ -34,7 +30,7 @@ export interface CustomerDraft {
   externalId?: string;
 }
 
-export interface Address {
+export interface IAddress {
   id?: string;
   city: string;
   streetName: string;
@@ -43,9 +39,47 @@ export interface Address {
   country: string;
 }
 
-export interface CustomerSignInResult {
+export interface ICustomerSignInResult {
   customer: Customer;
   cart?: Cart;
+}
+
+interface IPrice {
+  id: string;
+  value: {
+    currencyCode: string;
+    centAmount: number;
+    fractionDigits: number;
+  };
+  discounted?: {
+    value: {
+      centAmount: number;
+      fractionDigits: number;
+    };
+  };
+}
+
+export interface IProductData {
+  masterVariant: {
+    images: { url: string }[];
+    prices: IPrice[];
+  };
+  name: {
+    'en-GB': string;
+    ru: string;
+  };
+  description: {
+    'en-GB': string;
+    ru: string;
+  };
+  metaDescription: {
+    'en-GB': string;
+    ru: string;
+  };
+  slug: {
+    'en-GB': string;
+    ru: string;
+  };
 }
 
 export interface IUserProfile {

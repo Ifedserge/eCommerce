@@ -6,8 +6,9 @@ import { BlockType, Pages } from '../types/enums';
 import Router from '../../services/router/router';
 import { Login } from '../views/login/login';
 import { createNotFoundPage } from '../views/not-found/not-found';
-import { RouteInterface } from '../types/interfaces';
+import { IRouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
+import { Catalogue } from '../views/catalogue/catalogue';
 
 export class App {
   routes = this.createRoutes();
@@ -28,7 +29,7 @@ export class App {
   start(): void {
     this.header = new Header(this.router, this.updateHeader.bind(this));
     const header = this.header.createLayout();
-    const mainPage = new MainPage().createLayout();
+    const mainPage = new MainPage(this.router).createLayout();
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
@@ -48,15 +49,15 @@ export class App {
     this.main.append(layout);
   }
 
-  createRoutes(): RouteInterface[] {
+  createRoutes(): IRouteInterface[] {
     return [
       {
         path: '',
-        callback: () => this.changePage(new MainPage().createLayout()),
+        callback: () => this.changePage(new MainPage(this.router).createLayout()),
       },
       {
         path: `${Pages.index}`,
-        callback: () => this.changePage(new MainPage().createLayout()),
+        callback: () => this.changePage(new MainPage(this.router).createLayout()),
       },
       {
         path: `${Pages.login}`,
@@ -66,7 +67,37 @@ export class App {
         path: `${Pages.registration}`,
         callback: () => this.changePage(Registration.render()),
       },
-
+      {
+        path: `${Pages.catalogue}`,
+        callback: () => this.changePage(new Catalogue(this.router).createLayout([])),
+      },
+      {
+        path: `${Pages.man}`,
+        callback: () => this.changePage(new Catalogue(this.router).createLayout(['Man'])),
+      },
+      {
+        path: `${Pages.man_jeans}`,
+        callback: () => this.changePage(new Catalogue(this.router).createLayout(['Man', 'Jeans'])),
+      },
+      {
+        path: `${Pages.man_jackets}`,
+        callback: () =>
+          this.changePage(new Catalogue(this.router).createLayout(['Man', 'Jackets'])),
+      },
+      {
+        path: `${Pages.woman}`,
+        callback: () => this.changePage(new Catalogue(this.router).createLayout(['Woman'])),
+      },
+      {
+        path: `${Pages.woman_jeans}`,
+        callback: () =>
+          this.changePage(new Catalogue(this.router).createLayout(['Woman', 'Jeans'])),
+      },
+      {
+        path: `${Pages.woman_jackets}`,
+        callback: () =>
+          this.changePage(new Catalogue(this.router).createLayout(['Woman', 'Jackets'])),
+      },
       {
         path: `${Pages.notFound}`,
         callback: () => this.changePage(createNotFoundPage(this.router)),
