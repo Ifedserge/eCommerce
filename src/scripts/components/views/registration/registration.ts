@@ -161,6 +161,57 @@ class Registration {
     const billingAddress = document.createElement('p');
     billingAddress.innerText = 'Billing address';
 
+    const countryBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const countryBillingLabel = createLabel(['form-label', 'text'], 'Country');
+    const countryBillingSelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text']);
+    countrySelect.setAttribute('name', 'country');
+
+    countryBillingContainer.append(countryBillingLabel, countryBillingSelect);
+
+    const cityBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const cityBillingLabel = createLabel(['form-label', 'text'], 'City');
+    const cityBillingInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter city',
+    });
+    cityBillingInput.setAttribute('name', 'city');
+    cityBillingInput.addEventListener('input', onInputCityChange);
+
+    cityBillingContainer.append(cityBillingLabel, cityBillingInput);
+
+    const streetBiilingContainer = createBlock(BlockType.div, ['form-group']);
+    const streetBillingLabel = createLabel(['form-label', 'text'], 'Street');
+    const streetBillingInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter street',
+    });
+    streetBillingInput.setAttribute('name', 'street');
+    streetBillingInput.addEventListener('input', onInputStreetChange);
+
+    streetBiilingContainer.append(streetBillingLabel, streetBillingInput);
+
+    const streetBillingNumberContainer = createBlock(BlockType.div, ['form-group']);
+    const streetBillingNumberLabel = createLabel(['form-label'], 'Street number');
+    const streetBillingNumberInput = createInput(InputType.text, ['form-control'], {
+      name: 'placeholder',
+      value: 'Enter street number',
+    });
+    streetBillingNumberInput.setAttribute('name', 'streetNumber');
+    streetBillingNumberInput.addEventListener('input', onInputStreetChange);
+
+    streetBillingNumberContainer.append(streetBillingNumberLabel, streetBillingNumberInput);
+
+    const countryBillingIndexContainer = createBlock(BlockType.div, ['form-group']);
+    const countryBillingIndexLabel = createLabel(['form-label', 'text'], 'Country index');
+    const countryBillingIndexInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter country index',
+    });
+    countryBillingIndexInput.setAttribute('name', 'countryIndex');
+    countryBillingIndexInput.addEventListener('input', onInputPostalCodeChange);
+
+    countryBillingIndexContainer.append(countryBillingIndexLabel, countryBillingIndexInput);
+
     fieldset.append(
       legend,
       emailContainer,
@@ -175,7 +226,12 @@ class Registration {
       streetNumberContainer,
       countryIndexContainer,
       defaultAddressContainer,
-      billingAddress
+      billingAddress,
+      countryBillingContainer,
+      cityBillingContainer,
+      streetBiilingContainer,
+      streetBillingNumberContainer,
+      countryBillingIndexContainer
     );
 
     const submitButton = createButton(
