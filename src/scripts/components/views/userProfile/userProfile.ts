@@ -17,7 +17,7 @@ import {
   createLabel,
 } from '../../../services/utilities/tags';
 import { BlockType, HeadingType, InputType } from '../../types/enums';
-import { Address, IUserProfile } from '../../types/interfaces';
+import { IAddress, IUserProfile } from '../../types/interfaces';
 
 export class UserProfile {
   static render(): HTMLFormElement {
@@ -106,10 +106,10 @@ export class UserProfile {
 
   static createAddressSection(
     title: string,
-    billingAddresses: Address[],
-    shippingAddresses: Address[],
-    defaultBillingAddress: Address | null,
-    defaultShippingAddress: Address | null
+    billingAddresses: IAddress[],
+    shippingAddresses: IAddress[],
+    defaultBillingAddress: IAddress | null,
+    defaultShippingAddress: IAddress | null
   ): HTMLElement {
     const addressSection = createBlock(BlockType.div, ['address-section', 'form-group']);
 
@@ -134,11 +134,11 @@ export class UserProfile {
   }
 
   static createAddress(
-    address: Address,
-    billingAddresses: Address[],
-    shippingAddresses: Address[],
-    defaultBillingAddress: Address | null,
-    defaultShippingAddress: Address | null
+    address: IAddress,
+    billingAddresses: IAddress[],
+    shippingAddresses: IAddress[],
+    defaultBillingAddress: IAddress | null,
+    defaultShippingAddress: IAddress | null
   ): HTMLElement {
     const addressContainer = createBlock(BlockType.div, ['address-container']);
 

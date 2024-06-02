@@ -86,9 +86,9 @@ export interface IUserProfile {
   email: string;
   firstName: string;
   lastName: string;
-  billingAddresses: Address[];
-  shippingAddresses: Address[];
-  defaultBillingAddress: Address | null;
-  defaultShippingAddress: Address | null;
+  billingAddresses: IAddress[];
+  shippingAddresses: IAddress[];
+  defaultBillingAddress: IAddress | null;
+  defaultShippingAddress: IAddress | null;
   dateOfBirth: string;
 }
