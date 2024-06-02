@@ -5,6 +5,7 @@ import {
   createInput,
   createLabel,
   createSelect,
+  createP,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
 
@@ -92,8 +93,7 @@ class Registration {
     dateOfBirthContainer.appendChild(dateOfBirthLabel);
     dateOfBirthContainer.appendChild(dateOfBirthInput);
 
-    const shippingAddres = document.createElement('p');
-    shippingAddres.innerText = 'Shipping address';
+    const shippingAddres = createP(['adress-type'], 'Shipping address');
 
     const countryContainer = createBlock(BlockType.div, ['form-group']);
     const countryLabel = createLabel(['form-label', 'text'], 'Country');
@@ -146,7 +146,7 @@ class Registration {
       value: 'Enter country index',
     });
     countryIndexInput.setAttribute('name', 'countryIndex');
-    countryIndexInput.addEventListener('input', (event) => onInputPostalCodeChange(event));
+    countryIndexInput.addEventListener('input', onInputPostalCodeChange);
 
     countryIndexContainer.appendChild(countryIndexLabel);
     countryIndexContainer.appendChild(countryIndexInput);
@@ -158,13 +158,14 @@ class Registration {
 
     defaultAddressContainer.append(defaultAddressLabel, defaultAddressInput);
 
-    const billingAddress = document.createElement('p');
-    billingAddress.innerText = 'Billing address';
+    const billingAddress = createP(['adress-type'], 'Billing address');
 
     const countryBillingContainer = createBlock(BlockType.div, ['form-group']);
     const countryBillingLabel = createLabel(['form-label', 'text'], 'Country');
-    const countryBillingSelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text']);
-    countryBillingSelect.setAttribute('name', 'billingCountry');
+    const countryBillingSelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text'], {
+      name: 'name',
+      value: 'billingCountry',
+    });
 
     countryBillingContainer.append(countryBillingLabel, countryBillingSelect);
 
