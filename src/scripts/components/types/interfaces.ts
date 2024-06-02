@@ -35,8 +35,10 @@ export interface CustomerDraft {
 }
 
 export interface Address {
+  id?: string;
   city: string;
   streetName: string;
+  streetNumber?: string;
   postalCode: string;
   country: string;
 }
@@ -44,4 +46,15 @@ export interface Address {
 export interface CustomerSignInResult {
   customer: Customer;
   cart?: Cart;
+}
+
+export interface IUserProfile {
+  email: string;
+  firstName: string;
+  lastName: string;
+  billingAddresses: Address[];
+  shippingAddresses: Address[];
+  defaultBillingAddress: Address | null;
+  defaultShippingAddress: Address | null;
+  dateOfBirth: string;
 }
