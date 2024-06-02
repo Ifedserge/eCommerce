@@ -1,11 +1,11 @@
 import { Pages } from '../../components/types/enums';
-import { RouteInterface } from '../../components/types/interfaces';
+import { IRouteInterface } from '../../components/types/interfaces';
 import { checkLoginState } from '../utilities/checkLoginState';
 
 export default class Router {
   private routes;
 
-  constructor(routes: RouteInterface[]) {
+  constructor(routes: IRouteInterface[]) {
     this.routes = routes;
 
     document.addEventListener('DOMContentLoaded', () => {

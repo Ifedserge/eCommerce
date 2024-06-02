@@ -1,3 +1,4 @@
+import Router from '../../../services/router/router';
 import {
   createBlock,
   createButton,
@@ -5,9 +6,15 @@ import {
   createImg,
   createP,
 } from '../../../services/utilities/tags';
-import { BlockType, HeadingType } from '../../types/enums';
+import { BlockType, HeadingType, Pages } from '../../types/enums';
 
 export class MainPage {
+  private router;
+
+  constructor(router: Router) {
+    this.router = router;
+  }
+
   createLayout(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['main-page']);
 
@@ -25,6 +32,7 @@ export class MainPage {
       ['main-page__catalogue-link', 'text', 'text_bold'],
       'Check new collection'
     );
+    linkCatalogue.addEventListener('click', () => this.router.navigate(Pages.catalogue));
     infoBlock.append(slogan, heading, linkCatalogue);
 
     const imgWrapper = createBlock(BlockType.div, ['main-page__preview-imgs']);
