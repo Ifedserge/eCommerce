@@ -16,25 +16,46 @@ export class RegistrationService {
     firstName: string,
     lastName: string,
     dateOfBirth: string,
-    city: string,
-    street: string,
-    streetNumber: string,
-    postalCode: string,
-    country: string
+    shippingCity: string,
+    shippingStreet: string,
+    shippingStreetNumber: string,
+    shippingPostalCode: string,
+    shippingCountry: string,
+    billingCity: string,
+    billingStreet: string,
+    billingStreetNumber: string,
+    billingPostalCode: string,
+    billingCountry: string,
+    useAsDefaultBilling: boolean,
+    useAsDefaultShipping: boolean
   ): Promise<void> {
-    const countryCode = countryCodes[country];
-    if (!countryCode) {
-      return Promise.reject(new Error(`Invalid country name: ${country}`));
+    const shippingCountryCode = countryCodes[shippingCountry];
+    const billingCountryCode = countryCodes[billingCountry];
+    if (!shippingCountryCode || !billingCountryCode) {
+      return Promise.reject(
+        new Error(`Invalid country name: ${shippingCountry}, ${billingCountry}`)
+      );
     }
 
-    const address: BaseAddress = {
-      country: countryCode,
+    const shippingAddress: BaseAddress = {
+      country: shippingCountryCode,
       firstName,
       lastName,
-      streetName: street,
-      streetNumber,
-      postalCode,
-      city,
+      streetName: shippingStreet,
+      streetNumber: shippingStreetNumber,
+      postalCode: shippingPostalCode,
+      city: shippingCity,
+      email,
+    };
+
+    const billingAddress: BaseAddress = {
+      country: billingCountryCode,
+      firstName,
+      lastName,
+      streetName: billingStreet,
+      streetNumber: billingStreetNumber,
+      postalCode: billingPostalCode,
+      city: billingCity,
       email,
     };
 
@@ -44,7 +65,9 @@ export class RegistrationService {
       firstName,
       lastName,
       dateOfBirth,
-      addresses: [address],
+      addresses: [shippingAddress, billingAddress],
+      defaultShippingAddress: useAsDefaultShipping ? 0 : undefined,
+      defaultBillingAddress: useAsDefaultBilling ? 1 : undefined,
     };
 
     return apiAnonRoot
@@ -60,19 +83,13 @@ export class RegistrationService {
           NotificationType.success
         );
 
-        // console.log('apiAnonRoot ne ok:\n' + response);
-        console.log(anonResponse);
-
-        console.log(localStorage.getItem('email'));
-        console.log(localStorage.getItem('encryptPassword'));
-
         return apiAuthRoot
           .me()
           .get()
           .execute()
           .then((authResponse) => {
-            // console.log('apiAuthRoot ok:\n' + response);
-            console.log(authResponse);
+            console.log(`'apiAuthRoot response:\n' + ${authResponse}`);
+            window.location.pathname = '/index';
           })
           .catch((authError) => {
             const errorMessage =
@@ -81,17 +98,14 @@ export class RegistrationService {
               `Something went wrong. Please try again. Error: ${errorMessage}`,
               NotificationType.error
             );
-            const abc = {
+            const deleteArgs = {
               queryArgs: {
                 version: anonResponse.body.customer.version,
                 key: `${process.env.CTP_PROJECT_KEY}`,
               },
             };
-            apiAuthRoot.me().delete(abc).execute();
-            console.log(`apiAuthRoot ne ok: + ${authError}`);
+            apiAuthRoot.me().delete(deleteArgs).execute();
           });
-
-        // window.location.pathname = '/index';
       })
       .catch((anonError) => {
         const errorMessage =
@@ -100,48 +114,6 @@ export class RegistrationService {
           `Something went wrong. Please try again. Error: ${errorMessage}`,
           NotificationType.error
         );
-        console.log(`apiAnonRoot ne ok: + ${anonError}`);
       });
-
-    // return apiAnonRoot
-    //   .customers()
-    //   .post({ body: customerDraft })
-    //   .execute()
-    //   .then((response) => {
-    //     const customerId = response.body.customer.id;
-    //     const customerVersion = response.body.customer.version;
-
-    //     const addressAction: CustomerAddAddressAction = {
-    //       action: 'addAddress',
-    //       address: {
-    //         city,
-    //         streetName: street,
-    //         streetNumber,
-    //         postalCode,
-    //         country: countryCode,
-    //       },
-    //     };
-
-    //     const updateBody = {
-    //       version: customerVersion,
-    //       actions: [addressAction],
-    //     };
-
-    //     return apiAnonRoot.customers().withId({ ID: customerId }).post({ body: updateBody }).execute();
-    //   })
-    //   .then(() => {
-    //     NotificationService.showNotification(
-    //       'Registration and address addition successful!',
-    //       NotificationType.success
-    //     );
-    //     window.location.pathname = '/index';
-    //   })
-    //   .catch((error) => {
-    //     const errorMessage = error?.body?.message || `An unknown error occurred: ${error.message}`;
-    //     NotificationService.showNotification(
-    //       `Something went wrong. Please try again. Error: ${errorMessage}`,
-    //       NotificationType.error
-    //     );
-    //   });
   }
 }
