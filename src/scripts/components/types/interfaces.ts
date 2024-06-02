@@ -49,6 +49,12 @@ interface IPrice {
     centAmount: number;
     fractionDigits: number;
   };
+  discounted?: {
+    value: {
+      centAmount: number;
+      fractionDigits: number;
+    };
+  };
 }
 
 export interface IProductData {
