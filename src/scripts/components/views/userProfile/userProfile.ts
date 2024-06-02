@@ -59,7 +59,7 @@ export class UserProfile {
 
     const passwordContainer = createBlock(BlockType.div, ['form-group']);
 
-    const password = decryptCipher(localStorage.getItem('password') || '');
+    const password = decryptCipher(localStorage.getItem('encryptPassword') || '');
 
     const passwordLabel = createLabel(['form-label', 'text', 'text-normal'], 'Password');
     const passwordInput = createInput(
