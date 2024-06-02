@@ -81,7 +81,6 @@ export interface IProductData {
     ru: string;
   };
 }
-
 export interface IUserProfile {
   email: string;
   firstName: string;

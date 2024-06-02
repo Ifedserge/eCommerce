@@ -51,5 +51,6 @@ export function createCard(data: IProductData): HTMLElement {
 
   const description = createP(['card__description', 'text'], data.metaDescription['en-GB']);
   wrapper.append(imgWrapper, name, description, priceBlock);
+
   return wrapper;
 }
