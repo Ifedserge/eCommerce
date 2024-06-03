@@ -8,20 +8,24 @@ import {
   onInputPostalCodeChange,
   onInputStreetChange,
 } from '../../../services/registration/registrationButtons';
+import { onEditModeButtonClick, onInputRadioChange, onSubmitUpdateAddressButtonClick, onSubmitUpdateUserButtonClick } from '../../../services/userProfile/userButtons';
+import { edit } from '../../../services/utilities/SVGs';
 import { decryptCipher } from '../../../services/utilities/encryptor';
 import {
   createBlock,
+  createButton,
   createForm,
-  createHeading,
   createInput,
   createLabel,
 } from '../../../services/utilities/tags';
-import { BlockType, HeadingType, InputType } from '../../types/enums';
+import { BlockType, InputType } from '../../types/enums';
 import { IAddress, IUserProfile } from '../../types/interfaces';
 
 export class UserProfile {
-  static render(): HTMLFormElement {
+  static render(): HTMLElement {
     const user: IUserProfile = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const profile = createBlock(BlockType.div, ['profile']);
 
     const profileForm = createForm(['profile-form', 'login-form']);
 
@@ -34,11 +38,17 @@ export class UserProfile {
 
     fieldset.appendChild(legend);
 
+    const editButton = createBlock(BlockType.div, ['edit-button']);
+    editButton.innerHTML = edit;
+    editButton.addEventListener('click', onEditModeButtonClick);
+
+    fieldset.appendChild(editButton);
+
     const fields = [
-      { label: 'First name', value: user.firstName, event: onInputNameChange },
-      { label: 'Last name', value: user.lastName, event: onInputLastNameChange },
-      { label: 'Date of birth', value: user.dateOfBirth, event: onInputDateOfBirthChange },
-      { label: 'Email', value: user.email, event: onInputEmailChange },
+      { label: 'First name', value: user.firstName, name: 'firstName', event: onInputNameChange },
+      { label: 'Last name', value: user.lastName, name: 'lastName', event: onInputLastNameChange },
+      { label: 'Date of birth', value: user.dateOfBirth, name: 'dateOfBirth', event: onInputDateOfBirthChange },
+      { label: 'Email', value: user.email, name: 'email', event: onInputEmailChange },
     ];
 
     fields.forEach((field) => {
@@ -49,7 +59,8 @@ export class UserProfile {
         ['form-control', 'text', 'text_small'],
         { name: 'placeholder', value: `Enter ${field.label.toLowerCase()}` },
         { name: 'value', value: field.value },
-        { name: 'disabled', value: 'true' }
+        { name: 'disabled', value: 'true' },
+        { name: 'name', value: field.name }
       );
       input.addEventListener('keypress', field.event);
       container.appendChild(label);
@@ -70,7 +81,8 @@ export class UserProfile {
         value: 'Enter password',
       },
       { name: 'value', value: password },
-      { name: 'disabled', value: 'true' }
+      { name: 'disabled', value: 'true' },
+      { name: 'name', value: 'password' }
     );
     passwordInput.addEventListener('keyup', onInputPasswordChange);
 
@@ -90,31 +102,49 @@ export class UserProfile {
 
     fieldset.appendChild(passwordContainer);
 
-    const addressSection = this.createAddressSection(
+    const addressSection = this.createAddressForm(
       'Addresses',
       user.billingAddresses,
       user.shippingAddresses,
       user.defaultBillingAddress,
       user.defaultShippingAddress
     );
-    fieldset.appendChild(addressSection);
-
+    
+    const saveButton = createButton(['btn', 'btn-primary'], 'Save', {name: 'disabled', value: 'true'});
+    saveButton.addEventListener('click', onSubmitUpdateUserButtonClick);
+    fieldset.appendChild(saveButton);
+    
     profileForm.appendChild(fieldset);
+    
+    profile.appendChild(profileForm);
+    profile.appendChild(addressSection);
 
-    return profileForm;
+    return profile;
   }
 
-  static createAddressSection(
+  static createAddressForm(
     title: string,
     billingAddresses: IAddress[],
     shippingAddresses: IAddress[],
     defaultBillingAddress: IAddress | null,
     defaultShippingAddress: IAddress | null
-  ): HTMLElement {
-    const addressSection = createBlock(BlockType.div, ['address-section', 'form-group']);
+  ): HTMLFormElement {
+    const addressForm = createForm(['address-section', 'login-form']);
 
-    const sectionTitle = createHeading(['form-label', 'text'], title, HeadingType.h5);
-    addressSection.appendChild(sectionTitle);
+    const fieldset = document.createElement('fieldset');
+    fieldset.classList.add('profile-fieldset');
+
+    const legend = document.createElement('legend');
+    legend.classList.add('text');
+    legend.textContent = title;
+
+    fieldset.appendChild(legend);
+
+    const editButton = createBlock(BlockType.div, ['edit-button']);
+    editButton.innerHTML = edit;
+    editButton.addEventListener('click', onEditModeButtonClick);
+
+    fieldset.appendChild(editButton);
 
     const allAddresses = [...billingAddresses, ...shippingAddresses].filter(
       (value, index, self) => self.findIndex((v) => v.id === value.id) === index
@@ -127,10 +157,16 @@ export class UserProfile {
         defaultBillingAddress,
         defaultShippingAddress
       );
-      addressSection.appendChild(addressContainer);
+      fieldset.appendChild(addressContainer);
     });
 
-    return addressSection;
+    const saveButton = createButton(['btn', 'btn-primary'], 'Save', { name: 'disabled', value: 'true' });
+    saveButton.addEventListener('click', onSubmitUpdateAddressButtonClick);
+    fieldset.appendChild(saveButton);
+
+    addressForm.appendChild(fieldset);
+
+    return addressForm;
   }
 
   static createAddress(
@@ -141,6 +177,7 @@ export class UserProfile {
     defaultShippingAddress: IAddress | null
   ): HTMLElement {
     const addressContainer = createBlock(BlockType.div, ['address-container']);
+    addressContainer.setAttribute('data-id', address.id || '');
 
     const addressFields = [
       {
@@ -173,14 +210,17 @@ export class UserProfile {
         input = document.createElement('select');
         input.classList.add('form-control', 'text');
         input.setAttribute('disabled', 'true');
-
+        input.setAttribute('name', 'country');
+        
         const option1 = document.createElement('option');
-        option1.value = 'Belarus';
+        option1.value = 'BY';
         option1.text = 'Belarus';
+        option1.setAttribute('country', 'Belarus');
 
         const option2 = document.createElement('option');
-        option2.value = 'Germany';
+        option2.value = 'GE';
         option2.text = 'Germany';
+        option2.setAttribute('country', 'Germany');
 
         input.appendChild(option1);
         input.appendChild(option2);
@@ -196,7 +236,8 @@ export class UserProfile {
           ['form-control', 'text', 'text_small'],
           { name: 'placeholder', value: `Enter ${field.label.toLowerCase()}` },
           { name: 'value', value: field.value },
-          { name: 'disabled', value: 'true' }
+          { name: 'disabled', value: 'true' },
+          {name: 'name', value: field.name}
         );
         input.addEventListener('keypress', field.event);
       }
@@ -215,7 +256,8 @@ export class UserProfile {
       InputType.checkbox,
       ['form-checkbox'],
       { name: 'shipping', value: address.id },
-      { name: 'disabled', value: 'true' }
+      { name: 'disabled', value: 'true' },
+      {name: 'name', value: 'shipping'}
     );
     const checkboxLabelShipping = createLabel(['form-label'], 'Shipping');
     if (shippingAddresses.some((a) => a.id === address.id)) {
@@ -229,7 +271,8 @@ export class UserProfile {
       InputType.checkbox,
       ['form-checkbox'],
       { name: 'billing', value: address.id },
-      { name: 'disabled', value: 'true' }
+      { name: 'disabled', value: 'true' },
+      {name: 'name', value: 'billing'}
     );
     const checkboxLabelBilling = createLabel(['form-label'], 'Billing');
     if (billingAddresses.some((a) => a.id === address.id)) {
@@ -243,12 +286,14 @@ export class UserProfile {
       InputType.radio,
       ['form-radio'],
       { name: 'defaultShipping', value: address.id },
-      { name: 'disabled', value: 'true' }
+      { name: 'disabled', value: 'true' },
+      { name: 'name', value: 'defaultShipping' }
     );
     const radioLabelDefaultShipping = createLabel(['form-label'], 'Default Shipping');
     if (defaultShippingAddress && defaultShippingAddress.id === address.id) {
       radioDefaultShipping.checked = true;
     }
+    radioDefaultShipping.addEventListener('change', onInputRadioChange);
     radioDefaultShippingContainer.appendChild(radioLabelDefaultShipping);
     radioDefaultShippingContainer.appendChild(radioDefaultShipping);
 
@@ -257,12 +302,14 @@ export class UserProfile {
       InputType.radio,
       ['form-radio'],
       { name: 'defaultBilling', value: address.id },
-      { name: 'disabled', value: 'true' }
+      { name: 'disabled', value: 'true' },
+      { name: 'name', value: 'defaultBilling' }
     );
     const radioLabelDefaultBilling = createLabel(['form-label'], 'Default Billing');
     if (defaultBillingAddress && defaultBillingAddress.id === address.id) {
       radioDefaultBilling.checked = true;
     }
+    radioDefaultBilling.addEventListener('change', onInputRadioChange);
     radioDefaultBillingContainer.appendChild(radioLabelDefaultBilling);
     radioDefaultBillingContainer.appendChild(radioDefaultBilling);
 

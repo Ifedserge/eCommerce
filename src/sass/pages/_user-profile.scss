@@ -1,9 +1,11 @@
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+.profile {
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
 
   .profile-fieldset {
     border: black solid 3px;
@@ -14,6 +16,13 @@
       width: auto;
       padding: 5px;
       margin-bottom: 0;
+    }
+
+    .edit-button {
+      cursor: pointer;
+      float: right;
+      margin-top: -20px;
+      margin-right: 10px;
     }
 
     .invalid-feedback {
