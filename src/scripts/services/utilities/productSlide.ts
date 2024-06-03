@@ -1,5 +1,6 @@
 import { createBlock, createImg, createButton, createSpan } from './tags';
 import { BlockType } from '../../components/types/enums';
+import { createModal } from './modal';
 
 export function productSlider(images: { url: string }[]): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['slider']);
@@ -33,6 +34,10 @@ export function productSlider(images: { url: string }[]): HTMLElement {
   images.forEach((image, index) => {
     const slide = createBlock(BlockType.div, ['slider__slide']);
     const img = createImg(['slider__img'], image.url, 'Product image');
+    img.addEventListener('click', () => {
+      const modal = createModal(image.url);
+      document.body.append(modal);
+    });
     slide.append(img);
     sliderWrapper.append(slide);
 
