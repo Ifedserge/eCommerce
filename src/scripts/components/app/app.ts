@@ -9,6 +9,7 @@ import { createNotFoundPage } from '../views/not-found/not-found';
 import { IRouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
 import { Catalogue } from '../views/catalogue/catalogue';
+import ProductPage from '../views/product/productPage';
 
 export class App {
   routes = this.createRoutes();
@@ -101,6 +102,10 @@ export class App {
       {
         path: `${Pages.notFound}`,
         callback: () => this.changePage(createNotFoundPage(this.router)),
+      },
+      {
+        path: `${Pages.product}}`,
+        callback: () => this.changePage(ProductPage.render()),
       },
     ];
   }

@@ -80,6 +80,7 @@ export interface IProductData {
     'en-GB': string;
     ru: string;
   };
+  id: string;
 }
 export interface IUserProfile {
   email: string;

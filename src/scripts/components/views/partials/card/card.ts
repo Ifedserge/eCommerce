@@ -15,6 +15,11 @@ import { IProductData } from '../../../types/interfaces';
 export function createCard(data: IProductData): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
+  wrapper.addEventListener('click', () => {
+    window.location.pathname = `/product/${data.id}`;
+    // console.log(data.id);
+  });
+
   const imgWrapper = createBlock(BlockType.div, ['card__img-wrapper']);
   const img = createImg(['card__img'], data.masterVariant.images[0].url, data.name['en-GB']);
 

@@ -47,4 +47,5 @@ export enum Pages {
   woman = 'catalogue/woman',
   woman_jeans = 'catalogue/woman/jeans',
   woman_jackets = 'catalogue/woman/jackets',
+  product = 'product',
 }
