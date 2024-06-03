@@ -35,7 +35,7 @@ export function productSlider(images: { url: string }[]): HTMLElement {
     const slide = createBlock(BlockType.div, ['slider__slide']);
     const img = createImg(['slider__img'], image.url, 'Product image');
     img.addEventListener('click', () => {
-      const modal = createModal(image.url);
+      const modal = createModal(images, index);
       document.body.append(modal);
     });
     slide.append(img);

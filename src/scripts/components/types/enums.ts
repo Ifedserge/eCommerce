@@ -6,6 +6,7 @@ export enum InputType {
   radio = 'radio',
   checkbox = 'checkbox',
   reset = 'reset',
+  range = 'range',
 }
 
 export enum HeadingType {
