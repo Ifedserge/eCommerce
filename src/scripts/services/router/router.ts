@@ -1,24 +1,33 @@
 import { Pages } from '../../components/types/enums';
 import { IPathResource, IRouteInterface } from '../../components/types/interfaces';
-import HistoryRouterHandler from './history-router-handler';
 
 export default class Router {
   private routes;
 
-  private handler;
-
   constructor(routes: IRouteInterface[]) {
     this.routes = routes;
-
-    this.handler = new HistoryRouterHandler(this.urlChangedHandler.bind(this));
 
     document.addEventListener('DOMContentLoaded', () => {
       this.navigate(null);
     });
+
+    window.onpopstate = this.navigate.bind(this);
   }
 
   navigate(url: PopStateEvent | string | null) {
-    this.handler.navigate(url);
+    if (typeof url === 'string') {
+      window.history.pushState(null, `${url}`, `/${url}`);
+    }
+    const urlString = window.location.pathname.slice(1);
+
+    const result = {
+      path: '',
+      resource: '',
+    };
+    const path = urlString.split('/');
+    [result.path = '', result.resource = ''] = path;
+
+    this.urlChangedHandler(result);
   }
 
   // private urlChangedHandler(): void {
@@ -27,7 +36,8 @@ export default class Router {
   //   }
 
   //   const route = this.routes.find((item) => window.location.pathname.slice(1).includes(item.path));
-  urlChangedHandler(requestParams: IPathResource) {
+  //urlChangedHandler(requestParams: IPathResource) {
+  private urlChangedHandler(requestParams: IPathResource) {
     let pathForFind = '';
     if (requestParams.resource === '') pathForFind = requestParams.path;
     else pathForFind = `${requestParams.path}/${requestParams.resource}`;
