@@ -52,10 +52,10 @@ export class App {
 
   createRoutes(): IRouteInterface[] {
     return [
-      {
-        path: '',
-        callback: () => this.changePage(new MainPage(this.router).createLayout()),
-      },
+      // {
+      //   path: '',
+      //   callback: () => this.changePage(new MainPage(this.router).createLayout()),
+      // },
       {
         path: `${Pages.index}`,
         callback: () => this.changePage(new MainPage(this.router).createLayout()),
@@ -100,12 +100,15 @@ export class App {
           this.changePage(new Catalogue(this.router).createLayout(['Woman', 'Jackets'])),
       },
       {
-        path: `${Pages.notFound}`,
-        callback: () => this.changePage(createNotFoundPage(this.router)),
+        path: `${Pages.product}`,
+        callback: async () => {
+          const productPage = await ProductPage.render();
+          this.changePage(productPage);
+        },
       },
       {
-        path: `${Pages.product}/id`,
-        callback: () => this.changePage(ProductPage.render()),
+        path: `${Pages.notFound}`,
+        callback: () => this.changePage(createNotFoundPage(this.router)),
       },
     ];
   }

@@ -80,7 +80,11 @@ export default class Router {
   }
 
   private urlChangedHandler(): void {
-    const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
+    if (window.location.pathname === '/') {
+      window.history.pushState(null, 'index', '/index');
+    }
+
+    const route = this.routes.find((item) => window.location.pathname.slice(1).includes(item.path));
 
     if (
       !route ||
