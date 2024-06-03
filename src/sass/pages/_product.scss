@@ -3,16 +3,23 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  @media (max-width: 710px) {
+    flex-direction: column;
+  }
   .img-block {
     max-width: 600px;
     width: 100%;
-    img {
-      width: 400px;
-    }
   }
   .info-block {
     max-width: 600px;
     width: 100%;
+    @media (max-width: 1280px) {
+      max-width: 500px;
+    }
+    @media (max-width: 1024px) {
+      max-width: 330px;
+    }
+
     .product-page__price--new {
       color: red;
       font-size: 25px;
