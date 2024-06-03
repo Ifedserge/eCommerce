@@ -104,7 +104,7 @@ export class App {
         callback: () => this.changePage(createNotFoundPage(this.router)),
       },
       {
-        path: `${Pages.product}}`,
+        path: `${Pages.product}/id`,
         callback: () => this.changePage(ProductPage.render()),
       },
     ];

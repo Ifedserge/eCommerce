@@ -16,7 +16,7 @@ export function createCard(data: IProductData): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
   wrapper.addEventListener('click', () => {
-    window.location.pathname = `/product/${data.id}`;
+    window.location.pathname = `/product/${data.id}`; // перенаправляет на страницу 404
     // console.log(data.id);
   });
 
