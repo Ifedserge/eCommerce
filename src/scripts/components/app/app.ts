@@ -9,6 +9,7 @@ import { createNotFoundPage } from '../views/not-found/not-found';
 import { IRouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
 import { Catalogue } from '../views/catalogue/catalogue';
+import ProductPage from '../views/product/productPage';
 
 export class App {
   routes = this.createRoutes();
@@ -51,10 +52,10 @@ export class App {
 
   createRoutes(): IRouteInterface[] {
     return [
-      {
-        path: '',
-        callback: () => this.changePage(new MainPage(this.router).createLayout()),
-      },
+      // {
+      //   path: '',
+      //   callback: () => this.changePage(new MainPage(this.router).createLayout()),
+      // },
       {
         path: `${Pages.index}`,
         callback: () => this.changePage(new MainPage(this.router).createLayout()),
@@ -97,6 +98,13 @@ export class App {
         path: `${Pages.woman_jackets}`,
         callback: () =>
           this.changePage(new Catalogue(this.router).createLayout(['Woman', 'Jackets'])),
+      },
+      {
+        path: `${Pages.product}`,
+        callback: async () => {
+          const productPage = await ProductPage.render();
+          this.changePage(productPage);
+        },
       },
       {
         path: `${Pages.notFound}`,

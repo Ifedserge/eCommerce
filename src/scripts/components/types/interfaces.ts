@@ -11,7 +11,7 @@ export interface ITagAttributes {
 }
 export interface IRouteInterface {
   path: string;
-  callback: () => void;
+  callback: (params?: { [key: string]: string }) => void;
 }
 
 export interface ICustomerDraft {
@@ -80,6 +80,7 @@ export interface IProductData {
     'en-GB': string;
     ru: string;
   };
+  id: string;
 }
 export interface IUserProfile {
   email: string;
