@@ -18,7 +18,6 @@ export function createModal(images: { url: string }[], currentIndex: number): HT
   modal.append(slider);
   overlay.append(modal);
 
-  // Закрытие модального окна при клике вне изображения
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
       overlay.remove();

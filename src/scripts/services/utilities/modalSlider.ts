@@ -31,7 +31,7 @@ export function createModalSlider(images: { url: string }[]): HTMLElement {
   });
 
   wrapper.addEventListener('wheel', (event) => {
-    const wheelEvent = event as WheelEvent; // Приведение типа события к WheelEvent
+    const wheelEvent = event as WheelEvent;
     wheelEvent.preventDefault();
     const index = parseInt(rangeInput.value, 10);
     if (wheelEvent.deltaY > 0 && index < images.length - 1) {

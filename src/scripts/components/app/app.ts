@@ -52,10 +52,6 @@ export class App {
 
   createRoutes(): IRouteInterface[] {
     return [
-      // {
-      //   path: '',
-      //   callback: () => this.changePage(new MainPage(this.router).createLayout()),
-      // },
       {
         path: `${Pages.index}`,
         callback: () => this.changePage(new MainPage(this.router).createLayout()),
