@@ -4,6 +4,12 @@
   max-width: 600px;
   margin: auto;
   overflow: hidden;
+  @media (max-width: 1280px) {
+    max-width: 500px;
+  }
+  @media (max-width: 860px) {
+    max-width: 350px;
+  }
 
   &__wrapper {
     display: flex;
