@@ -63,6 +63,7 @@ module.exports = ({ development }) => ({
   plugins: [
     ...esLintPlugin(development),
     new HtmlWebpackPlugin({
+      base: '/',
       filename: 'index.html',
     }),
     new DotenvWebpackPlugin(),

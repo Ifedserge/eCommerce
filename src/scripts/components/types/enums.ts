@@ -42,11 +42,20 @@ export enum Pages {
   user = 'user',
   notFound = 'not-found',
   catalogue = 'catalogue',
-  man = 'catalogue/man',
-  man_jeans = 'catalogue/man/jeans',
-  man_jackets = 'catalogue/man/jackets',
-  woman = 'catalogue/woman',
-  woman_jeans = 'catalogue/woman/jeans',
-  woman_jackets = 'catalogue/woman/jackets',
   product = 'product',
+  man = 'man',
+  man_jeans = 'man-jeans',
+  man_jackets = 'man-jackets',
+  woman = 'woman',
+  woman_jeans = 'woman-jeans',
+  woman_jackets = 'woman-jackets',
+}
+
+export enum IdCategories {
+  man = '1309b310-7a8e-4651-b120-91b5f3e84e08',
+  woman = '0fc64765-8869-4e15-8fa0-60e712c70e12',
+  man_jeans = '19d2c3ef-dc32-407f-b7e2-5ce0bb18d76e',
+  man_jackets = 'bea90c56-89ac-477a-9979-6ade2c7dada9',
+  woman_jeans = '8c4fc8bb-898c-46f7-808a-0f10cd801e11',
+  woman_jackets = '6a9e1de6-efdd-496d-bc34-210262523a1a',
 }

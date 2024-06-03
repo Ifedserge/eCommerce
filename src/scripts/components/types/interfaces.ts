@@ -59,6 +59,11 @@ interface IPrice {
   };
 }
 
+export interface IPathResource {
+  path: string;
+  resource: string;
+}
+
 export interface IProductData {
   masterVariant: {
     images: { url: string }[];
@@ -91,4 +96,26 @@ export interface IUserProfile {
   defaultBillingAddress: IAddress | null;
   defaultShippingAddress: IAddress | null;
   dateOfBirth: string;
+}
+
+export interface ICategoryData {
+  name: {
+    'en-GB': string;
+    ru: string;
+  };
+  id: string;
+  parent?: {
+    id: string;
+  };
+  slug: {
+    'en-GB': string;
+    ru: string;
+  };
+}
+
+export interface ICategory {
+  name: string;
+  id: string;
+  slug: string;
+  parent?: string;
 }

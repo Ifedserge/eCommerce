@@ -1,41 +1,43 @@
 import { Pages } from '../../components/types/enums';
-import { IRouteInterface } from '../../components/types/interfaces';
-import { checkLoginState } from '../utilities/checkLoginState';
+import { IPathResource, IRouteInterface } from '../../components/types/interfaces';
+import HistoryRouterHandler from './history-router-handler';
 
 export default class Router {
   private routes;
 
+  private handler;
+
   constructor(routes: IRouteInterface[]) {
     this.routes = routes;
+
+    this.handler = new HistoryRouterHandler(this.urlChangedHandler.bind(this));
 
     document.addEventListener('DOMContentLoaded', () => {
       this.navigate(null);
     });
-
-    window.onpopstate = this.navigate.bind(this);
   }
 
-  navigate(url: PopStateEvent | string | null): void {
-    if (typeof url === 'string') {
-      window.history.pushState(null, `${url}`, `/${url}`);
-    }
-    this.urlChangedHandler();
+  navigate(url: PopStateEvent | string | null) {
+    this.handler.navigate(url);
   }
 
-  private urlChangedHandler(): void {
-    if (window.location.pathname === '/') {
-      window.history.pushState(null, 'index', '/index');
-    }
+  // private urlChangedHandler(): void {
+  //   if (window.location.pathname === '/') {
+  //     window.history.pushState(null, 'index', '/index');
+  //   }
 
-    const route = this.routes.find((item) => window.location.pathname.slice(1).includes(item.path));
+  //   const route = this.routes.find((item) => window.location.pathname.slice(1).includes(item.path));
+  urlChangedHandler(requestParams: IPathResource) {
+    let pathForFind = '';
+    if (requestParams.resource === '') pathForFind = requestParams.path;
+    else pathForFind = `${requestParams.path}/${requestParams.resource}`;
+    const route = this.routes.find((item) => item.path === pathForFind);
 
-    if (
-      !route ||
-      (checkLoginState() && (route.path === Pages.login || route.path === Pages.registration))
-    ) {
+    if (!route) {
       this.redirectToNotFoundPage();
       return;
     }
+
     route.callback();
   }
 
