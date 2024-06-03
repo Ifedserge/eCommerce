@@ -1,6 +1,7 @@
-import { createBlock, createHeading, createImg, createP } from '../../../services/utilities/tags';
+import { createBlock, createHeading, createP } from '../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
+import { productSlider } from '../../../services/utilities/productSlide';
 
 export default class ProductPage {
   static async render(): Promise<HTMLElement> {
@@ -9,13 +10,9 @@ export default class ProductPage {
 
     const wrapper = createBlock(BlockType.div, ['product-page']);
 
-    const imgBlock = createBlock(BlockType.div, ['img-block']);
-    const img = createImg(
-      ['product-page__img'],
-      data.masterVariant.images[0]?.url || '',
-      data.name['en-GB']
-    );
-    imgBlock.append(img);
+    const slider = productSlider(data.masterVariant.images);
+    const imgWrapper = createBlock(BlockType.div, ['product-page__img']);
+    imgWrapper.append(slider);
 
     const infoBlock = createBlock(BlockType.div, ['info-block']);
     const name = createHeading(
@@ -31,7 +28,7 @@ export default class ProductPage {
     );
 
     infoBlock.append(name, description, price);
-    wrapper.append(imgBlock, infoBlock);
+    wrapper.append(imgWrapper, infoBlock);
 
     return wrapper;
   }
