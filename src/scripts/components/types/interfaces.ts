@@ -116,6 +116,7 @@ export interface IProductAllData {
   };
 }
 
+
 export interface IUserProfile {
   email: string;
   firstName: string;
