@@ -8,7 +8,12 @@ import {
   onInputPostalCodeChange,
   onInputStreetChange,
 } from '../../../services/registration/registrationButtons';
-import { onEditModeButtonClick, onInputRadioChange, onSubmitUpdateAddressButtonClick, onSubmitUpdateUserButtonClick } from '../../../services/userProfile/userButtons';
+import {
+  onEditModeButtonClick,
+  onInputRadioChange,
+  onSubmitUpdateAddressButtonClick,
+  onSubmitUpdateUserButtonClick,
+} from '../../../services/userProfile/userButtons';
 import { edit } from '../../../services/utilities/SVGs';
 import { decryptCipher } from '../../../services/utilities/encryptor';
 import {
@@ -47,7 +52,12 @@ export class UserProfile {
     const fields = [
       { label: 'First name', value: user.firstName, name: 'firstName', event: onInputNameChange },
       { label: 'Last name', value: user.lastName, name: 'lastName', event: onInputLastNameChange },
-      { label: 'Date of birth', value: user.dateOfBirth, name: 'dateOfBirth', event: onInputDateOfBirthChange },
+      {
+        label: 'Date of birth',
+        value: user.dateOfBirth,
+        name: 'dateOfBirth',
+        event: onInputDateOfBirthChange,
+      },
       { label: 'Email', value: user.email, name: 'email', event: onInputEmailChange },
     ];
 
@@ -109,13 +119,16 @@ export class UserProfile {
       user.defaultBillingAddress,
       user.defaultShippingAddress
     );
-    
-    const saveButton = createButton(['btn', 'btn-primary'], 'Save', {name: 'disabled', value: 'true'});
+
+    const saveButton = createButton(['btn', 'btn-primary'], 'Save', {
+      name: 'disabled',
+      value: 'true',
+    });
     saveButton.addEventListener('click', onSubmitUpdateUserButtonClick);
     fieldset.appendChild(saveButton);
-    
+
     profileForm.appendChild(fieldset);
-    
+
     profile.appendChild(profileForm);
     profile.appendChild(addressSection);
 
@@ -160,7 +173,10 @@ export class UserProfile {
       fieldset.appendChild(addressContainer);
     });
 
-    const saveButton = createButton(['btn', 'btn-primary'], 'Save', { name: 'disabled', value: 'true' });
+    const saveButton = createButton(['btn', 'btn-primary'], 'Save', {
+      name: 'disabled',
+      value: 'true',
+    });
     saveButton.addEventListener('click', onSubmitUpdateAddressButtonClick);
     fieldset.appendChild(saveButton);
 
@@ -211,7 +227,7 @@ export class UserProfile {
         input.classList.add('form-control', 'text');
         input.setAttribute('disabled', 'true');
         input.setAttribute('name', 'country');
-        
+
         const option1 = document.createElement('option');
         option1.value = 'BY';
         option1.text = 'Belarus';
@@ -237,7 +253,7 @@ export class UserProfile {
           { name: 'placeholder', value: `Enter ${field.label.toLowerCase()}` },
           { name: 'value', value: field.value },
           { name: 'disabled', value: 'true' },
-          {name: 'name', value: field.name}
+          { name: 'name', value: field.name }
         );
         input.addEventListener('keypress', field.event);
       }
@@ -257,7 +273,7 @@ export class UserProfile {
       ['form-checkbox'],
       { name: 'shipping', value: address.id },
       { name: 'disabled', value: 'true' },
-      {name: 'name', value: 'shipping'}
+      { name: 'name', value: 'shipping' }
     );
     const checkboxLabelShipping = createLabel(['form-label'], 'Shipping');
     if (shippingAddresses.some((a) => a.id === address.id)) {
@@ -272,7 +288,7 @@ export class UserProfile {
       ['form-checkbox'],
       { name: 'billing', value: address.id },
       { name: 'disabled', value: 'true' },
-      {name: 'name', value: 'billing'}
+      { name: 'name', value: 'billing' }
     );
     const checkboxLabelBilling = createLabel(['form-label'], 'Billing');
     if (billingAddresses.some((a) => a.id === address.id)) {
