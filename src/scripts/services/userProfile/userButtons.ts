@@ -22,15 +22,18 @@ export function onEditModeButtonClick(event: Event) {
     const buttons = form.querySelectorAll('button');
 
     inputs.forEach((input) => {
-      input.disabled = false;
+      const temp = input;
+      temp.disabled = false;
     });
 
     selects.forEach((select) => {
-      select.disabled = false;
+      const temp = select;
+      temp.disabled = false;
     });
 
     buttons.forEach((button) => {
-      button.disabled = false;
+      const temp = button;
+      temp.disabled = false;
     });
   }
 }
@@ -45,7 +48,8 @@ export function onInputRadioChange(event: Event) {
 
     radios.forEach((radio) => {
       if (radio !== target) {
-        radio.checked = false;
+        const temp = radio;
+        temp.checked = false;
       }
     });
   }
@@ -58,7 +62,8 @@ export function onDefaultShippingChange(event: Event) {
   ) as NodeListOf<HTMLInputElement>;
   radios.forEach((radio) => {
     if (radio !== target) {
-      radio.checked = false;
+      const temp = radio;
+      temp.checked = false;
     }
   });
 }
@@ -70,7 +75,8 @@ export function onDefaultBillingChange(event: Event) {
   ) as NodeListOf<HTMLInputElement>;
   radios.forEach((radio) => {
     if (radio !== target) {
-      radio.checked = false;
+      const temp = radio;
+      temp.checked = false;
     }
   });
 }
