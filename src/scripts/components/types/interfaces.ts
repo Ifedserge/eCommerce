@@ -59,7 +59,13 @@ interface IPrice {
   };
 }
 
+export interface IPathResource {
+  path: string;
+  resource: string;
+}
+
 export interface IProductData {
+  id: string;
   masterVariant: {
     images: { url: string }[];
     prices: IPrice[];
@@ -80,8 +86,36 @@ export interface IProductData {
     'en-GB': string;
     ru: string;
   };
-  id: string;
 }
+
+export interface IProductAllData {
+  id: string;
+  masterData: {
+    current: {
+      name: {
+        'en-GB': string;
+        ru: string;
+      };
+      description: {
+        'en-GB': string;
+        ru: string;
+      };
+      metaDescription: {
+        'en-GB': string;
+        ru: string;
+      };
+      masterVariant: {
+        images: { url: string }[];
+        prices: IPrice[];
+      };
+      slug: {
+        'en-GB': string;
+        ru: string;
+      };
+    };
+  };
+}
+
 export interface IUserProfile {
   email: string;
   firstName: string;
@@ -91,4 +125,26 @@ export interface IUserProfile {
   defaultBillingAddress: IAddress | null;
   defaultShippingAddress: IAddress | null;
   dateOfBirth: string;
+}
+
+export interface ICategoryData {
+  name: {
+    'en-GB': string;
+    ru: string;
+  };
+  id: string;
+  parent?: {
+    id: string;
+  };
+  slug: {
+    'en-GB': string;
+    ru: string;
+  };
+}
+
+export interface ICategory {
+  name: string;
+  id: string;
+  slug: string;
+  parent?: string;
 }
