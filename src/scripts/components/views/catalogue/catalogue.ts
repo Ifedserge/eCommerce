@@ -1,29 +1,73 @@
-import { getCatalogueDataMan } from '../../../services/utilities/getDataFunctions';
-import Router from '../../../services/router/router';
+import { getCatalogueData, getProducts } from '../../../services/utilities/getDataFunctions';
 import {
   createBlock,
   createButton,
   createHeading,
   createImg,
-  createP,
+  createSpan,
 } from '../../../services/utilities/tags';
-import { BlockType, HeadingType } from '../../types/enums';
+import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { createCard } from '../partials/card/card';
 
 export class Catalogue {
-  private router;
-
   private cardsBlock = createBlock(BlockType.div, ['catalogue__cards']);
 
-  constructor(router: Router) {
-    this.router = router;
+  isChosenSex = false;
+
+  private page;
+
+  constructor(isChosenSex: boolean, page: Pages) {
+    this.isChosenSex = isChosenSex;
+    this.page = page;
   }
 
-  createLayout(paths: string[]): HTMLElement {
+  createLayout(paths: string[], categoryId: string): HTMLElement {
     const block = createBlock(BlockType.section, ['catalogue']);
     block.append(this.createNavBlock(paths), this.createFilter(), this.cardsBlock);
-    getCatalogueDataMan(createCard, this.cardsBlock);
+    this.openPage(this.page, categoryId);
     return block;
+  }
+
+  openPage(name: string, categoryId: string): void {
+    switch (name) {
+      case Pages.catalogue: {
+        this.cardsBlock.innerHTML = '';
+        getProducts(createCard, this.cardsBlock);
+        break;
+      }
+      case Pages.man: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      case Pages.man_jeans: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      case Pages.man_jackets: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      case Pages.woman: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      case Pages.woman_jeans: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      case Pages.woman_jackets: {
+        this.cardsBlock.innerHTML = '';
+        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        break;
+      }
+      default:
+        break;
+    }
   }
 
   createNavBlock(path: string[]): HTMLElement {
@@ -37,9 +81,14 @@ export class Catalogue {
     const paths = path.filter((item) => item);
     paths.unshift('All categories');
     paths.forEach((item, index) => {
-      const button = createButton(['catalogue__path-button'], item);
+      const button = createButton(['catalogue__button', 'text', 'text_normal'], item);
+      button.addEventListener('click', () => {
+        if (item === 'All categories') window.location.pathname = 'catalogue';
+        if (item === 'Man') window.location.pathname = 'catalogue/man';
+        if (item === 'Woman') window.location.pathname = 'catalogue/woman';
+      });
       if (index < paths.length && paths.length !== 1) {
-        const slash = createP(['catalogue__slash'], '/');
+        const slash = createSpan(['catalogue__slash', 'text', 'text_normal'], '/');
         pathBlock.append(slash);
       }
       pathBlock.append(button);
@@ -49,7 +98,9 @@ export class Catalogue {
       `Denim Collection\nFall 2024`,
       HeadingType.h1
     );
-    pathWrapper.append(pathBlock, heading);
+
+    const subCategories = this.createSubCategories(path);
+    pathWrapper.append(pathBlock, heading, subCategories);
 
     const imgWrapper = createBlock(BlockType.div, ['catalogue__nav-img-wrapper']);
     const slogan = createImg(
@@ -84,5 +135,33 @@ export class Catalogue {
   createCardsBlock(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['catalogue__cards']);
     return wrapper;
+  }
+
+  createSubCategories(path: string[]): HTMLElement {
+    const wrapper = createBlock(BlockType.div, ['catalogue__sub-categories']);
+    if (!this.isChosenSex) {
+      const manButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Man');
+      manButton.addEventListener('click', () => this.redirect.call(this, 'man'));
+      const womanButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Woman');
+      womanButton.addEventListener('click', () => this.redirect.call(this, 'woman'));
+      wrapper.append(manButton, womanButton);
+    } else if (path.length === 1) {
+      const jeansButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jeans');
+      jeansButton.addEventListener('click', () => {
+        if (path[0] === 'Man') this.redirect.call(this, 'man-jeans');
+        else this.redirect.call(this, 'woman-jeans');
+      });
+      const jacketsButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jackets');
+      jacketsButton.addEventListener('click', () => {
+        if (path[0] === 'Man') this.redirect.call(this, 'man-jackets');
+        else this.redirect.call(this, 'woman-jackets');
+      });
+      wrapper.append(jeansButton, jacketsButton);
+    }
+    return wrapper;
+  }
+
+  private redirect(path: string): void {
+    window.location.pathname = `catalogue/${path}`;
   }
 }

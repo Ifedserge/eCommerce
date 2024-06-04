@@ -57,6 +57,12 @@
     max-width: 1200px;
     margin: 0 10px;
   }
+
+  &__button {
+    background: transparent;
+    border: none;
+    font-weight: 500;
+  }
 }
 
 .tracery {
