@@ -1,13 +1,13 @@
 import { Category } from '@commercetools/platform-sdk';
 import { NotificationType } from '../../components/types/enums';
-import { IProductData } from '../../components/types/interfaces';
+import { IProductAllData, IProductData } from '../../components/types/interfaces';
 import { apiAnonRoot } from '../api';
 import { NotificationService } from './notification';
 
 export function getProducts(
-  callBack: (data: IProductData) => HTMLElement,
+  callBack: (data: IProductAllData) => HTMLElement,
   block: HTMLElement
-): void | IProductData[] {
+): void | IProductAllData[] {
   apiAnonRoot
     .products()
     .get({
@@ -19,7 +19,7 @@ export function getProducts(
     .execute()
     .then((response) => {
       response.body.results.forEach((item) => {
-        const data = item.masterData.current as unknown as IProductData;
+        const data = item as unknown as IProductAllData;
         block.append(callBack(data));
       });
     })
@@ -41,7 +41,7 @@ export function getCatalogueData(
     .search()
     .get({
       queryArgs: {
-        filter: `categories.id:"${id}"`, // 'categories.id:' + '"' + `${id}` + '"',
+        filter: `categories.id:"${id}"`,
         limit: 10,
       },
     })

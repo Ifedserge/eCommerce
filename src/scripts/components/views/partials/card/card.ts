@@ -10,9 +10,9 @@ import {
   createSpan,
 } from '../../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../../types/enums';
-import { IProductData } from '../../../types/interfaces';
+import { IProductAllData, IProductData } from '../../../types/interfaces';
 
-export function createCard(data: IProductData): HTMLElement {
+export function createCard(data: IProductData | IProductAllData): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
   wrapper.addEventListener('click', () => {
@@ -20,40 +20,103 @@ export function createCard(data: IProductData): HTMLElement {
   });
 
   const imgWrapper = createBlock(BlockType.div, ['card__img-wrapper']);
-  const img = createImg(['card__img'], data.masterVariant.images[0].url, data.name['en-GB']);
+
+  let img: HTMLElement;
+  let name: HTMLElement;
+  let priceStr: string;
+  let description: HTMLElement;
+
+  const priceBlock = createBlock(BlockType.div, ['card__price-block']);
+
+  if (JSON.stringify(data).includes('masterData')) {
+    const newData = data as IProductAllData;
+    img = createImg(
+      ['card__img'],
+      newData.masterData.current.masterVariant.images[0].url,
+      newData.masterData.current.name['en-GB']
+    );
+    name = createHeading(
+      ['card__name', 'text', 'text_normal'],
+      newData.masterData.current.name['en-GB'],
+      HeadingType.h3
+    );
+    priceStr = convertPrice(
+      newData.masterData.current.masterVariant.prices[0].value.centAmount,
+      newData.masterData.current.masterVariant.prices[0].value.fractionDigits
+    );
+    description = createP(
+      ['card__description', 'text'],
+      newData.masterData.current.metaDescription['en-GB']
+    );
+    if (newData.masterData.current.masterVariant.prices[0].discounted) {
+      const priceElem = createDel(['card__old-price', 'text'], priceStr);
+      const newPrice = convertPrice(
+        newData.masterData.current.masterVariant.prices[0].discounted.value.centAmount,
+        newData.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits
+      );
+      const newPriceElem = createSpan(['card__new-price', 'text'], newPrice);
+      priceBlock.append(priceElem, newPriceElem);
+    } else {
+      const priceElem = createP(['card__price', 'text'], priceStr);
+      priceBlock.append(priceElem);
+    }
+  } else {
+    const newData = data as IProductData;
+    img = createImg(['card__img'], newData.masterVariant.images[0].url, newData.name['en-GB']);
+    name = createHeading(
+      ['card__name', 'text', 'text_normal'],
+      newData.name['en-GB'],
+      HeadingType.h3
+    );
+    priceStr = convertPrice(
+      newData.masterVariant.prices[0].value.centAmount,
+      newData.masterVariant.prices[0].value.fractionDigits
+    );
+    description = createP(['card__description', 'text'], newData.metaDescription['en-GB']);
+    if (newData.masterVariant.prices[0].discounted) {
+      const priceElem = createDel(['card__old-price', 'text'], priceStr);
+      const newPrice = convertPrice(
+        newData.masterVariant.prices[0].discounted.value.centAmount,
+        newData.masterVariant.prices[0].discounted.value.fractionDigits
+      );
+      const newPriceElem = createSpan(['card__new-price', 'text'], newPrice);
+      priceBlock.append(priceElem, newPriceElem);
+    } else {
+      const priceElem = createP(['card__price', 'text'], priceStr);
+      priceBlock.append(priceElem);
+    }
+  }
 
   const basketWrapper = createButton(['card__basket-button'], '');
   basketWrapper.innerHTML = basket;
 
   imgWrapper.append(img, basketWrapper);
 
-  const name = createHeading(
-    ['card__name', 'text', 'text_normal'],
-    data.name['en-GB'],
-    HeadingType.h3
-  );
+  // const name = createHeading(
+  //   ['card__name', 'text', 'text_normal'],
+  //   data.name['en-GB'],
+  //   HeadingType.h3
+  // );
 
-  const priceBlock = createBlock(BlockType.div, ['card__price-block']);
+  // const priceStr = convertPrice(
+  //   data.masterVariant.prices[0].value.centAmount,
+  //   data.masterVariant.prices[0].value.fractionDigits
+  // );
 
-  const priceStr = convertPrice(
-    data.masterVariant.prices[0].value.centAmount,
-    data.masterVariant.prices[0].value.fractionDigits
-  );
+  // if (data.masterVariant.prices[0].discounted) {
+  //   const priceElem = createDel(['card__old-price', 'text'], priceStr);
+  //   const newPrice = convertPrice(
+  //     data.masterVariant.prices[0].discounted.value.centAmount,
+  //     data.masterVariant.prices[0].discounted.value.fractionDigits
+  //   );
+  //   const newPriceElem = createSpan(['card__new-price', 'text'], newPrice);
+  //   priceBlock.append(priceElem, newPriceElem);
+  // } else {
+  //   const priceElem = createP(['card__price', 'text'], priceStr);
+  //   priceBlock.append(priceElem);
+  // }
 
-  if (data.masterVariant.prices[0].discounted) {
-    const priceElem = createDel(['card__old-price', 'text'], priceStr);
-    const newPrice = convertPrice(
-      data.masterVariant.prices[0].discounted.value.centAmount,
-      data.masterVariant.prices[0].discounted.value.fractionDigits
-    );
-    const newPriceElem = createSpan(['card__new-price', 'text'], newPrice);
-    priceBlock.append(priceElem, newPriceElem);
-  } else {
-    const priceElem = createP(['card__price', 'text'], priceStr);
-    priceBlock.append(priceElem);
-  }
-
-  const description = createP(['card__description', 'text'], data.metaDescription['en-GB']);
+  // const description = createP(['card__description', 'text'], data.metaDescription['en-GB']);
   wrapper.append(imgWrapper, name, description, priceBlock);
 
   return wrapper;

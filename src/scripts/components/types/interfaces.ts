@@ -65,6 +65,7 @@ export interface IPathResource {
 }
 
 export interface IProductData {
+  id: string;
   masterVariant: {
     images: { url: string }[];
     prices: IPrice[];
@@ -85,8 +86,36 @@ export interface IProductData {
     'en-GB': string;
     ru: string;
   };
-  id: string;
 }
+
+export interface IProductAllData {
+  id: string;
+  masterData: {
+    current: {
+      name: {
+        'en-GB': string;
+        ru: string;
+      };
+      description: {
+        'en-GB': string;
+        ru: string;
+      };
+      metaDescription: {
+        'en-GB': string;
+        ru: string;
+      };
+      masterVariant: {
+        images: { url: string }[];
+        prices: IPrice[];
+      };
+      slug: {
+        'en-GB': string;
+        ru: string;
+      };
+    };
+  };
+}
+
 export interface IUserProfile {
   email: string;
   firstName: string;
