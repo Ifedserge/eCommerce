@@ -27,15 +27,9 @@ export default class Router {
     const path = urlString.split('/');
     [result.path = '', result.resource = ''] = path;
 
-    this.checkCard();
-
-    this.urlChangedHandler(result);
-  }
-
-  checkCard(): void {
-    const path = window.location.pathname.slice(1);
-    const route = this.routes.find((item) => path.includes(item.path));
-    if (route && path.length > 20) route.callback();
+    const route = this.routes.find((item) => urlString.includes(item.path));
+    if (route && urlString.length > 20) route.callback();
+    else this.urlChangedHandler(result);
   }
 
   private urlChangedHandler(requestParams: IPathResource) {
