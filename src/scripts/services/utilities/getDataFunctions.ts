@@ -82,10 +82,12 @@ export function sortCards(
 ): void | IProductData[] | IProductAllData[] {
   if (id === 'none' || id === '') {
     apiAnonRoot
-      .products()
+      .productProjections()
+      .search()
       .get({
         queryArgs: {
-          sort: `masterData.current.${value} ${sortingType}`,
+          filter: `categories.id:"1309b310-7a8e-4651-b120-91b5f3e84e08"`,
+          sort: `${value} ${sortingType}`,
           limit: 10,
         },
       })
