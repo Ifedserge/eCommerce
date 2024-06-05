@@ -1,13 +1,14 @@
 import { Category } from '@commercetools/platform-sdk';
 import { NotificationType } from '../../components/types/enums';
 import { IProductAllData, IProductData } from '../../components/types/interfaces';
-import { apiAnonRoot } from '../api';
 import { NotificationService } from './notification';
+import { Api } from '../api';
 
 export function getProducts(
   callBack: (data: IProductAllData) => HTMLElement,
   block: HTMLElement
 ): void | IProductAllData[] {
+  const apiAnonRoot = Api.createAnonClient();
   apiAnonRoot
     .products()
     .get({
@@ -36,6 +37,7 @@ export function getCatalogueData(
   block: HTMLElement,
   id: string
 ): void | IProductData[] {
+  const apiAnonRoot = Api.createAnonClient();
   apiAnonRoot
     .productProjections()
     .search()
@@ -61,6 +63,7 @@ export function getCatalogueData(
 }
 
 export function getCategories(callback: (data: Category[]) => void): void {
+  const apiAnonRoot = Api.createAnonClient();
   apiAnonRoot
     .categories()
     .get()
