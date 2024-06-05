@@ -1,5 +1,5 @@
 import { Category } from '@commercetools/platform-sdk';
-import { NotificationType } from '../../components/types/enums';
+import { NotificationType, SortType, SortingValue } from '../../components/types/enums';
 import { IProductAllData, IProductData } from '../../components/types/interfaces';
 import { apiAnonRoot } from '../api';
 import { NotificationService } from './notification';
@@ -12,7 +12,6 @@ export function getProducts(
     .products()
     .get({
       queryArgs: {
-        offset: 1,
         limit: 10,
       },
     })
@@ -72,4 +71,60 @@ export function getCategories(callback: (data: Category[]) => void): void {
         NotificationType.error
       );
     });
+}
+
+export function sortCards(
+  value: SortingValue,
+  id: string,
+  sortingType: SortType,
+  callBack: (data: IProductData | IProductAllData) => HTMLElement,
+  block: HTMLElement
+): void | IProductData[] | IProductAllData[] {
+  if (id === 'none' || id === '') {
+    apiAnonRoot
+      .products()
+      .get({
+        queryArgs: {
+          sort: `masterData.current.${value} ${sortingType}`,
+          limit: 10,
+        },
+      })
+      .execute()
+      .then((response) => {
+        response.body.results.forEach((item) => {
+          const data = item as unknown as IProductAllData;
+          block.append(callBack(data));
+        });
+      })
+      .catch(() => {
+        NotificationService.showNotification(
+          'Something happened. Please, go to the main page...',
+          NotificationType.error
+        );
+      });
+  } else {
+    apiAnonRoot
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          filter: `categories.id:"${id}"`,
+          sort: `${value} ${sortingType}`,
+          limit: 10,
+        },
+      })
+      .execute()
+      .then((response) => {
+        response.body.results.forEach((item) => {
+          const data = item as unknown as IProductData;
+          block.append(callBack(data));
+        });
+      })
+      .catch(() => {
+        NotificationService.showNotification(
+          'Something happened. Please, go to the main page...',
+          NotificationType.error
+        );
+      });
+  }
 }
