@@ -7,10 +7,11 @@ import {
   CustomerSetDefaultBillingAddressAction,
   CustomerAddBillingAddressIdAction,
 } from '@commercetools/platform-sdk';
-import { apiAnonRoot, apiAuthRoot } from '../api';
 import { NotificationService } from '../utilities/notification';
 import { NotificationType } from '../../components/types/enums';
 import { encryptCipher } from '../utilities/encryptor';
+import { Api } from '../api';
+import { convertToUserProfile } from '../utilities/converter';
 
 const countryCodes: { [key: string]: string } = {
   Belarus: 'BY',
@@ -78,6 +79,8 @@ export class RegistrationService {
       defaultBillingAddress: useAsDefaultBilling ? 1 : undefined,
     };
 
+    const apiAnonRoot = Api.createAnonClient();
+
     return apiAnonRoot
       .me()
       .signup()
@@ -118,6 +121,8 @@ export class RegistrationService {
           } as CustomerAddBillingAddressIdAction);
         }
 
+        const apiAuthRoot = Api.createAuthClient();
+
         return apiAuthRoot
           .customers()
           .withId({ ID: customerId })
@@ -128,7 +133,9 @@ export class RegistrationService {
             },
           })
           .execute()
-          .then(() => {
+          .then((response) => {
+            const user = convertToUserProfile(response);
+            localStorage.setItem('user', JSON.stringify(user));
             NotificationService.showNotification(
               'Addresses added successfully!',
               NotificationType.success

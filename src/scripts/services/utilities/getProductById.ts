@@ -1,8 +1,9 @@
 import { Product } from '@commercetools/platform-sdk';
-import { apiAnonRoot } from '../api';
 import { IProductData } from '../../components/types/interfaces';
+import { Api } from '../api';
 
 export async function getProductById(productId: string): Promise<IProductData> {
+  const apiAnonRoot = Api.createAnonClient();
   const response = await apiAnonRoot.products().withId({ ID: productId }).get().execute();
   const product: Product = response.body;
 

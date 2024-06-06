@@ -1,10 +1,12 @@
 import { NotificationType } from '../../components/types/enums';
-import { apiAnonRoot, apiAuthRoot } from '../api';
+import { Api } from '../api';
+import { convertToUserProfile } from '../utilities/converter';
 import { encryptCipher } from '../utilities/encryptor';
 import { NotificationService } from '../utilities/notification';
 
 export class LoginService {
   static async login(email: string, password: string): Promise<void> {
+    const apiAnonRoot = Api.createAnonClient();
     await apiAnonRoot
       .me()
       .login()
@@ -19,11 +21,14 @@ export class LoginService {
         localStorage.setItem('email', email);
         localStorage.setItem('encryptPassword', encryptCipher(password));
 
+        const apiAuthRoot = Api.createAuthClient();
         apiAuthRoot
           .me()
           .get()
           .execute()
-          .then(() => {
+          .then((response) => {
+            const user = convertToUserProfile(response);
+            localStorage.setItem('user', JSON.stringify(user));
             NotificationService.showNotification('Login successful!', NotificationType.success);
             window.location.pathname = '/index';
           })

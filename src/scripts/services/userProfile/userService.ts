@@ -7,9 +7,10 @@ import {
 } from '@commercetools/platform-sdk';
 import { NotificationType } from '../../components/types/enums';
 import { IAddress, IUserProfile } from '../../components/types/interfaces';
-import { apiAuthRoot } from '../api';
 import { decryptCipher, encryptCipher } from '../utilities/encryptor';
 import { NotificationService } from '../utilities/notification';
+import { Api } from '../api';
+import { convertToUserProfile } from '../utilities/converter';
 
 export class UserService {
   static getCurrentUser(): IUserProfile {
@@ -24,46 +25,14 @@ export class UserService {
       dateOfBirth: '',
     };
 
+    const apiAuthRoot = Api.createAuthClient();
+
     apiAuthRoot
       .me()
       .get()
       .execute()
       .then((response) => {
-        const addresses = (response.body.addresses || []).map((address) => ({
-          id: address.id,
-          city: address.city || '',
-          streetName: address.streetName || '',
-          streetNumber: address.streetNumber || '',
-          postalCode: address.postalCode || '',
-          country: address.country || '',
-        }));
-
-        const billingAddresses = addresses.filter((address) =>
-          (response.body.billingAddressIds || []).includes(address.id || '')
-        );
-        const shippingAddresses = addresses.filter((address) =>
-          (response.body.shippingAddressIds || []).includes(address.id || '')
-        );
-        const defaultBillingAddress =
-          billingAddresses.find(
-            (address) => address.id === response.body.defaultBillingAddressId
-          ) || null;
-        const defaultShippingAddress =
-          shippingAddresses.find(
-            (address) => address.id === response.body.defaultShippingAddressId
-          ) || null;
-
-        user = {
-          email: response.body.email,
-          firstName: response.body.firstName || '',
-          lastName: response.body.lastName || '',
-          billingAddresses,
-          shippingAddresses,
-          defaultBillingAddress,
-          defaultShippingAddress,
-          dateOfBirth: response.body.dateOfBirth || '',
-        };
-
+        user = convertToUserProfile(response);
         localStorage.setItem('user', JSON.stringify(user));
       })
       .catch((error) => {
@@ -78,6 +47,8 @@ export class UserService {
 
   static async updateUser(user: IUserProfile, password: string): Promise<void> {
     const oldPassword: string = decryptCipher(localStorage.getItem('encryptedPassword') || '');
+
+    const apiAuthRoot = Api.createAuthClient();
 
     await apiAuthRoot
       .me()
@@ -178,6 +149,7 @@ export class UserService {
   }
 
   static async updateAddresses(user: IUserProfile): Promise<void> {
+    const apiAuthRoot = Api.createAuthClient();
     await apiAuthRoot
       .me()
       .get()
