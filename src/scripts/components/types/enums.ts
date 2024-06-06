@@ -59,24 +59,3 @@ export enum IdCategories {
   woman_jeans = '8c4fc8bb-898c-46f7-808a-0f10cd801e11',
   woman_jackets = '6a9e1de6-efdd-496d-bc34-210262523a1a',
 }
-
-export enum SortType {
-  asc = 'asc',
-  desc = 'desc',
-  none = 'none',
-}
-
-export enum SortButtonText {
-  asc = 'A-Z',
-  desc = 'Z-A',
-}
-
-export enum SortingValue {
-  name = 'name.en-GB',
-  price = 'price',
-}
-
-export enum SortPriceButtonText {
-  chip = 'Chip first',
-  expensive = 'Expensive first',
-}

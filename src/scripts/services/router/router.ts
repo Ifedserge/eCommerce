@@ -28,7 +28,7 @@ export default class Router {
     [result.path = '', result.resource = ''] = path;
 
     const route = this.routes.find((item) => urlString.includes(item.path));
-    if (route && urlString.length > 22) route.callback();
+    if (route && urlString.length > 20) route.callback();
     else this.urlChangedHandler(result);
   }
 
