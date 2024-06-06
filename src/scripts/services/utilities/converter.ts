@@ -36,7 +36,7 @@ export function convertToUserProfile(user: ClientResponse<Customer>): IUserProfi
     shippingAddresses.find((address) => address.id === user.body.defaultShippingAddressId) || null;
 
   const userProfile: IUserProfile = {
-    email: user.body.email,
+    email: user.body.email || '',
     firstName: user.body.firstName || '',
     lastName: user.body.lastName || '',
     billingAddresses,
