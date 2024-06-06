@@ -77,3 +77,15 @@
 .card:hover .card__basket-button {
   transform: translateX(0);
 }
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .card {
+    flex-basis: 30%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card {
+    flex-basis: 45%;
+  }
+}
