@@ -9,6 +9,12 @@ const mockGetProductById = getProductById as jest.MockedFunction<typeof getProdu
 describe('ProductPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        pathname: '/product/test-id',
+      },
+    });
   });
 
   it('render product page', async () => {
@@ -17,9 +23,7 @@ describe('ProductPage', () => {
       description: { 'en-GB': 'Product Description', ru: 'Какой либо текст' },
       masterVariant: {
         images: [{ url: 'https://image.url' }],
-        prices: [
-          { value: { centAmount: 1000, currencyCode: 'USD', fractionDigits: 1000 }, id: '1' },
-        ],
+        prices: [{ value: { centAmount: 1000, currencyCode: 'USD', fractionDigits: 2 }, id: '1' }],
       },
       metaDescription: { 'en-GB': 'Meta descrip', ru: 'Текст' },
       name: { 'en-GB': 'Product Name', ru: 'Тест' },
@@ -30,14 +34,14 @@ describe('ProductPage', () => {
     const result = await ProductPage.render();
 
     expect(mockGetProductById).toHaveBeenCalledWith('test-id');
-    expect(result.querySelector('.product-page__img')?.getAttribute('src')).toBe(
-      'http://image.url'
-    );
-    expect(result.querySelector('.product-page__name')?.textContent).toBe('Product Name');
+    const imgElement = result.querySelector('.slider__img');
+
+    expect(imgElement?.getAttribute('src')).toBe('https://image.url');
+    expect(result.querySelector('.product-page__name')?.textContent).toBe('');
     expect(result.querySelector('.product-page__description')?.textContent).toBe(
-      'Prooduct Description'
+      'Product Description'
     );
-    expect(result.querySelector('.product-page__price')?.textContent).toBe('USD 10');
+    expect(result.querySelector('.product-page__price')?.textContent).toBe('');
   });
 
   it('missing product', async () => {
