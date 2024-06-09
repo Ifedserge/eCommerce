@@ -1,0 +1,91 @@
+.card {
+  flex-basis: 20%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  justify-content: space-between;
+  border: none !important;
+  transition-timing-function: ease-in-out;
+  transition-duration: 300ms;
+
+  &__img-wrapper {
+    overflow: hidden;
+    position: relative;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  &__img {
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+  }
+
+  &__basket-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 15px;
+    border: none;
+    background: transparent;
+    transition-timing-function: ease-in-out;
+    transition-duration: 800ms;
+    transform: translateX(50px);
+  }
+
+  &__name {
+    margin: 15px 0 0 0;
+    font-weight: 500;
+    padding: 0 5px;
+  }
+
+  &__description {
+    font-size: 0.75rem;
+    margin: 5px 0 0 0;
+    padding: 0 5px;
+  }
+
+  &__price {
+    margin: 10px 0 0 0;
+    font-weight: 700;
+  }
+
+  &__price-block {
+    padding: 0 5px;
+  }
+
+  &__old-price {
+    color: rgb(228, 0, 0);
+  }
+
+  &__new-price,
+  &__old-price {
+    font-weight: 700;
+  }
+
+  &__new-price {
+    margin-left: 10px;
+  }
+}
+
+.card:hover {
+  background-color: $gray-color;
+}
+
+.card:hover .card__img {
+  transform: scale(1.1);
+}
+
+.card:hover .card__basket-button {
+  transform: translateX(0);
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .card {
+    flex-basis: 30%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card {
+    flex-basis: 45%;
+  }
+}

@@ -5,25 +5,21 @@ import {
   Cart,
 } from '@commercetools/platform-sdk';
 
-export interface TagAttributes {
+export interface ITagAttributes {
   name: string;
   value?: string;
 }
-export interface RouteInterface {
+export interface IRouteInterface {
   path: string;
-  callback: () => void;
+  callback: (params?: { [key: string]: string }) => void;
 }
 
-export interface Router {
-  navigate: (url: string) => void;
-}
-
-export interface CustomerDraft {
+export interface ICustomerDraft {
   email: string;
   password: string;
   firstName?: string;
   lastName?: string;
-  addresses?: Address[];
+  addresses?: IAddress[];
   dateOfBirth?: string;
   companyName?: string;
   vatId?: string;
@@ -34,14 +30,121 @@ export interface CustomerDraft {
   externalId?: string;
 }
 
-export interface Address {
+export interface IAddress {
+  id?: string;
   city: string;
   streetName: string;
+  streetNumber?: string;
   postalCode: string;
   country: string;
 }
 
-export interface CustomerSignInResult {
+export interface ICustomerSignInResult {
   customer: Customer;
   cart?: Cart;
+}
+
+interface IPrice {
+  id: string;
+  value: {
+    currencyCode: string;
+    centAmount: number;
+    fractionDigits: number;
+  };
+  discounted?: {
+    value: {
+      centAmount: number;
+      fractionDigits: number;
+    };
+  };
+}
+
+export interface IPathResource {
+  path: string;
+  resource: string;
+}
+
+export interface IProductData {
+  id: string;
+  masterVariant: {
+    images: { url: string }[];
+    prices: IPrice[];
+  };
+  name: {
+    'en-GB': string;
+    ru: string;
+  };
+  description: {
+    'en-GB': string;
+    ru: string;
+  };
+  metaDescription: {
+    'en-GB': string;
+    ru: string;
+  };
+  slug: {
+    'en-GB': string;
+    ru: string;
+  };
+}
+
+export interface IProductAllData {
+  id: string;
+  masterData: {
+    current: {
+      name: {
+        'en-GB': string;
+        ru: string;
+      };
+      description: {
+        'en-GB': string;
+        ru: string;
+      };
+      metaDescription: {
+        'en-GB': string;
+        ru: string;
+      };
+      masterVariant: {
+        images: { url: string }[];
+        prices: IPrice[];
+      };
+      slug: {
+        'en-GB': string;
+        ru: string;
+      };
+    };
+  };
+}
+
+export interface IUserProfile {
+  email: string;
+  firstName: string;
+  lastName: string;
+  billingAddresses: IAddress[];
+  shippingAddresses: IAddress[];
+  defaultBillingAddress: IAddress | null;
+  defaultShippingAddress: IAddress | null;
+  dateOfBirth: string;
+}
+
+export interface ICategoryData {
+  name: {
+    'en-GB': string;
+    ru: string;
+  };
+  id: string;
+  parent?: {
+    id: string;
+  };
+  slug: {
+    'en-GB': string;
+    ru: string;
+  };
+}
+
+export interface ICategory {
+  name: string;
+  id: string;
+  slug: string;
+  parent?: string;
 }

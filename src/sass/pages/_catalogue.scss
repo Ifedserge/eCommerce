@@ -1,0 +1,84 @@
+.catalogue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+
+  &__navigation {
+    display: flex;
+    justify-content: center;
+    background-color: $gray-color;
+
+    width: 100vw;
+  }
+
+  &__nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+
+  &__nav-img-wrapper {
+    position: relative;
+  }
+
+  &__nav-img {
+    height: 260px;
+    z-index: 2;
+    position: relative;
+  }
+
+  &__nav-tracery-first {
+    position: absolute;
+    bottom: 0;
+    left: -30px;
+  }
+
+  &__nav-tracery-second {
+    position: absolute;
+    top: 0;
+    right: -30px;
+  }
+
+  &__path-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__heading {
+    font-weight: 700;
+  }
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 10px;
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    font-weight: 500;
+  }
+
+  &__filter {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__sort-name-button,
+  &__sort-price-button {
+    background-color: $black-color;
+    border: none;
+    color: $white-color;
+    padding: 10px 15px;
+  }
+}
+
+.tracery {
+  width: 232px;
+  height: 176px;
+}

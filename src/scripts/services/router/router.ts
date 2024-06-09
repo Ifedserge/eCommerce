@@ -1,11 +1,10 @@
 import { Pages } from '../../components/types/enums';
-import { RouteInterface } from '../../components/types/interfaces';
-import { checkLoginState } from '../utilities/checkLoginState';
+import { IPathResource, IRouteInterface } from '../../components/types/interfaces';
 
 export default class Router {
   private routes;
 
-  constructor(routes: RouteInterface[]) {
+  constructor(routes: IRouteInterface[]) {
     this.routes = routes;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -15,23 +14,35 @@ export default class Router {
     window.onpopstate = this.navigate.bind(this);
   }
 
-  navigate(url: PopStateEvent | string | null): void {
+  navigate(url: PopStateEvent | string | null) {
     if (typeof url === 'string') {
       window.history.pushState(null, `${url}`, `/${url}`);
     }
-    this.urlChangedHandler();
+    const urlString = window.location.pathname.slice(1);
+
+    const result = {
+      path: '',
+      resource: '',
+    };
+    const path = urlString.split('/');
+    [result.path = '', result.resource = ''] = path;
+
+    const route = this.routes.find((item) => urlString.includes(item.path));
+    if (route && urlString.length > 22) route.callback();
+    else this.urlChangedHandler(result);
   }
 
-  private urlChangedHandler(): void {
-    const route = this.routes.find((item) => item.path === window.location.pathname.slice(1));
+  private urlChangedHandler(requestParams: IPathResource) {
+    let pathForFind = '';
+    if (requestParams.resource === '') pathForFind = requestParams.path;
+    else pathForFind = `${requestParams.path}/${requestParams.resource}`;
+    const route = this.routes.find((item) => item.path === pathForFind);
 
-    if (
-      !route ||
-      (checkLoginState() && (route.path === Pages.login || route.path === Pages.registration))
-    ) {
+    if (!route) {
       this.redirectToNotFoundPage();
       return;
     }
+
     route.callback();
   }
 

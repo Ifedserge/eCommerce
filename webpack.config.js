@@ -63,6 +63,7 @@ module.exports = ({ development }) => ({
   plugins: [
     ...esLintPlugin(development),
     new HtmlWebpackPlugin({
+      base: '/',
       filename: 'index.html',
     }),
     new DotenvWebpackPlugin(),
@@ -82,6 +83,7 @@ module.exports = ({ development }) => ({
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist'),
+    publicPath: '/',
   },
   ...devServer(development),
 });

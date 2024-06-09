@@ -5,6 +5,7 @@ import {
   createInput,
   createLabel,
   createSelect,
+  createP,
 } from '../../../services/utilities/tags';
 import { BlockType, InputType } from '../../types/enums';
 
@@ -92,6 +93,8 @@ class Registration {
     dateOfBirthContainer.appendChild(dateOfBirthLabel);
     dateOfBirthContainer.appendChild(dateOfBirthInput);
 
+    const shippingAddres = createP(['adress-type'], 'Shipping address');
+
     const countryContainer = createBlock(BlockType.div, ['form-group']);
     const countryLabel = createLabel(['form-label', 'text'], 'Country');
     const countrySelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text']);
@@ -155,6 +158,68 @@ class Registration {
 
     defaultAddressContainer.append(defaultAddressLabel, defaultAddressInput);
 
+    const billingAddress = createP(['adress-type'], 'Billing address');
+
+    const countryBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const countryBillingLabel = createLabel(['form-label', 'text'], 'Country');
+    const countryBillingSelect = createSelect(['Belarus', 'Germany'], ['form-control', 'text'], {
+      name: 'name',
+      value: 'billingCountry',
+    });
+
+    countryBillingContainer.append(countryBillingLabel, countryBillingSelect);
+
+    const cityBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const cityBillingLabel = createLabel(['form-label', 'text'], 'City');
+    const cityBillingInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter city',
+    });
+    cityBillingInput.setAttribute('name', 'billingCity');
+    cityBillingInput.addEventListener('input', onInputCityChange);
+
+    cityBillingContainer.append(cityBillingLabel, cityBillingInput);
+
+    const streetBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const streetBillingLabel = createLabel(['form-label', 'text'], 'Street');
+    const streetBillingInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter street',
+    });
+    streetBillingInput.setAttribute('name', 'billingStreet');
+    streetBillingInput.addEventListener('input', onInputStreetChange);
+
+    streetBillingContainer.append(streetBillingLabel, streetBillingInput);
+
+    const streetBillingNumberContainer = createBlock(BlockType.div, ['form-group']);
+    const streetBillingNumberLabel = createLabel(['form-label'], 'Street number');
+    const streetBillingNumberInput = createInput(InputType.text, ['form-control'], {
+      name: 'placeholder',
+      value: 'Enter street number',
+    });
+    streetBillingNumberInput.setAttribute('name', 'billingStreetNumber');
+    streetBillingNumberInput.addEventListener('input', onInputStreetChange);
+
+    streetBillingNumberContainer.append(streetBillingNumberLabel, streetBillingNumberInput);
+
+    const countryBillingIndexContainer = createBlock(BlockType.div, ['form-group']);
+    const countryBillingIndexLabel = createLabel(['form-label', 'text'], 'Country index');
+    const countryBillingIndexInput = createInput(InputType.text, ['form-control', 'text'], {
+      name: 'placeholder',
+      value: 'Enter country index',
+    });
+    countryBillingIndexInput.setAttribute('name', 'billingCountryIndex');
+    countryBillingIndexInput.addEventListener('input', (event) => onInputPostalCodeChange(event));
+
+    countryBillingIndexContainer.append(countryBillingIndexLabel, countryBillingIndexInput);
+
+    const useAsDefaultBillingContainer = createBlock(BlockType.div, ['form-group']);
+    const useAsDefaultBillingLabel = createLabel(['form-label'], 'Use as default billing address');
+    const useAsDefaultBillingInput = createInput(InputType.checkbox, ['default_check']);
+    useAsDefaultBillingInput.setAttribute('name', 'useAsDefaultBilling');
+
+    useAsDefaultBillingContainer.append(useAsDefaultBillingLabel, useAsDefaultBillingInput);
+
     fieldset.append(
       legend,
       emailContainer,
@@ -162,12 +227,20 @@ class Registration {
       lastNameContainer,
       passwordContainer,
       dateOfBirthContainer,
+      shippingAddres,
       countryContainer,
       cityContainer,
       streetContainer,
       streetNumberContainer,
       countryIndexContainer,
-      defaultAddressContainer
+      defaultAddressContainer,
+      billingAddress,
+      countryBillingContainer,
+      cityBillingContainer,
+      streetBillingContainer,
+      streetBillingNumberContainer,
+      countryBillingIndexContainer,
+      useAsDefaultBillingContainer
     );
 
     const submitButton = createButton(
