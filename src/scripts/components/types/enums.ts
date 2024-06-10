@@ -49,6 +49,7 @@ export enum Pages {
   woman = 'woman',
   woman_jeans = 'woman-jeans',
   woman_jackets = 'woman-jackets',
+  basket = 'basket',
 }
 
 export enum IdCategories {

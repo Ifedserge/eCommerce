@@ -13,6 +13,7 @@ import { Catalogue } from '../views/catalogue/catalogue';
 import ProductPage from '../views/product/productPage';
 // import { getAttributes, getCategories, sortCards } from '../../services/utilities/getDataFunctions';
 import { UserProfile } from '../views/userProfile/userProfile';
+import { BasketPage } from '../views/basket/basket';
 
 export class App {
   routes = this.createRoutes();
@@ -154,6 +155,10 @@ export class App {
       {
         path: `${Pages.notFound}`,
         callback: () => this.changePage(createNotFoundPage(this.router)),
+      },
+      {
+        path: `${Pages.basket}`,
+        callback: () => this.changePage(BasketPage.render()),
       },
     ];
   }

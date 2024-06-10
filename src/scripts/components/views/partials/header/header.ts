@@ -61,6 +61,7 @@ export class Header {
   createManageBlock(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['header__manage-wrapper']);
     const basketLink = createButton(['header__icon-wrapper'], '');
+    basketLink.addEventListener('click', () => this.router.navigate(Pages.basket));
     basketLink.innerHTML = basket;
     wrapper.append(this.createAuthBlock(), basketLink);
     return wrapper;
