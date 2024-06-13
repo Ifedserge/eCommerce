@@ -11,7 +11,6 @@ import { ICategory, IRouteInterface } from '../types/interfaces';
 import Registration from '../views/registration/registration';
 import { Catalogue } from '../views/catalogue/catalogue';
 import ProductPage from '../views/product/productPage';
-// import { getAttributes, getCategories, sortCards } from '../../services/utilities/getDataFunctions';
 import { UserProfile } from '../views/userProfile/userProfile';
 import { BasketPage } from '../views/basket/basket';
 import { AboutUsPage } from '../views/about-us/about-us';
@@ -53,8 +52,6 @@ export class App {
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
-
-    // getCategories(this.setCategories.bind(this));
   }
 
   updateHeader(): void {

@@ -1,4 +1,5 @@
 import { basket } from '../../../../services/utilities/SVGs';
+import { addGoodHandler } from '../../../../services/utilities/basketDataFunctions';
 import { convertPrice } from '../../../../services/utilities/convertPrice';
 import {
   createBlock,
@@ -15,7 +16,13 @@ import { IProductAllData, IProductData } from '../../../types/interfaces';
 export function createCard(data: IProductData | IProductAllData): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
-  wrapper.addEventListener('click', () => {
+  wrapper.addEventListener('click', (e: Event) => {
+    const elem = e.target as HTMLElement;
+    elem.classList.contains;
+    if (elem.classList.contains('card__basket-button') || elem.classList.contains('basket')) {
+      addGoodHandler();
+      return;
+    }
     window.location.pathname = `/product/${data.id}`;
   });
 
