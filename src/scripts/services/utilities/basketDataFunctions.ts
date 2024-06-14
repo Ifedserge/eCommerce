@@ -1,28 +1,27 @@
 import { Api } from '../api';
 import { checkCart, checkLoginState } from './checkLoginState';
 
-export function addGoodHandler(): void {
-  if (checkCart()) addGoodInBasket();
-  else createCart();
+export async function addGoodHandler(id: string): Promise<void> {
+  if (!checkCart()) await getCart();
+  const cartData = JSON.parse(localStorage.getItem('cartData')!);
+  addGoodInBasket(cartData.id, cartData.version, id);
 }
 
-function addGoodInBasket(): void {
+function addGoodInBasket(cartID: string, cartVersion: number, productID: string): void {
   let apiType;
   if (checkLoginState()) apiType = Api.createAuthClient();
   else apiType = Api.createAnonClient();
-
-  debugger;
   apiType
     .me()
     .carts()
-    .withId({ ID: localStorage.getItem('cartId')! })
+    .withId({ ID: cartID })
     .post({
       body: {
-        version: 1,
+        version: cartVersion,
         actions: [
           {
             action: 'addLineItem',
-            productId: '1f980c5b-918c-4db8-91ad-4acbf4b05733',
+            productId: productID,
           },
         ],
       },
@@ -33,11 +32,11 @@ function addGoodInBasket(): void {
     });
 }
 
-function createCart(): void {
+async function createCart(): Promise<void> {
   let apiType;
   if (checkLoginState()) apiType = Api.createAuthClient();
   else apiType = Api.createAnonClient();
-  apiType
+  await apiType
     .me()
     .carts()
     .post({
@@ -47,24 +46,26 @@ function createCart(): void {
     })
     .execute()
     .then((response) => {
-      console.log(response);
-      //скорее всего нужно будет создавать объект с данными Cart, потому что на сколько я понял надо хранить еще версию корзины
-      localStorage.setItem('cartId', response.body.id); //здесь получаю id Cart
-      //addGoodInBasket();
-      checkCartInApi(); //но при попытке обратиться к корзине выдает ошибку 404. Я похоже как-то не так к ней обращаюсь
+      localStorage.setItem('cartData', JSON.stringify({ id: response.body.id, version: 1 }));
     });
 }
 
-function checkCartInApi(): void {
+async function getCart(): Promise<void> {
   let apiType;
-  apiType = Api.createAnonClient();
-  apiType
+  if (checkLoginState()) apiType = Api.createAuthClient();
+  else apiType = Api.createAnonClient();
+  await apiType
     .me()
     .carts()
-    .withId({ ID: localStorage.getItem('cartId')! })
-    .head()
+    .get()
     .execute()
     .then((response) => {
       console.log(response);
+      if (response.body.results.length === 0) createCart();
+      else {
+        const actualCart = response.body.results.find((item) => item.cartState === 'Active');
+        const cartData = { id: actualCart!.id, version: actualCart!.version };
+        localStorage.setItem('cartData', JSON.stringify(cartData));
+      }
     });
 }

@@ -20,7 +20,7 @@ export function createCard(data: IProductData | IProductAllData): HTMLElement {
     const elem = e.target as HTMLElement;
     elem.classList.contains;
     if (elem.classList.contains('card__basket-button') || elem.classList.contains('basket')) {
-      addGoodHandler();
+      addGoodHandler(data.id);
       return;
     }
     window.location.pathname = `/product/${data.id}`;

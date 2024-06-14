@@ -6,6 +6,6 @@ export function checkLoginState(): boolean {
 
 export function checkCart(): boolean {
   const storage = window.localStorage;
-  if (storage.cartId) return true;
+  if (storage.cartData) return true;
   return false;
 }
