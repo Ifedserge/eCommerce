@@ -19,7 +19,7 @@ export class Header {
   createLayout(): HTMLElement {
     const block = createBlock(BlockType.header, ['header']);
     const wrapper = createBlock(BlockType.div, ['header__wrapper']);
-    wrapper.append(this.createLogo(), this.createManageBlock());
+    wrapper.append(this.createLogo(), this.createAboutPageButton(), this.createManageBlock());
     block.append(wrapper);
     return block;
   }
@@ -61,6 +61,7 @@ export class Header {
   createManageBlock(): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['header__manage-wrapper']);
     const basketLink = createButton(['header__icon-wrapper'], '');
+    basketLink.addEventListener('click', () => this.router.navigate(Pages.basket));
     basketLink.innerHTML = basket;
     wrapper.append(this.createAuthBlock(), basketLink);
     return wrapper;
@@ -68,5 +69,11 @@ export class Header {
 
   changeAuthState(): void {
     this.isLogined = !this.isLogined;
+  }
+
+  createAboutPageButton(): HTMLElement {
+    const button = createButton(['header__about', 'text', 'text_normal'], 'About us');
+    button.addEventListener('click', () => this.router.navigate(Pages.about));
+    return button;
   }
 }
