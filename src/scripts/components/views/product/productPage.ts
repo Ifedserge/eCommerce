@@ -4,6 +4,7 @@ import {
   createP,
   createDel,
   createSpan,
+  createButton,
 } from '../../../services/utilities/tags';
 import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
@@ -53,7 +54,9 @@ export default class ProductPage {
         const regularPrice = createP(['product-page__price'], formattedPrice);
         priceWrapper.append(regularPrice);
       }
-      infoBlock.append(name, description, priceWrapper);
+
+      const addToCartBtn = createButton(['btn_add'], 'add to cart');
+      infoBlock.append(name, description, priceWrapper, addToCartBtn);
       wrapper.append(imgWrapper, infoBlock);
     } catch {
       window.location.pathname = Pages.notFound;
