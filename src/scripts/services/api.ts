@@ -171,3 +171,5 @@ export class Api {
     });
   }
 }
+
+export const apiAnonRoot = Api.createAnonClient();

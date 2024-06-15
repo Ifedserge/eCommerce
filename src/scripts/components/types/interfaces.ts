@@ -69,6 +69,8 @@ export interface IProductData {
   masterVariant: {
     images: { url: string }[];
     prices: IPrice[];
+    id?: number;
+    sku?: string;
   };
   name: {
     'en-GB': string;
