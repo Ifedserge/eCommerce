@@ -150,3 +150,8 @@ export interface ICategory {
   slug: string;
   parent?: string;
 }
+export interface ICommercetoolsError {
+  statusCode: number;
+  message: string;
+  errors: Array<{ code: string; message: string }>;
+}

@@ -10,7 +10,7 @@ import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
 import { productSlider } from '../../../services/utilities/productSlide';
 import { convertPrice } from '../../../services/utilities/convertPrice';
-import { addToAnonymousCart, createAnonymousCart } from '../../../services/utilities/anonymousCart';
+import { handleAddProductToCart } from '../../../services/utilities/cartHandler';
 
 export default class ProductPage {
   static async render(): Promise<HTMLElement> {
@@ -57,26 +57,7 @@ export default class ProductPage {
       }
 
       const addToCartBtn = createButton(['btn_add'], 'add to cart');
-      addToCartBtn.addEventListener('click', async () => {
-        const userToken = localStorage.getItem('userToken');
-        const cartId = localStorage.getItem('cartId');
-
-        if (userToken) {
-          if (cartId) {
-            console.log('Check user cart');
-          } else {
-            console.log('create new cart!!!!');
-          }
-        }
-        if (cartId) {
-          await addToAnonymousCart(cartId, data);
-        } else {
-          const newCartId = await createAnonymousCart();
-          localStorage.setItem('cartId', newCartId);
-          await addToAnonymousCart(newCartId, data);
-          console.log('Anon add cart');
-        }
-      });
+      addToCartBtn.addEventListener('click', () => handleAddProductToCart(productId));
 
       infoBlock.append(name, description, priceWrapper, addToCartBtn);
       wrapper.append(imgWrapper, infoBlock);
