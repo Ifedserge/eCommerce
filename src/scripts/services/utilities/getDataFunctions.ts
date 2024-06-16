@@ -7,8 +7,9 @@ import { Api } from '../api';
 const apiAnonRoot = Api.createAnonClient();
 
 export function getProducts(
-  callBack: (data: IProductAllData) => HTMLElement,
-  block: HTMLElement
+  callBack: (data: IProductAllData, api: any) => HTMLElement,
+  block: HTMLElement,
+  anonApi: any
 ): void | IProductAllData[] {
   apiAnonRoot
     .products()
@@ -21,7 +22,7 @@ export function getProducts(
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductAllData;
-        block.append(callBack(data));
+        block.append(callBack(data, anonApi));
       });
     })
     .catch(() => {
@@ -33,9 +34,10 @@ export function getProducts(
 }
 
 export function getCatalogueData(
-  callBack: (data: IProductData) => HTMLElement,
+  callBack: (data: IProductData, api: any) => HTMLElement,
   block: HTMLElement,
-  id: string
+  id: string,
+  api: any
 ): void | IProductData[] {
   apiAnonRoot
     .productProjections()
@@ -50,7 +52,7 @@ export function getCatalogueData(
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductData;
-        block.append(callBack(data));
+        block.append(callBack(data, api));
       });
     })
     .catch(() => {
@@ -79,8 +81,9 @@ export function sortCards(
   value: SortingValue,
   id: string,
   sortingType: SortType,
-  callBack: (data: IProductData | IProductAllData) => HTMLElement,
-  block: HTMLElement
+  callBack: (data: IProductData | IProductAllData, api: any) => HTMLElement,
+  block: HTMLElement,
+  api: any
 ): void | IProductData[] | IProductAllData[] {
   const queryArgs = {
     filter:
@@ -99,7 +102,7 @@ export function sortCards(
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductData | IProductAllData;
-        block.append(callBack(data));
+        block.append(callBack(data, api));
       });
     })
     .catch(() => {

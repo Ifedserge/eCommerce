@@ -1,3 +1,4 @@
+import { ApiClient } from '@commercetools/platform-sdk';
 import {
   getCatalogueData,
   getProducts,
@@ -37,9 +38,12 @@ export class Catalogue {
 
   private manageBlock = this.createManageBlock();
 
-  constructor(isChosenSex: boolean, page: Pages) {
+  private anonApi;
+
+  constructor(isChosenSex: boolean, page: Pages, anonApi: any) {
     this.isChosenSex = isChosenSex;
     this.page = page;
+    this.anonApi = anonApi;
   }
 
   createLayout(paths: string[], categoryId: string): HTMLElement {
@@ -55,43 +59,43 @@ export class Catalogue {
       case Pages.catalogue: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = '';
-        getProducts(createCard, this.cardsBlock);
+        getProducts(createCard, this.cardsBlock, this.anonApi);
         break;
       }
       case Pages.man: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       case Pages.man_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       case Pages.man_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       case Pages.woman: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       case Pages.woman_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       case Pages.woman_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.anonApi);
         break;
       }
       default:
@@ -250,7 +254,14 @@ export class Catalogue {
     this.manageBlock.innerHTML = '';
     this.manageBlock.append(this.createSortNameBlock(), this.createSortPriceBlock());
     this.cardsBlock.innerHTML = '';
-    sortCards(sortingValue, this.categoryId, sortingType, createCard, this.cardsBlock);
+    sortCards(
+      sortingValue,
+      this.categoryId,
+      sortingType,
+      createCard,
+      this.cardsBlock,
+      this.anonApi
+    );
   }
 
   createCardsBlock(): HTMLElement {

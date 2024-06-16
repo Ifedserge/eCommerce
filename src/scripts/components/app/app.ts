@@ -14,6 +14,7 @@ import ProductPage from '../views/product/productPage';
 import { UserProfile } from '../views/userProfile/userProfile';
 import { BasketPage } from '../views/basket/basket';
 import { AboutUsPage } from '../views/about-us/about-us';
+import { Api } from '../../services/api';
 
 export class App {
   routes = this.createRoutes();
@@ -25,6 +26,8 @@ export class App {
   main = createBlock(BlockType.main, ['main']);
 
   categories: ICategory[] = [];
+
+  anonClient = Api.createAnonClient();
 
   constructor() {
     window.addEventListener('load', () => {
@@ -85,18 +88,22 @@ export class App {
       {
         path: `${Pages.catalogue}`,
         callback: () =>
-          this.changePage(new Catalogue(false, Pages.catalogue).createLayout([], 'none')),
+          this.changePage(
+            new Catalogue(false, Pages.catalogue, this.anonClient).createLayout([], 'none')
+          ),
       },
       {
         path: `${Pages.catalogue}/${Pages.man}`,
         callback: () =>
-          this.changePage(new Catalogue(true, Pages.man).createLayout(['Man'], IdCategories.man)),
+          this.changePage(
+            new Catalogue(true, Pages.man, this.anonClient).createLayout(['Man'], IdCategories.man)
+          ),
       },
       {
         path: `${Pages.catalogue}/${Pages.man_jeans}`,
         callback: () =>
           this.changePage(
-            new Catalogue(true, Pages.man_jeans).createLayout(
+            new Catalogue(true, Pages.man_jeans, this.anonClient).createLayout(
               ['Man', 'Jeans'],
               IdCategories.man_jeans
             )
@@ -106,7 +113,7 @@ export class App {
         path: `${Pages.catalogue}/${Pages.man_jackets}`,
         callback: () =>
           this.changePage(
-            new Catalogue(true, Pages.man_jackets).createLayout(
+            new Catalogue(true, Pages.man_jackets, this.anonClient).createLayout(
               ['Man', 'Jackets'],
               IdCategories.man_jackets
             )
@@ -116,14 +123,17 @@ export class App {
         path: `${Pages.catalogue}/${Pages.woman}`,
         callback: () =>
           this.changePage(
-            new Catalogue(true, Pages.woman).createLayout(['Woman'], IdCategories.woman)
+            new Catalogue(true, Pages.woman, this.anonClient).createLayout(
+              ['Woman'],
+              IdCategories.woman
+            )
           ),
       },
       {
         path: `${Pages.catalogue}/${Pages.woman_jeans}`,
         callback: () =>
           this.changePage(
-            new Catalogue(true, Pages.woman_jeans).createLayout(
+            new Catalogue(true, Pages.woman_jeans, this.anonClient).createLayout(
               ['Woman', 'Jeans'],
               IdCategories.woman_jeans
             )
@@ -133,7 +143,7 @@ export class App {
         path: `${Pages.catalogue}/${Pages.woman_jackets}`,
         callback: () =>
           this.changePage(
-            new Catalogue(true, Pages.woman_jackets).createLayout(
+            new Catalogue(true, Pages.woman_jackets, this.anonClient).createLayout(
               ['Woman', 'Jackets'],
               IdCategories.woman_jackets
             )

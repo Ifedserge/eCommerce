@@ -13,14 +13,14 @@ import {
 import { BlockType, HeadingType } from '../../../types/enums';
 import { IProductAllData, IProductData } from '../../../types/interfaces';
 
-export function createCard(data: IProductData | IProductAllData): HTMLElement {
+export function createCard(data: IProductData | IProductAllData, anonApi: any): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
   wrapper.addEventListener('click', (e: Event) => {
     const elem = e.target as HTMLElement;
     elem.classList.contains;
     if (elem.classList.contains('card__basket-button') || elem.classList.contains('basket')) {
-      addGoodHandler(data.id);
+      addGoodHandler(data.id, anonApi);
       return;
     }
     window.location.pathname = `/product/${data.id}`;

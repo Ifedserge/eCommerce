@@ -1,16 +1,27 @@
+import { Cart } from '@commercetools/platform-sdk';
 import { Api } from '../api';
-import { checkCart, checkLoginState } from './checkLoginState';
+import { checkLoginState } from './checkLoginState';
 
-export async function addGoodHandler(id: string): Promise<void> {
-  if (!checkCart()) await getCart();
-  const cartData = JSON.parse(localStorage.getItem('cartData')!);
-  addGoodInBasket(cartData.id, cartData.version, id);
+export async function addGoodHandler(id: string, api: any): Promise<void> {
+  let activeCart;
+  let cart = JSON.parse(localStorage.getItem('cartData')!);
+  if (!cart) {
+    const carts = await getCarts(api);
+    let targetCart;
+    if (carts.length === 0) targetCart = await createCart(api);
+    else if (carts.length > 1) targetCart = carts.find((item: Cart) => item.cartState === 'Active');
+    else targetCart = carts[0];
+    activeCart = { id: targetCart.id, version: targetCart.version };
+    localStorage.setItem('cartData', JSON.stringify(activeCart));
+  } else activeCart = cart;
+  addGoodInBasket(activeCart.id, activeCart.version, id, api);
 }
 
-function addGoodInBasket(cartID: string, cartVersion: number, productID: string): void {
+function addGoodInBasket(cartID: string, cartVersion: number, productID: string, api: any): void {
   let apiType;
+  //const anonId = localStorage.getItem('anonymousId')!;
   if (checkLoginState()) apiType = Api.createAuthClient();
-  else apiType = Api.createAnonClient();
+  else apiType = api;
   apiType
     .me()
     .carts()
@@ -27,15 +38,20 @@ function addGoodInBasket(cartID: string, cartVersion: number, productID: string)
       },
     })
     .execute()
-    .then((response) => {
-      console.log(response);
-    });
+    .then((response: any) => {
+      localStorage.setItem(
+        'cartData',
+        JSON.stringify({ id: response.body.id, version: response.body.version })
+      );
+    })
+    .catch((response: any) => console.log(response));
 }
 
-async function createCart(): Promise<void> {
+async function createCart(api: any): Promise<Cart> {
   let apiType;
   if (checkLoginState()) apiType = Api.createAuthClient();
-  else apiType = Api.createAnonClient();
+  else apiType = api;
+  let cart;
   await apiType
     .me()
     .carts()
@@ -45,27 +61,23 @@ async function createCart(): Promise<void> {
       },
     })
     .execute()
-    .then((response) => {
-      localStorage.setItem('cartData', JSON.stringify({ id: response.body.id, version: 1 }));
+    .then((response: any) => {
+      cart = response.body;
+      if (api) localStorage.setItem('anonymousId', response.body.anonymousId!);
     });
+  return cart!;
 }
 
-async function getCart(): Promise<void> {
+async function getCarts(api: any): Promise<any> {
   let apiType;
   if (checkLoginState()) apiType = Api.createAuthClient();
-  else apiType = Api.createAnonClient();
+  else apiType = api;
+  let carts;
   await apiType
     .me()
     .carts()
     .get()
     .execute()
-    .then((response) => {
-      console.log(response);
-      if (response.body.results.length === 0) createCart();
-      else {
-        const actualCart = response.body.results.find((item) => item.cartState === 'Active');
-        const cartData = { id: actualCart!.id, version: actualCart!.version };
-        localStorage.setItem('cartData', JSON.stringify(cartData));
-      }
-    });
+    .then((response: any) => (carts = response.body.results));
+  return carts;
 }
