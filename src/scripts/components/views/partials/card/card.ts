@@ -1,3 +1,4 @@
+import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import { basket } from '../../../../services/utilities/SVGs';
 import { addGoodHandler } from '../../../../services/utilities/basketDataFunctions';
 import { convertPrice } from '../../../../services/utilities/convertPrice';
@@ -13,7 +14,10 @@ import {
 import { BlockType, HeadingType } from '../../../types/enums';
 import { IProductAllData, IProductData } from '../../../types/interfaces';
 
-export function createCard(data: IProductData | IProductAllData, anonApi: any): HTMLElement {
+export function createCard(
+  data: IProductData | IProductAllData,
+  anonApi: ByProjectKeyRequestBuilder
+): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
 
   wrapper.addEventListener('click', (e: Event) => {

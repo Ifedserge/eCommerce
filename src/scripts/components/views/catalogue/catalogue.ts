@@ -1,4 +1,4 @@
-import { ApiClient } from '@commercetools/platform-sdk';
+import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import {
   getCatalogueData,
   getProducts,
@@ -40,7 +40,7 @@ export class Catalogue {
 
   private anonApi;
 
-  constructor(isChosenSex: boolean, page: Pages, anonApi: any) {
+  constructor(isChosenSex: boolean, page: Pages, anonApi: ByProjectKeyRequestBuilder) {
     this.isChosenSex = isChosenSex;
     this.page = page;
     this.anonApi = anonApi;

@@ -15,6 +15,7 @@ import { UserProfile } from '../views/userProfile/userProfile';
 import { BasketPage } from '../views/basket/basket';
 import { AboutUsPage } from '../views/about-us/about-us';
 import { Api } from '../../services/api';
+import { deleteAnonCartData } from '../../services/utilities/checkLoginState';
 
 export class App {
   routes = this.createRoutes();
@@ -55,6 +56,7 @@ export class App {
     this.main.append(mainPage);
     const footer = createFooter();
     document.body.append(header, this.main, footer);
+    deleteAnonCartData();
   }
 
   updateHeader(): void {

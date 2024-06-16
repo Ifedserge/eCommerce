@@ -29,6 +29,8 @@ export class LoginService {
           .then((response) => {
             const user = convertToUserProfile(response);
             localStorage.setItem('user', JSON.stringify(user));
+            localStorage.removeItem('anonymousId');
+            localStorage.removeItem('cartData');
             NotificationService.showNotification('Login successful!', NotificationType.success);
             window.location.pathname = '/index';
           })

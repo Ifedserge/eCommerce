@@ -1,4 +1,4 @@
-import { Category } from '@commercetools/platform-sdk';
+import { ByProjectKeyRequestBuilder, Category } from '@commercetools/platform-sdk';
 import { NotificationType, SortType, SortingValue } from '../../components/types/enums';
 import { IProductAllData, IProductData } from '../../components/types/interfaces';
 import { NotificationService } from './notification';
@@ -7,9 +7,9 @@ import { Api } from '../api';
 const apiAnonRoot = Api.createAnonClient();
 
 export function getProducts(
-  callBack: (data: IProductAllData, api: any) => HTMLElement,
+  callBack: (data: IProductAllData, api: ByProjectKeyRequestBuilder) => HTMLElement,
   block: HTMLElement,
-  anonApi: any
+  anonApi: ByProjectKeyRequestBuilder
 ): void | IProductAllData[] {
   apiAnonRoot
     .products()
@@ -34,10 +34,10 @@ export function getProducts(
 }
 
 export function getCatalogueData(
-  callBack: (data: IProductData, api: any) => HTMLElement,
+  callBack: (data: IProductData, api: ByProjectKeyRequestBuilder) => HTMLElement,
   block: HTMLElement,
   id: string,
-  api: any
+  api: ByProjectKeyRequestBuilder
 ): void | IProductData[] {
   apiAnonRoot
     .productProjections()
@@ -81,9 +81,9 @@ export function sortCards(
   value: SortingValue,
   id: string,
   sortingType: SortType,
-  callBack: (data: IProductData | IProductAllData, api: any) => HTMLElement,
+  callBack: (data: IProductData | IProductAllData, api: ByProjectKeyRequestBuilder) => HTMLElement,
   block: HTMLElement,
-  api: any
+  api: ByProjectKeyRequestBuilder
 ): void | IProductData[] | IProductAllData[] {
   const queryArgs = {
     filter:

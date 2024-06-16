@@ -9,3 +9,11 @@ export function checkCart(): boolean {
   if (storage.cartData) return true;
   return false;
 }
+
+export function deleteAnonCartData() {
+  if (
+    !checkLoginState() &&
+    (localStorage.getItem('anonymousId') || localStorage.getItem('cartData'))
+  )
+    localStorage.clear();
+}
