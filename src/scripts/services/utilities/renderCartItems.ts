@@ -3,9 +3,19 @@ import { createBlock, createHeading, createP, createImg, createButton } from './
 import { BlockType, HeadingType } from '../../components/types/enums';
 import { convertPrice } from './convertPrice';
 import { updateCartItemQuantity } from './updateCartItemQuantity';
+import { removeCartItem } from './removeCartItem';
 
 export const renderCartItems = async (cart: Cart, container: HTMLElement): Promise<void> => {
   const tempContainer = document.createDocumentFragment();
+  const newContainer = container;
+
+  if (cart.lineItems.length === 0) {
+    const emptyMessage = createP(['basket__empty-message'], 'The cart is empty.');
+    tempContainer.appendChild(emptyMessage);
+    newContainer.innerHTML = '';
+    container.appendChild(tempContainer);
+    return;
+  }
 
   let totalPrice = 0;
 
@@ -62,7 +72,15 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
         }
       });
 
-      quantityBlock.append(minusButton, quantityText, plusButton);
+      const removeButton = createButton(['basket__item-remove'], 'Remove');
+      removeButton.addEventListener('click', async () => {
+        const updatedCart = await removeCartItem(cart.id, item.id, cart.version);
+        if (updatedCart) {
+          await renderCartItems(updatedCart, container);
+        }
+      });
+
+      quantityBlock.append(minusButton, quantityText, plusButton, removeButton);
 
       productBlock.append(productName, productPrice, quantityBlock);
       totalPrice += item.price.value.centAmount * item.quantity;
@@ -81,7 +99,6 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
   totalPriceBlock.append(totalPriceText);
   tempContainer.appendChild(totalPriceBlock);
 
-  const newContainer = container;
   newContainer.innerHTML = '';
   container.appendChild(tempContainer);
 };

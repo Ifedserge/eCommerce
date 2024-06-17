@@ -8,6 +8,7 @@
   .basket__item {
     width: 90%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     border-bottom: 2px solid #151c22;
@@ -20,7 +21,7 @@
       text-align: center;
     }
     .basket__item-quantity {
-      max-width: 90px;
+      max-width: 170px;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -31,6 +32,13 @@
         background-color: white;
         border-radius: 5px;
         border: 2px solid #151c22;
+      }
+      .basket__item-remove {
+        width: 80px;
+      }
+      .basket__empty-message {
+        text-align: center;
+        font-size: 40px;
       }
     }
   }

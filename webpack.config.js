@@ -65,6 +65,7 @@ module.exports = ({ development }) => ({
     new HtmlWebpackPlugin({
       base: '/',
       filename: 'index.html',
+      title: 'Nimes',
     }),
     new DotenvWebpackPlugin(),
     new CopyPlugin({
