@@ -33,9 +33,13 @@ export class Catalogue {
 
   private page = Pages.catalogue;
 
+  private block = createBlock(BlockType.section, ['catalogue']);
+
   private cardsBlock = createBlock(BlockType.div, ['catalogue__cards']);
 
   private manageBlock = this.createManageBlock();
+
+  private totalCards = 0;
 
   constructor(isChosenSex: boolean, page: Pages) {
     this.isChosenSex = isChosenSex;
@@ -43,11 +47,10 @@ export class Catalogue {
   }
 
   createLayout(paths: string[], categoryId: string): HTMLElement {
-    const block = createBlock(BlockType.section, ['catalogue']);
-    block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
+    this.block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
     this.openPage(this.page, categoryId);
     this.categoryId = categoryId;
-    return block;
+    return this.block;
   }
 
   openPage(name: string, categoryId: string): void {
@@ -61,37 +64,37 @@ export class Catalogue {
       case Pages.man: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       default:
@@ -284,5 +287,37 @@ export class Catalogue {
 
   private redirect(path: string): void {
     window.location.pathname = `catalogue/${path}`;
+  }
+
+  updateTotalCards(num: number, offset: number | undefined): void {
+    this.totalCards = num;
+    document.querySelector('.pagination')?.remove();
+    if (num < 10) return;
+    this.block.append(this.addPaginationBlock(num, offset));
+  }
+
+  addPaginationBlock(num: number, offset: number | undefined): HTMLElement {
+    const block = createBlock(BlockType.div, ['pagination']);
+    const numOfButtons = Math.round(num / 10);
+    for (let i = 0; i < numOfButtons; i += 1) {
+      const button = createButton(['pagination__button', 'text', 'text-normal'], `${i + 1}`);
+      if (offset! / 10 === i || (offset === undefined && i === 0)) {
+        button.setAttribute('disabled', '');
+        button.classList.add('disabled');
+      } else button.addEventListener('click', () => this.openNextPagiPage(i));
+      block.append(button);
+    }
+    return block;
+  }
+
+  openNextPagiPage(num: number): void {
+    this.cardsBlock.innerHTML = '';
+    getCatalogueData(
+      createCard,
+      this.cardsBlock,
+      this.categoryId,
+      this.updateTotalCards.bind(this),
+      num * 10
+    );
   }
 }

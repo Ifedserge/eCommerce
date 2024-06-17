@@ -35,7 +35,9 @@ export function getProducts(
 export function getCatalogueData(
   callBack: (data: IProductData) => HTMLElement,
   block: HTMLElement,
-  id: string
+  id: string,
+  totalCardUpdateCallback: (num: number, offset: number | undefined) => void,
+  offset?: number
 ): void | IProductData[] {
   apiAnonRoot
     .productProjections()
@@ -44,6 +46,7 @@ export function getCatalogueData(
       queryArgs: {
         filter: `categories.id:"${id}"`,
         limit: 10,
+        offset: offset,
       },
     })
     .execute()
@@ -52,6 +55,7 @@ export function getCatalogueData(
         const data = item as unknown as IProductData;
         block.append(callBack(data));
       });
+      if (response.body.total) totalCardUpdateCallback(response.body.total, offset);
     })
     .catch(() => {
       NotificationService.showNotification(
