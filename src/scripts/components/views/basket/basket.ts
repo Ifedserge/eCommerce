@@ -30,6 +30,8 @@ export class BasketPage {
       cartId = cart.id;
     }
 
+    let totalPrice = 0;
+
     if (cart && cart.lineItems.length > 0) {
       cart.lineItems.forEach((item) => {
         const productBlock = createBlock(BlockType.div, ['basket__item']);
@@ -48,14 +50,25 @@ export class BasketPage {
           item.name['en-GB'],
           HeadingType.h2
         );
-
         const productPrice = createP(
           ['basket__item-price'],
           convertPrice(item.price.value.centAmount, item.price.value.fractionDigits)
         );
+
         productBlock.append(productName, productPrice);
         wrapper.append(productBlock);
+
+        totalPrice += item.price.value.centAmount;
       });
+
+      const formattedTotalPrice = convertPrice(
+        totalPrice,
+        cart.lineItems[0].price.value.fractionDigits
+      );
+      const totalPriceBlock = createBlock(BlockType.div, ['basket__total']);
+      const totalPriceText = createP(['basket__total-text'], `Total Price: ${formattedTotalPrice}`);
+      totalPriceBlock.append(totalPriceText);
+      wrapper.append(totalPriceBlock);
     } else {
       const emptyMessage = createP(['basket__empty-message'], 'The cart is empty.');
       wrapper.append(emptyMessage);

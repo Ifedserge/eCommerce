@@ -63,18 +63,18 @@ export default class ProductPage {
       );
       const productInCart = await checkProductInCart(productId);
       if (productInCart) {
-        addToCartBtn.textContent = 'Удалить из корзины';
+        addToCartBtn.textContent = 'Remove from cart ';
       } else {
-        addToCartBtn.textContent = 'Добавить в корзину';
+        addToCartBtn.textContent = 'Add to cart';
       }
 
       addToCartBtn.addEventListener('click', async () => {
         await handleAddProductToCart(productId);
         const updatedProductInCart = await checkProductInCart(productId);
         if (updatedProductInCart) {
-          addToCartBtn.textContent = 'Удалить из корзины';
+          addToCartBtn.textContent = 'Remove from cart';
         } else {
-          addToCartBtn.textContent = 'Добавить в корзину';
+          addToCartBtn.textContent = 'Add to cart';
         }
       });
 
