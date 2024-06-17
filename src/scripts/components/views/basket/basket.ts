@@ -1,5 +1,5 @@
 import { Cart } from '@commercetools/platform-sdk';
-import { createBlock, createP, createHeading } from '../../../services/utilities/tags';
+import { createBlock, createP, createHeading, createImg } from '../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../types/enums';
 import { Api } from '../../../services/api';
 import { createNewCart } from '../../../services/utilities/createNewCart';
@@ -16,8 +16,7 @@ const getCartById = async (cartId: string): Promise<Cart | null> => {
 export class BasketPage {
   static async render(): Promise<HTMLElement> {
     const wrapper = createBlock(BlockType.div, ['basket']);
-    const heading = createBlock(BlockType.div, ['basket__heading']);
-    heading.textContent = 'CART';
+    const heading = createHeading(['basket__heading'], 'Cart', HeadingType.h1);
     wrapper.append(heading);
 
     let cartId = localStorage.getItem('cartId');
@@ -34,11 +33,22 @@ export class BasketPage {
     if (cart && cart.lineItems.length > 0) {
       cart.lineItems.forEach((item) => {
         const productBlock = createBlock(BlockType.div, ['basket__item']);
+
+        if (item.variant && item.variant.images && item.variant.images.length > 0) {
+          const productImg = createImg(
+            ['basket__item-img'],
+            item.variant.images[0].url,
+            item.name['en-GB']
+          );
+          productBlock.appendChild(productImg);
+        }
+
         const productName = createHeading(
           ['basket__item-name'],
           item.name['en-GB'],
           HeadingType.h2
         );
+
         const productPrice = createP(
           ['basket__item-price'],
           convertPrice(item.price.value.centAmount, item.price.value.fractionDigits)

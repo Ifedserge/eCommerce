@@ -63,20 +63,20 @@ export default class ProductPage {
       );
       const productInCart = await checkProductInCart(productId);
       if (productInCart) {
-        addToCartBtn.disabled = true;
-        addToCartBtn.textContent = 'Added';
+        addToCartBtn.textContent = 'Удалить из корзины';
       } else {
-        addToCartBtn.disabled = false;
-        addToCartBtn.textContent = 'Add to cart';
-        addToCartBtn.addEventListener('click', async () => {
-          await handleAddProductToCart(productId);
-          const updatedProductInCart = await checkProductInCart(productId);
-          if (updatedProductInCart) {
-            addToCartBtn.disabled = true;
-            addToCartBtn.textContent = 'Added';
-          }
-        });
+        addToCartBtn.textContent = 'Добавить в корзину';
       }
+
+      addToCartBtn.addEventListener('click', async () => {
+        await handleAddProductToCart(productId);
+        const updatedProductInCart = await checkProductInCart(productId);
+        if (updatedProductInCart) {
+          addToCartBtn.textContent = 'Удалить из корзины';
+        } else {
+          addToCartBtn.textContent = 'Добавить в корзину';
+        }
+      });
 
       infoBlock.append(name, description, priceWrapper, addToCartBtn);
       wrapper.append(imgWrapper, infoBlock);
