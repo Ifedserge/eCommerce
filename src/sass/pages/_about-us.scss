@@ -86,4 +86,30 @@
     width: 20%;
     margin: 20px;
   }
+
+  @media screen and (max-width: 1000px) {
+    .about-section {
+      flex-direction: column;
+
+      &:nth-child(odd) {
+        .about-img {
+          order: 1;
+        }
+
+        .info {
+          order: 2;
+        }
+      }
+
+      &:nth-child(even) {
+        .about-img {
+          order: 1;
+        }
+
+        .info {
+          order: 2;
+        }
+      }
+    }
+  }
 }
