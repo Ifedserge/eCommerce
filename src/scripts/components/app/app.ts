@@ -14,7 +14,7 @@ import ProductPage from '../views/product/productPage';
 // import { getAttributes, getCategories, sortCards } from '../../services/utilities/getDataFunctions';
 import { UserProfile } from '../views/userProfile/userProfile';
 import { BasketPage } from '../views/basket/basket';
-import { AboutUsPage } from '../views/about-us/about-us';
+import { AboutUs } from '../views/about-us/about-us';
 
 export class App {
   routes = this.createRoutes();
@@ -163,7 +163,7 @@ export class App {
       },
       {
         path: `${Pages.about}`,
-        callback: () => this.changePage(AboutUsPage.render()),
+        callback: () => this.changePage(AboutUs.render()),
       },
     ];
   }
