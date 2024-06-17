@@ -11,6 +11,7 @@ import {
 } from '../../../../services/utilities/tags';
 import { BlockType, HeadingType } from '../../../types/enums';
 import { IProductAllData, IProductData } from '../../../types/interfaces';
+import { handleAddProductToCart } from '../../../../services/utilities/handleAddProductToCart';
 
 export function createCard(data: IProductData | IProductAllData): HTMLElement {
   const wrapper = createBlock(BlockType.div, ['card']);
@@ -89,6 +90,10 @@ export function createCard(data: IProductData | IProductAllData): HTMLElement {
 
   const basketWrapper = createButton(['card__basket-button'], '');
   basketWrapper.innerHTML = basket;
+  basketWrapper.addEventListener('click', (e: Event) => {
+    e.stopPropagation();
+    handleAddProductToCart(data.id);
+  });
 
   imgWrapper.append(img, basketWrapper);
   wrapper.append(imgWrapper, name, description, priceBlock);

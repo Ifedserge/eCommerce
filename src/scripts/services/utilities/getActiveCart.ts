@@ -1,12 +1,11 @@
 import { Cart, ClientResponse, CartPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Api } from '../api';
-import { handleAddToCart } from './handleAddToCart';
-import { handleCreateCart } from './handleCreateCart';
 import { ICommercetoolsError } from '../../components/types/interfaces';
+import { createNewCart } from './createNewCart';
 
-const getActiveCart = async (isUserLoggedIn: boolean): Promise<Cart | null> => {
+export const getActiveCart = async (isUserLoggedIn: boolean): Promise<Cart | null> => {
   const storedCartId = localStorage.getItem('cartId');
-  if (storedCartId && !isUserLoggedIn) {
+  if (storedCartId) {
     try {
       const response: ClientResponse<Cart> = await Api.createAnonClient()
         .carts()
@@ -34,7 +33,9 @@ const getActiveCart = async (isUserLoggedIn: boolean): Promise<Cart | null> => {
       const activeCart = response.body.results.find((cart) => cart.cartState === 'Active');
       return activeCart || null;
     }
-
+    if (!storedCartId) {
+      return await createNewCart();
+    }
     const response: ClientResponse<CartPagedQueryResponse> = await Api.createAnonClient()
       .carts()
       .get()
@@ -47,30 +48,5 @@ const getActiveCart = async (isUserLoggedIn: boolean): Promise<Cart | null> => {
       return null;
     }
     throw error;
-  }
-};
-
-export const handleAddProductToCart = async (productId: string): Promise<void> => {
-  const isUserLoggedIn = Boolean(localStorage.getItem('token'));
-  let cart = await getActiveCart(isUserLoggedIn);
-
-  if (!cart) {
-    const newCartResponse = await handleCreateCart(isUserLoggedIn);
-    cart = newCartResponse.body;
-
-    if (!isUserLoggedIn) {
-      localStorage.setItem('cartId', cart.id);
-    }
-  }
-
-  const { id: cartId, version: cartVersion } = cart;
-
-  await handleAddToCart(cartId, cartVersion, productId, isUserLoggedIn);
-
-  cart = await getActiveCart(isUserLoggedIn);
-
-  if (cart) {
-    console.log('Cart ID:', cart.id);
-    console.log('Current items in the cart:', cart.lineItems);
   }
 };

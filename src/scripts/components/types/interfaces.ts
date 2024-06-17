@@ -152,6 +152,6 @@ export interface ICategory {
 }
 export interface ICommercetoolsError {
   statusCode: number;
-  message: string;
-  errors: Array<{ code: string; message: string }>;
+  message?: string;
+  errors?: Array<{ code: string; message: string }>;
 }

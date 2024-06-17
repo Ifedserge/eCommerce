@@ -10,7 +10,9 @@ import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
 import { productSlider } from '../../../services/utilities/productSlide';
 import { convertPrice } from '../../../services/utilities/convertPrice';
-import { handleAddProductToCart } from '../../../services/utilities/cartHandler';
+// import { handleAddProductToCart, checkProductInCart } from '../../../services/utilities/cartHandler';
+import { handleAddProductToCart } from '../../../services/utilities/handleAddProductToCart';
+import { checkProductInCart } from '../../../services/utilities/checkProductInCart';
 
 export default class ProductPage {
   static async render(): Promise<HTMLElement> {
@@ -56,8 +58,26 @@ export default class ProductPage {
         priceWrapper.append(regularPrice);
       }
 
-      const addToCartBtn = createButton(['btn_add'], 'add to cart');
-      addToCartBtn.addEventListener('click', () => handleAddProductToCart(productId));
+      const addToCartBtn = createButton(
+        ['registration-form__button', 'text', 'text_bold'],
+        'Add to cart'
+      );
+      const productInCart = await checkProductInCart(productId);
+      if (productInCart) {
+        addToCartBtn.disabled = true;
+        addToCartBtn.textContent = 'Added';
+      } else {
+        addToCartBtn.disabled = false;
+        addToCartBtn.textContent = 'Add to cart';
+        addToCartBtn.addEventListener('click', async () => {
+          await handleAddProductToCart(productId);
+          const updatedProductInCart = await checkProductInCart(productId);
+          if (updatedProductInCart) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.textContent = 'Added';
+          }
+        });
+      }
 
       infoBlock.append(name, description, priceWrapper, addToCartBtn);
       wrapper.append(imgWrapper, infoBlock);
