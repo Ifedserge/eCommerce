@@ -16,6 +16,4 @@ export const handleAddProductToCart = async (productId: string): Promise<void> =
   const { id: cartId, version: cartVersion } = cart;
 
   await handleAddToCart(cartId, cartVersion, productId, isUserLoggedIn);
-
-  cart = await getActiveCart(isUserLoggedIn);
 };

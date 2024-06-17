@@ -10,7 +10,6 @@ import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
 import { productSlider } from '../../../services/utilities/productSlide';
 import { convertPrice } from '../../../services/utilities/convertPrice';
-// import { handleAddProductToCart, checkProductInCart } from '../../../services/utilities/cartHandler';
 import { handleAddProductToCart } from '../../../services/utilities/handleAddProductToCart';
 import { checkProductInCart } from '../../../services/utilities/checkProductInCart';
 
