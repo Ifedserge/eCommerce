@@ -159,7 +159,10 @@ export class App {
       },
       {
         path: `${Pages.basket}`,
-        callback: () => this.changePage(BasketPage.render()),
+        callback: async () => {
+          const basketPage = await BasketPage.render();
+          this.changePage(basketPage);
+        },
       },
       {
         path: `${Pages.about}`,

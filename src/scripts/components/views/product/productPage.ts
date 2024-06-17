@@ -4,11 +4,14 @@ import {
   createP,
   createDel,
   createSpan,
+  createButton,
 } from '../../../services/utilities/tags';
 import { BlockType, HeadingType, Pages } from '../../types/enums';
 import { getProductById } from '../../../services/utilities/getProductById';
 import { productSlider } from '../../../services/utilities/productSlide';
 import { convertPrice } from '../../../services/utilities/convertPrice';
+import { handleAddProductToCart } from '../../../services/utilities/handleAddProductToCart';
+import { checkProductInCart } from '../../../services/utilities/checkProductInCart';
 
 export default class ProductPage {
   static async render(): Promise<HTMLElement> {
@@ -53,7 +56,29 @@ export default class ProductPage {
         const regularPrice = createP(['product-page__price'], formattedPrice);
         priceWrapper.append(regularPrice);
       }
-      infoBlock.append(name, description, priceWrapper);
+
+      const addToCartBtn = createButton(
+        ['registration-form__button', 'text', 'text_bold'],
+        'Add to cart'
+      );
+      const productInCart = await checkProductInCart(productId);
+      if (productInCart) {
+        addToCartBtn.textContent = 'Remove from cart ';
+      } else {
+        addToCartBtn.textContent = 'Add to cart';
+      }
+
+      addToCartBtn.addEventListener('click', async () => {
+        await handleAddProductToCart(productId);
+        const updatedProductInCart = await checkProductInCart(productId);
+        if (updatedProductInCart) {
+          addToCartBtn.textContent = 'Remove from cart';
+        } else {
+          addToCartBtn.textContent = 'Add to cart';
+        }
+      });
+
+      infoBlock.append(name, description, priceWrapper, addToCartBtn);
       wrapper.append(imgWrapper, infoBlock);
     } catch {
       window.location.pathname = Pages.notFound;
