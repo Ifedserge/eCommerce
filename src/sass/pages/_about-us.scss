@@ -1,0 +1,89 @@
+.about-us {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .about-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+
+    &:nth-child(odd) {
+      .about-img {
+        order: 1;
+      }
+
+      .info {
+        order: 2;
+      }
+    }
+
+    &:nth-child(even) {
+      .about-img {
+        order: 2;
+      }
+
+      .info {
+        order: 1;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      max-width: fit-content;
+
+      .short-info {
+        margin-bottom: 10px;
+
+        .short-item {
+          margin-bottom: 5px;
+
+          .text {
+            &.text_bold {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+
+    .about-img {
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        object-fit: cover;
+        width: 70rem;
+      }
+    }
+
+    .github-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      margin-top: 5px;
+
+      svg {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .rs-school-link {
+    width: 20%;
+    margin: 20px;
+  }
+}
