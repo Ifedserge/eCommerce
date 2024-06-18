@@ -5,9 +5,14 @@
   .basket__heading {
     text-align: center;
   }
+  .basket__empty-message {
+    text-align: center;
+    font-size: 40px;
+  }
   .basket__item {
     width: 90%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     border-bottom: 2px solid #151c22;
@@ -19,8 +24,28 @@
       width: 40%;
       text-align: center;
     }
+    .basket__item-quantity {
+      max-width: 170px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      button {
+        width: 35px;
+        height: 35px;
+        background-color: white;
+        border-radius: 5px;
+        border: 2px solid #151c22;
+      }
+      .basket__item-remove {
+        width: 80px;
+      }
+    }
   }
   .basket__total-text {
     font-size: 28px;
+  }
+  .cart__btn-clear {
+    margin-bottom: 20px;
   }
 }
