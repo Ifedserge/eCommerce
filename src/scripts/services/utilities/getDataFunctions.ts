@@ -3,13 +3,11 @@ import { NotificationType, SortType, SortingValue } from '../../components/types
 import { IProductAllData, IProductData } from '../../components/types/interfaces';
 import { NotificationService } from './notification';
 import { Api } from '../api';
+import { Card } from '../../components/views/partials/card/card';
 
 const apiAnonRoot = Api.createAnonClient();
 
-export function getProducts(
-  callBack: (data: IProductAllData) => HTMLElement,
-  block: HTMLElement
-): void | IProductAllData[] {
+export function getProducts(block: HTMLElement): void | IProductAllData[] {
   apiAnonRoot
     .products()
     .get({
@@ -21,7 +19,7 @@ export function getProducts(
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductAllData;
-        block.append(callBack(data));
+        block.append(new Card(data).createCard());
       });
     })
     .catch(() => {
@@ -33,7 +31,6 @@ export function getProducts(
 }
 
 export function getCatalogueData(
-  callBack: (data: IProductData) => HTMLElement,
   block: HTMLElement,
   id: string,
   totalCardUpdateCallback: (num: number, offset: number | undefined) => void,
@@ -46,14 +43,14 @@ export function getCatalogueData(
       queryArgs: {
         filter: `categories.id:"${id}"`,
         limit: 10,
-        offset: offset,
+        offset,
       },
     })
     .execute()
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductData;
-        block.append(callBack(data));
+        block.append(new Card(data).createCard());
       });
       if (response.body.total) totalCardUpdateCallback(response.body.total, offset);
     })
@@ -83,7 +80,6 @@ export function sortCards(
   value: SortingValue,
   id: string,
   sortingType: SortType,
-  callBack: (data: IProductData | IProductAllData) => HTMLElement,
   block: HTMLElement
 ): void | IProductData[] | IProductAllData[] {
   const queryArgs = {
@@ -103,7 +99,7 @@ export function sortCards(
     .then((response) => {
       response.body.results.forEach((item) => {
         const data = item as unknown as IProductData | IProductAllData;
-        block.append(callBack(data));
+        block.append(new Card(data).createCard());
       });
     })
     .catch(() => {

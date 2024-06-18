@@ -64,6 +64,10 @@
   &__new-price {
     margin-left: 10px;
   }
+
+  &__disabled {
+    stroke: #a57575;
+  }
 }
 
 .card:hover {
