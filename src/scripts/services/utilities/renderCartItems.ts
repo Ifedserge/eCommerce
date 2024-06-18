@@ -4,6 +4,7 @@ import { BlockType, HeadingType } from '../../components/types/enums';
 import { convertPrice } from './convertPrice';
 import { updateCartItemQuantity } from './updateCartItemQuantity';
 import { removeCartItem } from './removeCartItem';
+import { clearCart } from './clearCart';
 
 export const renderCartItems = async (cart: Cart, container: HTMLElement): Promise<void> => {
   const tempContainer = document.createDocumentFragment();
@@ -11,9 +12,9 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
 
   if (cart.lineItems.length === 0) {
     const emptyMessage = createP(['basket__empty-message'], 'The cart is empty.');
-    tempContainer.appendChild(emptyMessage);
+    tempContainer.append(emptyMessage);
     newContainer.innerHTML = '';
-    container.appendChild(tempContainer);
+    newContainer.append(tempContainer);
     return;
   }
 
@@ -51,7 +52,7 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
             cart.version
           );
           if (updatedCart) {
-            await renderCartItems(updatedCart, container);
+            await renderCartItems(updatedCart, newContainer);
           }
         }
       });
@@ -68,7 +69,7 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
           cart.version
         );
         if (updatedCart) {
-          await renderCartItems(updatedCart, container);
+          await renderCartItems(updatedCart, newContainer);
         }
       });
 
@@ -89,7 +90,7 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
     })
   );
 
-  lineItems.forEach((item) => tempContainer.appendChild(item));
+  lineItems.forEach((item) => tempContainer.append(item));
 
   const totalPriceBlock = createBlock(BlockType.div, ['basket__total']);
   const totalPriceText = createP(
@@ -97,8 +98,20 @@ export const renderCartItems = async (cart: Cart, container: HTMLElement): Promi
     `Total Price: ${convertPrice(totalPrice, cart.lineItems[0].price.value.fractionDigits)}`
   );
   totalPriceBlock.append(totalPriceText);
-  tempContainer.appendChild(totalPriceBlock);
+  tempContainer.append(totalPriceBlock);
+
+  const clearCartButton = createButton(
+    ['main-page__catalogue-link', 'cart__btn-clear', 'text', 'text_bold'],
+    'Clear Shopping Cart'
+  );
+  clearCartButton.addEventListener('click', async () => {
+    const updatedCart = await clearCart(cart.id, cart.version, cart.lineItems);
+    if (updatedCart) {
+      await renderCartItems(updatedCart, newContainer);
+    }
+  });
+  tempContainer.append(clearCartButton);
 
   newContainer.innerHTML = '';
-  container.appendChild(tempContainer);
+  newContainer.append(tempContainer);
 };
