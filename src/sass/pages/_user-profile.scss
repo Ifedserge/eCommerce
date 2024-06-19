@@ -33,6 +33,16 @@
       margin-top: 20px;
     }
 
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .delete-button {
+      cursor: pointer;
+    }
+
     i {
       cursor: pointer;
     }
