@@ -41,6 +41,8 @@ export function onEditModeButtonClick(event: Event) {
       const temp = button;
       temp.disabled = false;
     });
+
+    NotificationService.showNotification('Now you can edit your data!', NotificationType.info);
   }
 }
 
