@@ -23,6 +23,8 @@ export class Card {
   constructor(data: IProductData | IProductAllData) {
     this.data = data;
 
+    this.basketWrapper.innerHTML = basket;
+
     this.wrapper.addEventListener('click', () => {
       window.location.pathname = `/product/${data.id}`;
     });
@@ -97,19 +99,12 @@ export class Card {
       }
     }
 
-    this.basketWrapper.innerHTML = basket;
     this.basketWrapper.addEventListener('click', (e: Event) => {
       e.stopPropagation();
-      this.disableCard();
+      this.waitingResponse();
       handleAddProductToCart(this.data.id, true)
-        .then(() => {
-          const target = this.basketWrapper.firstChild?.lastChild!.previousSibling as HTMLElement;
-          target.classList.add('card__disabled');
-          this.basketWrapper.style.cursor = 'auto';
-        })
-        .catch(() => {
-          this.enableCard();
-        });
+        .then(() => this.disableCartButton())
+        .catch(() => this.enableCard());
     });
 
     imgWrapper.append(img, this.basketWrapper);
@@ -118,7 +113,7 @@ export class Card {
     return this.wrapper;
   }
 
-  disableCard(): void {
+  waitingResponse(): void {
     this.basketWrapper.style.cursor = 'wait';
     this.basketWrapper.setAttribute('disabled', '');
   }
@@ -126,5 +121,12 @@ export class Card {
   enableCard(): void {
     this.basketWrapper.style.cursor = 'pointer';
     this.basketWrapper.removeAttribute('disabled');
+  }
+
+  disableCartButton(): void {
+    const target = this.basketWrapper.firstChild?.lastChild!.previousSibling as HTMLElement;
+    target.classList.add('card__disabled');
+    this.basketWrapper.style.cursor = 'auto';
+    this.basketWrapper.setAttribute('disabled', '');
   }
 }
