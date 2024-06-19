@@ -46,7 +46,7 @@ export function getCatalogueData(
       queryArgs: {
         filter: `categories.id:"${id}"`,
         limit: 10,
-        offset: offset,
+        offset,
       },
     })
     .execute()

@@ -1,5 +1,6 @@
 import { NotificationType } from '../../components/types/enums';
 import { IAddress, IUserProfile } from '../../components/types/interfaces';
+import { displayErrorMessages } from '../utilities/error';
 import { NotificationService } from '../utilities/notification';
 import {
   validateCity,
@@ -20,6 +21,11 @@ export function onEditModeButtonClick(event: Event) {
     const inputs = form.querySelectorAll('input');
     const selects = form.querySelectorAll('select');
     const buttons = form.querySelectorAll('button');
+    const deleteButton: NodeListOf<HTMLDivElement> = form.querySelectorAll('div.delete-button');
+
+    deleteButton.forEach((button) => {
+      button.style.display = 'block';
+    });
 
     inputs.forEach((input) => {
       const temp = input;
@@ -200,11 +206,17 @@ export function onSubmitUpdateAddressButtonClick(event: Event) {
       return;
     }
 
+    const countrySelect = addressContainer.querySelector(
+      'select[name="country"]'
+    ) as HTMLSelectElement;
+    const selectedOption = countrySelect.options[countrySelect.selectedIndex] as HTMLOptionElement;
+    const country: string = selectedOption.getAttribute('country') || '';
+
     if (!validateCity(address.city).isValid) {
       NotificationService.showNotification('Please enter a valid city', NotificationType.error);
       return;
     }
-    if (!validatePostalCode(address.country, address.postalCode).isValid) {
+    if (!validatePostalCode(country, address.postalCode).isValid) {
       NotificationService.showNotification(
         'Please enter a valid postal code',
         NotificationType.error
@@ -220,4 +232,32 @@ export function onSubmitUpdateAddressButtonClick(event: Event) {
   });
 
   UserService.updateAddresses(newUserAddress);
+}
+
+export function onInputPostalCodeChange(event: Event) {
+  const input: HTMLInputElement = event.target as HTMLInputElement;
+  const postalCode: string = input.value;
+  const addressContainer = input.closest('.address-container') as HTMLElement;
+  const countrySelect = addressContainer.querySelector(
+    'select[name="country"]'
+  ) as HTMLSelectElement;
+  const selectedOption = countrySelect.options[countrySelect.selectedIndex] as HTMLOptionElement;
+  const country: string = selectedOption.getAttribute('country') || '';
+
+  const validationResult = validatePostalCode(country, postalCode);
+  if (!validationResult.isValid) {
+    displayErrorMessages(validationResult.errorMessages, input.parentNode as HTMLElement);
+    return;
+  }
+
+  displayErrorMessages([], input.parentNode as HTMLElement);
+}
+
+export function onRemoveAddress(event: Event) {
+  const address = event.target as HTMLElement;
+  const addressContainer = address.closest('.address-container');
+  const addressId = addressContainer ? addressContainer.getAttribute('data-id') || '' : '';
+  if (addressId !== undefined && addressId !== '') {
+    UserService.removeAddress(addressId);
+  }
 }
