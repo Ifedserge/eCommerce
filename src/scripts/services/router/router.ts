@@ -18,6 +18,7 @@ export default class Router {
     if (typeof url === 'string') {
       window.history.pushState(null, `${url}`, `/${url}`);
     }
+    if (window.location.pathname === '/') this.navigate(Pages.index);
     const urlString = window.location.pathname.slice(1);
 
     const result = {
