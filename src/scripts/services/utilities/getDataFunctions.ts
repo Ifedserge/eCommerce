@@ -1,15 +1,63 @@
-import { Category } from '@commercetools/platform-sdk';
+import {
+  Category,
+  ClientResponse,
+  ProductPagedQueryResponse,
+  ProductProjectionPagedSearchResponse,
+} from '@commercetools/platform-sdk';
 import { NotificationType, SortType, SortingValue } from '../../components/types/enums';
 import { IProductAllData, IProductData } from '../../components/types/interfaces';
 import { NotificationService } from './notification';
 import { Api } from '../api';
+import { Card } from '../../components/views/partials/card/card';
+import { getActiveCart } from './getActiveCart';
+
+async function renderCategoryCards(
+  response: ClientResponse<ProductProjectionPagedSearchResponse>,
+  block: HTMLElement
+): Promise<void> {
+  if (!localStorage.getItem('cartId')) {
+    response.body.results.forEach((item) => {
+      const data = item as unknown as IProductData;
+      block.append(new Card(data).createCard());
+    });
+  } else {
+    const isUserLoggedIn = Boolean(localStorage.getItem('token'));
+    const cart = await getActiveCart(isUserLoggedIn);
+    response.body.results.forEach((item) => {
+      const data = item as unknown as IProductData;
+      const card = new Card(data);
+      if (cart?.lineItems.find((lineItem) => lineItem.productId === data.id))
+        card.disableCartButton();
+      block.append(card.createCard());
+    });
+  }
+}
+
+async function renderProductCards(
+  response: ClientResponse<ProductPagedQueryResponse>,
+  block: HTMLElement
+): Promise<void> {
+  if (!localStorage.getItem('cartId')) {
+    response.body.results.forEach((item) => {
+      const data = item as unknown as IProductAllData;
+      block.append(new Card(data).createCard());
+    });
+  } else {
+    const isUserLoggedIn = Boolean(localStorage.getItem('token'));
+    const cart = await getActiveCart(isUserLoggedIn);
+    response.body.results.forEach((item) => {
+      const data = item as unknown as IProductAllData;
+      const card = new Card(data);
+      if (cart?.lineItems.find((lineItem) => lineItem.productId === data.id))
+        card.disableCartButton();
+      block.append(card.createCard());
+    });
+  }
+}
 
 const apiAnonRoot = Api.createAnonClient();
 
-export function getProducts(
-  callBack: (data: IProductAllData) => HTMLElement,
-  block: HTMLElement
-): void | IProductAllData[] {
+export function getProducts(block: HTMLElement): void | IProductAllData[] {
   apiAnonRoot
     .products()
     .get({
@@ -18,12 +66,7 @@ export function getProducts(
       },
     })
     .execute()
-    .then((response) => {
-      response.body.results.forEach((item) => {
-        const data = item as unknown as IProductAllData;
-        block.append(callBack(data));
-      });
-    })
+    .then((response) => renderProductCards(response, block))
     .catch(() => {
       NotificationService.showNotification(
         'Something happened. Please, go to the main page...',
@@ -32,13 +75,12 @@ export function getProducts(
     });
 }
 
-export function getCatalogueData(
-  callBack: (data: IProductData) => HTMLElement,
+export async function getCatalogueData(
   block: HTMLElement,
   id: string,
   totalCardUpdateCallback: (num: number, offset: number | undefined) => void,
   offset?: number
-): void | IProductData[] {
+): Promise<void | IProductData[]> {
   apiAnonRoot
     .productProjections()
     .search()
@@ -50,13 +92,12 @@ export function getCatalogueData(
       },
     })
     .execute()
-    .then((response) => {
-      response.body.results.forEach((item) => {
-        const data = item as unknown as IProductData;
-        block.append(callBack(data));
-      });
-      if (response.body.total) totalCardUpdateCallback(response.body.total, offset);
-    })
+    .then((response) =>
+      (async function checkChosenCards() {
+        await renderCategoryCards(response, block);
+        if (response.body.total) totalCardUpdateCallback(response.body.total, offset);
+      })()
+    )
     .catch(() => {
       NotificationService.showNotification(
         'Something happened. Please, go to the main page...',
@@ -83,7 +124,6 @@ export function sortCards(
   value: SortingValue,
   id: string,
   sortingType: SortType,
-  callBack: (data: IProductData | IProductAllData) => HTMLElement,
   block: HTMLElement
 ): void | IProductData[] | IProductAllData[] {
   const queryArgs = {
@@ -100,12 +140,7 @@ export function sortCards(
     .search()
     .get({ queryArgs })
     .execute()
-    .then((response) => {
-      response.body.results.forEach((item) => {
-        const data = item as unknown as IProductData | IProductAllData;
-        block.append(callBack(data));
-      });
-    })
+    .then((response) => renderCategoryCards(response, block))
     .catch(() => {
       NotificationService.showNotification(
         'Something happened. Please, go to the main page...',

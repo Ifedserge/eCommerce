@@ -20,7 +20,6 @@ import {
   SortType,
   SortingValue,
 } from '../../types/enums';
-import { createCard } from '../partials/card/card';
 
 export class Catalogue {
   isChosenSex = false;
@@ -58,43 +57,43 @@ export class Catalogue {
       case Pages.catalogue: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = '';
-        getProducts(createCard, this.cardsBlock);
+        getProducts(this.cardsBlock);
         break;
       }
       case Pages.man: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       default:
@@ -253,7 +252,7 @@ export class Catalogue {
     this.manageBlock.innerHTML = '';
     this.manageBlock.append(this.createSortNameBlock(), this.createSortPriceBlock());
     this.cardsBlock.innerHTML = '';
-    sortCards(sortingValue, this.categoryId, sortingType, createCard, this.cardsBlock);
+    sortCards(sortingValue, this.categoryId, sortingType, this.cardsBlock);
   }
 
   createCardsBlock(): HTMLElement {
@@ -312,12 +311,6 @@ export class Catalogue {
 
   openNextPagiPage(num: number): void {
     this.cardsBlock.innerHTML = '';
-    getCatalogueData(
-      createCard,
-      this.cardsBlock,
-      this.categoryId,
-      this.updateTotalCards.bind(this),
-      num * 10
-    );
+    getCatalogueData(this.cardsBlock, this.categoryId, this.updateTotalCards.bind(this), num * 10);
   }
 }

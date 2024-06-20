@@ -3,7 +3,10 @@ import { handleAddToCart } from './handleAddToCart';
 import { handleRemoveProductFromCart } from './handleRemoveProductFromCart';
 import { createNewCart } from './createNewCart';
 
-export const handleAddProductToCart = async (productId: string): Promise<void> => {
+export const handleAddProductToCart = async (
+  productId: string,
+  callingFromCard?: boolean
+): Promise<void> => {
   const isUserLoggedIn = Boolean(localStorage.getItem('token'));
   let cart = await getActiveCart(isUserLoggedIn);
 
@@ -18,11 +21,13 @@ export const handleAddProductToCart = async (productId: string): Promise<void> =
   const productInCart = cart.lineItems.some((item) => item.productId === productId);
 
   if (productInCart) {
+    if (callingFromCard) {
+      Promise.resolve();
+      return;
+    }
     await handleRemoveProductFromCart(productId);
   } else {
     const { id: cartId, version: cartVersion } = cart;
     await handleAddToCart(cartId, cartVersion, productId, isUserLoggedIn);
   }
-
-  cart = await getActiveCart(isUserLoggedIn);
 };
