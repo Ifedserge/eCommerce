@@ -46,6 +46,7 @@ export class Catalogue {
   }
 
   createLayout(paths: string[], categoryId: string): HTMLElement {
+    //debugger;
     this.block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
     this.openPage(this.page, categoryId);
     this.categoryId = categoryId;
@@ -102,6 +103,7 @@ export class Catalogue {
   }
 
   createNavBlock(path: string[]): HTMLElement {
+    //debugger;
     const block = createBlock(BlockType.div, ['catalogue__navigation']);
 
     const wrapper = createBlock(BlockType.div, ['catalogue__nav-wrapper']);
@@ -263,21 +265,21 @@ export class Catalogue {
   createSubCategories(path: string[]): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['catalogue__sub-categories']);
     if (!this.isChosenSex) {
-      const manButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Man');
+      const manButton = createButton(['catalogue__button', 'text', 'text_normal'], Pages.man);
       manButton.addEventListener('click', () => this.redirect.call(this, 'man'));
-      const womanButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Woman');
+      const womanButton = createButton(['catalogue__button', 'text', 'text_normal'], Pages.woman);
       womanButton.addEventListener('click', () => this.redirect.call(this, 'woman'));
       wrapper.append(manButton, womanButton);
     } else if (path.length === 1) {
       const jeansButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jeans');
       jeansButton.addEventListener('click', () => {
-        if (path[0] === 'Man') this.redirect.call(this, 'man-jeans');
-        else this.redirect.call(this, 'woman-jeans');
+        if (path[0] === 'Man') this.redirect.call(this, Pages.man_jeans);
+        else this.redirect.call(this, Pages.woman_jeans);
       });
       const jacketsButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jackets');
       jacketsButton.addEventListener('click', () => {
-        if (path[0] === 'Man') this.redirect.call(this, 'man-jackets');
-        else this.redirect.call(this, 'woman-jackets');
+        if (path[0] === 'Man') this.redirect.call(this, Pages.man_jackets);
+        else this.redirect.call(this, Pages.woman_jackets);
       });
       wrapper.append(jeansButton, jacketsButton);
     }

@@ -27,8 +27,10 @@ export default class Router {
     };
     const path = urlString.split('/');
     [result.path = '', result.resource = ''] = path;
-
-    const route = this.routes.find((item) => urlString.includes(item.path));
+    let route;
+    if (result.path === Pages.catalogue && result.resource === Pages.woman_jackets)
+      route = this.routes.find((item) => item.path === Pages.woman_jackets);
+    else route = this.routes.find((item) => urlString.includes(item.path));
     if (route && urlString.length > 22) route.callback();
     else this.urlChangedHandler(result);
   }

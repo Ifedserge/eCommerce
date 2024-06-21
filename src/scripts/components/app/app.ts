@@ -64,6 +64,7 @@ export class App {
   }
 
   changePage(layout: HTMLElement): void {
+    //debugger;
     this.main.innerHTML = '';
     this.main.append(layout);
   }
