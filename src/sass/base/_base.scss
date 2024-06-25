@@ -1,0 +1,15 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main {
+  width: 100vw;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
