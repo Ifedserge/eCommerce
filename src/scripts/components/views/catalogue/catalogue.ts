@@ -46,7 +46,6 @@ export class Catalogue {
   }
 
   createLayout(paths: string[], categoryId: string): HTMLElement {
-    //debugger;
     this.block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
     this.openPage(this.page, categoryId);
     this.categoryId = categoryId;
@@ -103,7 +102,6 @@ export class Catalogue {
   }
 
   createNavBlock(path: string[]): HTMLElement {
-    //debugger;
     const block = createBlock(BlockType.div, ['catalogue__navigation']);
 
     const wrapper = createBlock(BlockType.div, ['catalogue__nav-wrapper']);
