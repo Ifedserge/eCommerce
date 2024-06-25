@@ -82,3 +82,21 @@
   width: 232px;
   height: 176px;
 }
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  &__button {
+    background-color: $black-color;
+    color: $white-color;
+    width: 50px;
+    height: 30px;
+  }
+}
+
+.disabled {
+  cursor: auto;
+  background-color: #4e4e4e;
+}

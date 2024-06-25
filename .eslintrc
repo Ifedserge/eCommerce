@@ -19,11 +19,12 @@
     "no-console": "warn",
     "class-methods-use-this":"off",
     "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-expressions": "off",
     "import/prefer-default-export": "off",
     "no-param-reassign": [
       "error",
       {
-        "props": true
+        "props": false
       }
     ]
   },

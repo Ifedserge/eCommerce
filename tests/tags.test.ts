@@ -25,7 +25,7 @@ test('creating input', () => {
   result.type = 'text';
   const classes = ['tst1', 'tst2'];
   classes.forEach((item) => result.classList.add(item));
-  const attributes = [{ name: 'name', value: 'fuck!' }, { name: 'disabled' }];
+  const attributes = [{ name: 'name', value: 'go' }, { name: 'disabled' }];
   attributes.forEach((item) => result.setAttribute(item.name, item.value ? item.value : ''));
   expect(createInput(InputType.text, classes, ...attributes)).toStrictEqual(result);
 });
@@ -35,7 +35,7 @@ test('creating form', () => {
   const classes = ['tst1', 'tst2'];
   classes.forEach((item) => result.classList.add(item));
   const attributes = [
-    { name: 'action', value: 'fuck!' },
+    { name: 'action', value: 'go' },
     { name: 'name', value: 'name' },
   ];
   attributes.forEach((item) => result.setAttribute(item.name, item.value ? item.value : ''));

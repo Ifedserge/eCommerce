@@ -20,7 +20,6 @@ import {
   SortType,
   SortingValue,
 } from '../../types/enums';
-import { createCard } from '../partials/card/card';
 
 export class Catalogue {
   isChosenSex = false;
@@ -33,9 +32,13 @@ export class Catalogue {
 
   private page = Pages.catalogue;
 
+  private block = createBlock(BlockType.section, ['catalogue']);
+
   private cardsBlock = createBlock(BlockType.div, ['catalogue__cards']);
 
   private manageBlock = this.createManageBlock();
+
+  private totalCards = 0;
 
   constructor(isChosenSex: boolean, page: Pages) {
     this.isChosenSex = isChosenSex;
@@ -43,11 +46,10 @@ export class Catalogue {
   }
 
   createLayout(paths: string[], categoryId: string): HTMLElement {
-    const block = createBlock(BlockType.section, ['catalogue']);
-    block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
+    this.block.append(this.createNavBlock(paths), this.manageBlock, this.cardsBlock);
     this.openPage(this.page, categoryId);
     this.categoryId = categoryId;
-    return block;
+    return this.block;
   }
 
   openPage(name: string, categoryId: string): void {
@@ -55,43 +57,43 @@ export class Catalogue {
       case Pages.catalogue: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = '';
-        getProducts(createCard, this.cardsBlock);
+        getProducts(this.cardsBlock);
         break;
       }
       case Pages.man: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.man_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.man_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jeans: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jeans;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       case Pages.woman_jackets: {
         this.cardsBlock.innerHTML = '';
         this.categoryId = IdCategories.woman_jackets;
-        getCatalogueData(createCard, this.cardsBlock, categoryId);
+        getCatalogueData(this.cardsBlock, categoryId, this.updateTotalCards.bind(this));
         break;
       }
       default:
@@ -250,7 +252,7 @@ export class Catalogue {
     this.manageBlock.innerHTML = '';
     this.manageBlock.append(this.createSortNameBlock(), this.createSortPriceBlock());
     this.cardsBlock.innerHTML = '';
-    sortCards(sortingValue, this.categoryId, sortingType, createCard, this.cardsBlock);
+    sortCards(sortingValue, this.categoryId, sortingType, this.cardsBlock);
   }
 
   createCardsBlock(): HTMLElement {
@@ -261,21 +263,21 @@ export class Catalogue {
   createSubCategories(path: string[]): HTMLElement {
     const wrapper = createBlock(BlockType.div, ['catalogue__sub-categories']);
     if (!this.isChosenSex) {
-      const manButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Man');
+      const manButton = createButton(['catalogue__button', 'text', 'text_normal'], Pages.man);
       manButton.addEventListener('click', () => this.redirect.call(this, 'man'));
-      const womanButton = createButton(['catalogue__button', 'text', 'text_normal'], 'Woman');
+      const womanButton = createButton(['catalogue__button', 'text', 'text_normal'], Pages.woman);
       womanButton.addEventListener('click', () => this.redirect.call(this, 'woman'));
       wrapper.append(manButton, womanButton);
     } else if (path.length === 1) {
       const jeansButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jeans');
       jeansButton.addEventListener('click', () => {
-        if (path[0] === 'Man') this.redirect.call(this, 'man-jeans');
-        else this.redirect.call(this, 'woman-jeans');
+        if (path[0] === 'Man') this.redirect.call(this, Pages.man_jeans);
+        else this.redirect.call(this, Pages.woman_jeans);
       });
       const jacketsButton = createButton(['catalogue__button', 'text', 'text_normal'], 'jackets');
       jacketsButton.addEventListener('click', () => {
-        if (path[0] === 'Man') this.redirect.call(this, 'man-jackets');
-        else this.redirect.call(this, 'woman-jackets');
+        if (path[0] === 'Man') this.redirect.call(this, Pages.man_jackets);
+        else this.redirect.call(this, Pages.woman_jackets);
       });
       wrapper.append(jeansButton, jacketsButton);
     }
@@ -284,5 +286,31 @@ export class Catalogue {
 
   private redirect(path: string): void {
     window.location.pathname = `catalogue/${path}`;
+  }
+
+  updateTotalCards(num: number, offset: number | undefined): void {
+    this.totalCards = num;
+    document.querySelector('.pagination')?.remove();
+    if (num < 10) return;
+    this.block.append(this.addPaginationBlock(num, offset));
+  }
+
+  addPaginationBlock(num: number, offset: number | undefined): HTMLElement {
+    const block = createBlock(BlockType.div, ['pagination']);
+    const numOfButtons = Math.round(num / 10);
+    for (let i = 0; i < numOfButtons; i += 1) {
+      const button = createButton(['pagination__button', 'text', 'text-normal'], `${i + 1}`);
+      if (offset! / 10 === i || (offset === undefined && i === 0)) {
+        button.setAttribute('disabled', '');
+        button.classList.add('disabled');
+      } else button.addEventListener('click', () => this.openNextPagiPage(i));
+      block.append(button);
+    }
+    return block;
+  }
+
+  openNextPagiPage(num: number): void {
+    this.cardsBlock.innerHTML = '';
+    getCatalogueData(this.cardsBlock, this.categoryId, this.updateTotalCards.bind(this), num * 10);
   }
 }
